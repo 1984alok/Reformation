@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/catgText"
+    style="@style/header_title_15px"
+    android:padding="@dimen/dp5"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/catg_bg"
+    android:gravity="center">
+
+</TextView>

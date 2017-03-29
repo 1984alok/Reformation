@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/dp20">
+            <ImageView
+                android:id="@+id/topicImg"
+                android:layout_width="match_parent"
+                android:scaleType="fitXY"
+                android:layout_height="@dimen/home_imageHeight"
+                android:src="@drawable/about"
+                android:maxHeight="@dimen/home_imageHeight"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Medium Text"
+                android:id="@+id/textViewTopicTitle"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_gravity="left"
+                android:gravity="center"/>
+
+            <RelativeLayout
+                android:id="@+id/topic_of_weekDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp80"
+                android:paddingLeft="@dimen/dp10"
+                android:paddingRight="@dimen/dp10">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginRight="@dimen/dp10"
+                    style="@style/header_title_15px"
+                    android:textSize="@dimen/px20"
+                    android:maxHeight="@dimen/header_height"
+                    android:ellipsize="end"
+                    android:id="@+id/textViewTopicDesc"
+                    android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@+id/goto_img"
+                    android:gravity="top"/>
+
+                <ImageView
+                    android:id="@+id/goto_img"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/go_to"
+                    android:layout_alignParentRight="true"
+                    />
+
+            </RelativeLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp1"
+                android:background="@color/light_grey"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/next_eventt"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_gravity="left"
+                android:gravity="center"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/horizontal_recycler_eventView"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp1"
+                android:layout_marginTop="@dimen/dp20"
+                android:background="@color/light_grey"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/horizontal_recycler_menu"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_margin="@dimen/dp10"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+    </ScrollView>
+    <include
+        android:id="@+id/header"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        layout="@layout/header_bar"
+        android:layout_gravity="top"/>
+
+
+
+
+</FrameLayout>

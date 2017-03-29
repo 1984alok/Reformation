@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        id="@+id/tab_home"
+        icon="@drawable/home"
+        title=""/>
+        <!--barColorWhenSelected="@color/colorAccent"-->
+    <tab
+        id="@+id/tab_gate"
+        icon="@drawable/gates"
+        title=""/>
+        <!--barColorWhenSelected="#5D4037"-->
+    <tab
+        id="@+id/tab_prog"
+        icon="@drawable/program"
+        title=""/>
+       <!-- barColorWhenSelected="#7B1FA2"-->
+    <tab
+        id="@+id/tab_exibitor"
+        icon="@drawable/exhibitors"
+        title=""/>
+       <!-- barColorWhenSelected="#FF5252"-->
+    <tab
+        id="@+id/tab_map"
+        icon="@drawable/map"
+        title=""/>
+       <!-- barColorWhenSelected="#FF9800" -->
+</tabs>
