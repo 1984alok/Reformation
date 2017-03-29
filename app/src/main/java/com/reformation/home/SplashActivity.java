@@ -14,7 +14,7 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(SplashActivity.this,AudioGuideActivity.class));
+                startActivity(new Intent(SplashActivity.this,HomeScreen.class));
             }
         },1000);
     }
