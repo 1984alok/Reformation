@@ -20,7 +20,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".HomeScreen" />
-        <activity android:name=".AudioGuideActivity"></activity>
+        <activity android:name=".AudioGuideActivity" />
+        <activity android:name=".SettingScreen"></activity>
     </application>
 
 </manifest>
