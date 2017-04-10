@@ -3,6 +3,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
+    android:layout_margin="@dimen/dp20"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     card_view:cardCornerRadius="4dp"
@@ -13,23 +14,35 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@color/white">
-        <ImageView
-            android:id="@+id/homeMenuImg"
-            android:layout_width="match_parent"
-            android:scaleType="fitXY"
+        <FrameLayout
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/dp170"
-            android:src="@drawable/about"
-            android:maxHeight="@dimen/home_imageHeight"/>
+            android:layout_gravity="center">
+            <ImageView
+                android:id="@+id/homeMenuImg"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp170"
+                android:scaleType="fitXY"
+                android:maxHeight="@dimen/home_imageHeight"/>
+            <ProgressBar
+                android:id="@+id/dlg"
+                android:layout_width="@dimen/dp40"
+                android:layout_height="@dimen/dp40"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                android:indeterminateDrawable="@drawable/custom_progress" />
+        </FrameLayout>
+
         <TextView
             android:id="@+id/txtEventHomeMenuTxt"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/audio_guide"
             android:padding="@dimen/dp20"
-            style="@style/header_title_bold_17px"
-            android:textSize="@dimen/px20"
+            android:drawableRight="@drawable/list_arrow"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_gravity="left"
-            android:gravity="center"/>
+            android:gravity="left"/>
 
     </LinearLayout>
 

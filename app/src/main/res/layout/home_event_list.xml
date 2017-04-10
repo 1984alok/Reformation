@@ -5,6 +5,7 @@
     android:id="@+id/card_view"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:minWidth="@dimen/dp110"
     android:layout_margin="1dp"
     card_view:cardCornerRadius="4dp"
     app:cardElevation="3dp"
@@ -13,19 +14,19 @@
         android:id="@+id/frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:minWidth="@dimen/dp110"
         android:background="@color/light_blue"
         android:orientation="vertical"
        android:padding="@dimen/dp5" >
         <TextView
             android:id="@+id/txtEventName"
             android:layout_width="wrap_content"
-            android:maxWidth="@dimen/dp110"
             android:singleLine="true"
             android:ellipsize="end"
             android:layout_height="wrap_content"
             android:text="@string/next_eventt"
-            style="@style/header_title_bold_17px"
-            android:textSize="@dimen/px20"
+            android:textSize="@dimen/sp15"
+            android:textColor="@color/black"
             android:layout_gravity="left"
             android:gravity="center"/>
         <TextView
@@ -34,14 +35,14 @@
             android:layout_height="wrap_content"
             android:text="@string/next_eventt"
             style="@style/header_title_15px"
-            android:textSize="@dimen/px17"
+            android:textColor="@color/text_color_six"
             android:layout_marginTop="@dimen/dp5"
             android:layout_gravity="left"
             android:gravity="center"/>
         <LinearLayout
             android:layout_marginTop="@dimen/dp5"
             android:id="@+id/catgList"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
         </LinearLayout>

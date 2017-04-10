@@ -3,6 +3,25 @@
     <string name="header_title">World Reformation Exhibition</string>
     <string name="next_eventt">Next Event</string>
     <string name="audio_guide">Audio - Guide</string>
-    <string name="topic_desc">What holds us together . In Brexit times we want to glimpse the European soul. This programme will illustrate the colourful variety of Europe, present different relationships between religion and politics. celebrate Universal Children s Day and outline future prospects for everyone.</string>
+    <string name="topic_desc">What holds us together . In Brexit times we want to glimpse the European soul. This programme will illustrate the colourful variety of Europe, present different relationships between religion and politics. celebrate Universal Children s Day and outline future prospects for everyone.Loresn epsump ghtrg ghhjukk ghjjjjk gtff. Jklhngfdd tyyhbvv.</string>
     <string name="discover_more">Discover More</string>
+    <string name="language">Language</string>
+    <string name="lang_eng">English</string>
+    <string name="lang_german">German</string>
+    <string name="visitor_info">Visitor Information A - Z</string>
+    <string name="audio_video_guide">Audio / Video Guide</string>
+    <string name="contact">Contact\nInfo-und Servicephone:\n+41 3491 6434-700</string>
+    <string name="email_contact">E-Mail Contact</string>
+    <string name="imprintTxt">Imprint</string>
+    <string name="aniversary_partner">Anniversary Partners</string>
+    <string name="setting">Settings</string>
+    <string name="setting_lang_popup">This app will be launched in English.\n Sie können auf deutsch wechseln.</string>
+    <string name="program_text">Program</string>
+    <string name="topic_date">Period:</string>
+    <string name="topic_week_title">Topic Weeks</string>
+    <string name="gate">Gates</string>
+    <string name="topic_week_overview">Topic Weeks Overview</string>
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="more">more</string>
 </resources>

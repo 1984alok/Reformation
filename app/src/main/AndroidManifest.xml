@@ -3,6 +3,11 @@
     package="com.reformation.home">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -12,6 +17,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".SplashActivity"
+            android:configChanges="orientation|screenLayout|keyboard|keyboardHidden|layoutDirection|screenSize"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,9 +25,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HomeScreen" />
+        <activity
+            android:name=".HomeScreen"
+            android:configChanges="orientation|screenLayout|keyboard|keyboardHidden|layoutDirection|screenSize" />
         <activity android:name=".AudioGuideActivity" />
-        <activity android:name=".SettingScreen"></activity>
+        <activity
+            android:name=".SettingScreen"
+            android:configChanges="orientation|screenLayout|keyboard|keyboardHidden|layoutDirection|screenSize" />
+        <activity android:name=".TopicWeekDetailActivity"></activity>
     </application>
 
 </manifest>

@@ -19,7 +19,7 @@ public class AudioGuideActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_audio_guide);
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<String> call = apiInterface.getAudio(Constant.LANG_ENG);
+        Call<String> call = apiInterface.getAudio(Constant.SELECTED_LANG);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {

@@ -3,12 +3,13 @@ package model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Alok on 26-03-2017.
  */
-public class TopicweekResponse {
+public class TopicweekResponse implements Serializable{
 
     @SerializedName("status")
     @Expose
@@ -45,7 +46,7 @@ public class TopicweekResponse {
     }
 
 
-    public class TopicWeekModel {
+    public class TopicWeekModel implements Serializable{
 
         @SerializedName("header_pic")
         @Expose
@@ -115,12 +116,13 @@ public class TopicweekResponse {
         }
 
     }
-    public class Event {
+    public class Event implements Serializable{
+
 
         @SerializedName("id")
         @Expose
         private String id;
-        @SerializedName("titel")
+        @SerializedName("title")
         @Expose
         private String titel;
         @SerializedName("category")

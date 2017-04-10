@@ -4,7 +4,10 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/activity_main_swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,18 +17,19 @@
             android:layout_height="match_parent"
             android:background="@color/white"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/dp20">
+            android:paddingBottom="@dimen/dp40">
             <ImageView
                 android:id="@+id/topicImg"
                 android:layout_width="match_parent"
                 android:scaleType="fitXY"
                 android:layout_height="@dimen/home_imageHeight"
-                android:src="@drawable/about"
+                android:src="@drawable/ic_photo_frame"
                 android:maxHeight="@dimen/home_imageHeight"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="@dimen/sp17"
+                android:textColor="@color/black"
                 android:text="Medium Text"
                 android:id="@+id/textViewTopicTitle"
                 android:textStyle="bold"
@@ -37,17 +41,16 @@
             <RelativeLayout
                 android:id="@+id/topic_of_weekDetail"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/dp80"
-                android:paddingLeft="@dimen/dp10"
-                android:paddingRight="@dimen/dp10">
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp10">
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_marginRight="@dimen/dp10"
-                    style="@style/header_title_15px"
-                    android:textSize="@dimen/px20"
-                    android:maxHeight="@dimen/header_height"
+                    android:textSize="@dimen/sp15"
+                    android:textColor="@color/text_color_six"
+                    android:maxLines="4"
                     android:ellipsize="end"
                     android:id="@+id/textViewTopicDesc"
                     android:layout_alignParentTop="true"
@@ -72,7 +75,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="@dimen/sp17"
+                android:textColor="@color/black"
                 android:text="@string/next_eventt"
                 android:textStyle="bold"
                 android:layout_marginTop="@dimen/dp10"
@@ -94,16 +98,17 @@
                 android:layout_marginTop="@dimen/dp20"
                 android:background="@color/light_grey"/>
 
-            <android.support.v7.widget.RecyclerView
+            <LinearLayout
                 android:id="@+id/horizontal_recycler_menu"
-                android:background="@color/white"
                 android:layout_width="match_parent"
-                android:layout_margin="@dimen/dp10"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            </LinearLayout>
 
 
         </LinearLayout>
     </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
     <include
         android:id="@+id/header"
         android:layout_height="wrap_content"

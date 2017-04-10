@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/activity_main_swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            android:fillViewport="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/dp40">
+            <include
+                android:layout_height="@dimen/home_imageHeight"
+                android:layout_width="match_parent"
+                layout="@layout/image_layout"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp17"
+                android:text="Medium Text"
+                android:id="@+id/textViewTopicTitle"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_gravity="left"
+                android:gravity="center"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp1"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@color/light_grey"/>
+            <RelativeLayout
+                android:id="@+id/topic_of_weekDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp5"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp17"
+                    android:maxLines="5"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:ellipsize="end"
+                    android:id="@+id/textViewTopicDate"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:drawablePadding="@dimen/dp10"
+                    android:text="Period: 24th-29th May"
+                    android:drawableLeft="@drawable/calendar"/>
+
+
+            </RelativeLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp1"
+                android:background="@color/light_grey"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp10"
+                style="@style/header_title_15px"
+                android:textSize="@dimen/sp15"
+                android:textColor="@color/text_color_six"
+                android:id="@+id/textViewTopicDesc"
+                android:gravity="top"
+                android:text="@string/topic_desc"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/program_text"
+                android:textStyle="bold"
+                android:textSize="@dimen/sp17"
+                android:textColor="@color/black"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_gravity="left"
+                android:gravity="center"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/horizontal_recycler_eventView"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_margin="@dimen/dp10"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+        </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+    <include
+        android:id="@+id/header"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        layout="@layout/header_two"
+        android:layout_gravity="top"/>
+
+
+
+
+</FrameLayout>

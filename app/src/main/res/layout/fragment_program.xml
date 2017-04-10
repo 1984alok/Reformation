@@ -1,13 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_blue">
 
-    <TextView
-        android:layout_width="wrap_content"
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/dp40"
+                android:paddingBottom="@dimen/dp40">
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:background="@color/white"
+                    android:layout_height="@dimen/home_imageHeight"
+                    android:orientation="vertical">
+
+                    <android.support.design.widget.TabLayout
+                        android:id="@+id/tabs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:tabGravity="fill"
+                        app:tabMode="fixed" />
+
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/viewpager"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewTopicTitle"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/sp15"
+                    android:text="@string/topic_week_title"
+                    android:textColor="@color/text_color_seven"
+                    android:layout_marginTop="@dimen/dp20"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/horizontal_recycler_topic"
+                    android:layout_width="wrap_content"
+                    android:layout_margin="@dimen/dp10"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:background="@color/white"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/dp10"
+                    android:paddingRight="@dimen/dp10"
+                    android:layout_marginTop="@dimen/dp20">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/sp17"
+                        android:id="@+id/textViewTopicweekOverview"
+                        android:textStyle="bold"
+                        android:text="@string/topic_week_overview"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="@dimen/dp20"
+                        android:layout_gravity="left"
+                        android:gravity="center"/>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/horizontal_recycler_topicoverview"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="@dimen/dp20"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    <include
+        android:id="@+id/header"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Program"
-        android:id="@+id/textView4"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
-</RelativeLayout>
+        android:layout_width="match_parent"
+        layout="@layout/header_two"
+        android:layout_gravity="top"/>
+
+
+
+
+</FrameLayout>

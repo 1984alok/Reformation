@@ -1,6 +1,9 @@
 package com.reformation.home;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.support.design.widget.NavigationView;
@@ -21,6 +24,7 @@ import com.reformation.home.fragment.ProgramFragment;
 import bottombar.BottomBar;
 import bottombar.OnTabReselectListener;
 import bottombar.OnTabSelectListener;
+import utils.CustomProgresDialog;
 
 public class HomeScreen extends AppCompatActivity {
     // tags used to attach the fragments
@@ -31,7 +35,6 @@ public class HomeScreen extends AppCompatActivity {
     private static final String TAG_MAP = "map";
     public static String CURRENT_TAG = TAG_HOME;
     private Handler mHandler;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +125,27 @@ public class HomeScreen extends AppCompatActivity {
 
         return null;
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter intentFilter = new IntentFilter("LANG_CHANGE");
+        registerReceiver(changeLangReciever,intentFilter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(changeLangReciever);
+    }
+
+    private BroadcastReceiver changeLangReciever = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            loadHomeFragment(R.id.tab_home);
+        }
+    };
 
 
 }
