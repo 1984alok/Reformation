@@ -2,10 +2,10 @@ package adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.reformation.home.R;
@@ -13,7 +13,6 @@ import com.reformation.home.R;
 import java.util.ArrayList;
 
 import model.GateModel;
-import model.TopicweekResponse;
 
 /**
  * Created by Alok on 10-04-2017.
@@ -48,10 +47,13 @@ public class GateAdapter extends RecyclerView.Adapter<GateAdapter.MyViewHolder>{
     public void onBindViewHolder(GateAdapter.MyViewHolder holder, int position) {
         GateModel model = dataList.get(position);
         holder.txtViewTitle.setText(model.getTitle());
+        Log.i("gate data",model.getTitle());
+        Log.i("gate data pos",position+"");
     }
 
     @Override
     public int getItemCount() {
+        Log.i("gate data size",dataList.size()+"");
         return dataList.size();
     }
 }

@@ -1,11 +1,9 @@
 package com.reformation.home.fragment;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,9 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.reformation.home.R;
@@ -23,13 +19,10 @@ import com.reformation.home.R;
 import java.util.ArrayList;
 
 import adapter.GateAdapter;
-import adapter.HomeEventAdapter;
 import apihandler.ApiClient;
 import apihandler.ApiInterface;
 import model.GateModel;
 import model.GateResponsModel;
-import model.GateResponsModel;
-import model.TopicweekResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,7 +30,6 @@ import utils.Constant;
 import utils.CustomProgresDialog;
 import utils.FontUtls;
 import utils.LoadInPicasso;
-import utils.Utils;
 
 /**
  * Created by Alok on 26-03-2017.
@@ -87,7 +79,7 @@ public class GateFragment extends Fragment {
         gateRecyclerView.setFocusable(false);
         gateRecyclerView.setNestedScrollingEnabled(false);
         layoutManagaer
-                = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+                = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
 
         gateRecyclerView.setHasFixedSize(true);
         gateRecyclerView.setLayoutManager(layoutManagaer);

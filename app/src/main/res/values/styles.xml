@@ -72,15 +72,16 @@
         <item name="android:textColor">@color/text_color_six</item>
         <item name="android:textSize">@dimen/sp15</item>
     </style>
-    <style name="header_title_black_15px">
+    <style name="header_title_black_15px_black_font">
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">@dimen/sp15</item>
     </style>
 
-    <style name="header_title_11px">
+    <style name="header_title_11px_greyfont">
         <item name="android:textColor">@color/text_color_six</item>
         <item name="android:textSize">@dimen/sp11</item>
     </style>
+
     <style name="CustomAlertDialogStyle">
         <item name="android:bottomBright">@android:color/transparent</item>
         <item name="android:bottomDark">@android:color/transparent</item>

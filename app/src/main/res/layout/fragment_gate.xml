@@ -4,14 +4,11 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/activity_main_swipe_refresh_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            android:fillViewport="true">
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:paddingBottom="@dimen/dp40">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -49,19 +46,16 @@
                     android:background="@color/white"
                     android:layout_width="match_parent"
                     android:layout_margin="@dimen/dp10"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="match_parent"/>
 
             </LinearLayout>
         </ScrollView>
-    </android.support.v4.widget.SwipeRefreshLayout>
     <include
         android:id="@+id/header"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         layout="@layout/header_two"
         android:layout_gravity="top"/>
-
-
 
 
 </FrameLayout>

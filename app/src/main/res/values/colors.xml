@@ -12,6 +12,7 @@
     <color name="style_color_primary_dark">#21425d</color>
     <color name="style_color_accent">#01bcd5</color>
 
+
     <color name="fab_color_pressed">#007787</color>
     <color name="text_color_one">#686868</color>
     <color name="text_color_two">#0E6628</color>
@@ -21,7 +22,7 @@
     <color name="text_color_six">#FF555555</color>
     <color name="text_color_seven">#006825</color>
     <color name="text_color_eight">#86BC24</color>
-<color name="light_white">#66FFFFFF</color>
+    <color name="light_white">#66FFFFFF</color>
 
     <color name="language_dialog_background">#EFEFEF</color>
     <color name="white">#FFFFFF</color>

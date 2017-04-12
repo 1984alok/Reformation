@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name=".ReformationApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -32,7 +33,9 @@
         <activity
             android:name=".SettingScreen"
             android:configChanges="orientation|screenLayout|keyboard|keyboardHidden|layoutDirection|screenSize" />
-        <activity android:name=".TopicWeekDetailActivity"></activity>
+        <activity android:name=".TopicWeekDetailActivity" />
+        <activity android:name=".GateDetail" />
+        <activity android:name=".EventDetailActivity"></activity>
     </application>
 
 </manifest>

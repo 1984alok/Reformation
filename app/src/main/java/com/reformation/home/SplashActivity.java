@@ -78,7 +78,7 @@ public class SplashActivity extends AppCompatActivity implements
         buildGoogleApiClient();
         createLocationRequest();
         buildLocationSettingsRequest();
-        
+
         requestAllPermission();
     }
 
