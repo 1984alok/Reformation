@@ -6,11 +6,9 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.os.Handler;
-import android.support.annotation.NonNull;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -80,6 +78,7 @@ public class SplashActivity extends AppCompatActivity implements
         buildGoogleApiClient();
         createLocationRequest();
         buildLocationSettingsRequest();
+        
         requestAllPermission();
     }
 
