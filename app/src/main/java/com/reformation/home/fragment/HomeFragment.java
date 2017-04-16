@@ -1,13 +1,20 @@
 package com.reformation.home.fragment;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +22,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,6 +30,8 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.reformation.home.AudioGuideActivity;
+import com.reformation.home.EventDetailActivity;
 import com.reformation.home.HomeScreen;
 import com.reformation.home.R;
 import com.reformation.home.SettingScreen;
@@ -29,6 +39,7 @@ import com.reformation.home.TopicWeekDetailActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 import adapter.HomeEventAdapter;
 import apihandler.ApiClient;
@@ -43,6 +54,7 @@ import utils.Constant;
 import utils.CustomProgresDialog;
 import utils.FontUtls;
 import utils.LoadInPicasso;
+import utils.Utils;
 
 /**
  * Created by Alok on 26-03-2017.
@@ -65,6 +77,38 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Swipe
     SwipeRefreshLayout mSwipeRefreshLayout;
     RelativeLayout topic_of_weekDetail;
     TopicweekResponse model;
+    View headerView;
+    TextView headerTxt;
+    private static final int ANIM_DURATION_TOOLBAR = 300;
+    private boolean pendingIntroAnimation;
+
+
+    private void startIntroAnimation() {
+
+        int actionbarSize = Utils.dpToPx(56);
+        headerView.setTranslationY(-actionbarSize);
+        headerTxt.setTranslationY(-actionbarSize);
+        favImg.setTranslationY(-actionbarSize);
+        settingImg.setTranslationY(-actionbarSize);
+
+        headerView.animate()
+                .translationY(0)
+                .setDuration(ANIM_DURATION_TOOLBAR)
+                .setStartDelay(300);
+        headerTxt.animate()
+                .translationY(0)
+                .setDuration(ANIM_DURATION_TOOLBAR)
+                .setStartDelay(400);
+        favImg.animate()
+                .translationY(0)
+                .setDuration(ANIM_DURATION_TOOLBAR)
+                .setStartDelay(500);
+        settingImg.animate()
+                .translationY(0)
+                .setDuration(ANIM_DURATION_TOOLBAR)
+                .setStartDelay(500)
+                .start();
+    }
 
 
     @Override
@@ -73,25 +117,35 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Swipe
         // Inflate the layout for this fragment
         if(view==null)
             view = inflater.inflate(R.layout.fragment_home, container, false);
-
+        if (savedInstanceState == null) {
+            pendingIntroAnimation = true;
+        }
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+
         mSwipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.activity_main_swipe_refresh_layout);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.orange, R.color.colorPrimary, R.color.blue);
         topic_of_weekDetail = (RelativeLayout) view.findViewById(R.id.topic_of_weekDetail);
+        headerView = view.findViewById(R.id.header);
         topicImgview =(ImageView)view.findViewById(R.id.topicImg);
         settingImg=(ImageView)view.findViewById(R.id.imageViewSetting);
         favImg=(ImageView)view.findViewById(R.id.imageViewFavourite);
         topicTitle =(TextView) view.findViewById(R.id.textViewTopicTitle);
+        headerTxt=(TextView) view.findViewById(R.id.textViewHeaderTitle);
         topicDesc =(TextView) view.findViewById(R.id.textViewTopicDesc);
         context = getActivity();
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
         eventRecyclerView = (RecyclerView)view.findViewById(R.id.horizontal_recycler_eventView);
         menuLayout = (LinearLayout) view.findViewById(R.id.horizontal_recycler_menu);
+        if (pendingIntroAnimation) {
+            pendingIntroAnimation = false;
+            startIntroAnimation();
+        }
         horizontalLayoutManagaer
                 = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
 
@@ -137,6 +191,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Swipe
             eventList = model.getResponseData();
             if (eventList != null) {
                 homeEventAdapter = new HomeEventAdapter(context, eventList,Constant.EVENT_TOPIC_HOME_TYPE);
+                homeEventAdapter.setOnItemClickListener(mItemClickListener);
                 eventRecyclerView.setAdapter(homeEventAdapter);
             }
         }
@@ -178,7 +233,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Swipe
 
 
             if(topicWeekModel.getHeaderPic()!=null) {
-                Picasso.with(context).load(topicWeekModel.getHeaderPic())
+                Picasso.with(context).load(ApiClient.BASE_URL+topicWeekModel.getHeaderPic())
                         // .placeholder(R.drawable.progress_animation)
                         .error(R.drawable.ic_photo_frame)
                         .into(topicImgview);
@@ -226,9 +281,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Swipe
         TextView txtViewTitle;
         ImageView imgPic;
         ProgressBar progressBar;
+        if(menuLayout.getChildCount()>0){
+            menuLayout.removeAllViews();
+        }
         for (HomeMenuModelResponse.MenuModel model:modelList) {
             View itemView = LayoutInflater.from(getActivity()).inflate(R.layout.home_menu_list,null);
-            txtViewTitle = (TextView) itemView.findViewById(R.id.txtEventHomeMenuTxt);
+            txtViewTitle = (TextView) itemView.findViewById(R.id.textViewHeaderTitle);
             imgPic = (ImageView) itemView.findViewById(R.id.homeMenuImg);
             progressBar = (ProgressBar) itemView.findViewById(R.id.dlg);
             txtViewTitle.setText(model.getTitle());
@@ -247,6 +305,44 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Swipe
 
             menuLayout.addView(itemView);
         }
+        if(menuLayout.getChildCount()>0){
+            menuLayout.getChildAt(0).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startAudioPage(v,0);
+                }
+            });
+        }
+    }
+
+    private void startAudioPage(View v,int position){
+        Intent transitionIntent = new Intent(getActivity(), AudioGuideActivity.class);
+        TextView txtEventName = (TextView) v.findViewById(R.id.textViewHeaderTitle);
+
+        View navigationBar = v.findViewById(android.R.id.navigationBarBackground);
+        View statusBar = v.findViewById(android.R.id.statusBarBackground);
+        Pair<View, String> titelPair = Pair.create((View) txtEventName, "header");
+        Pair<View, String> navPair = Pair.create(navigationBar, Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME);
+        Pair<View, String> statusPair = Pair.create(statusBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME);
+        ArrayList<Pair<View, String>> list = new ArrayList<>();
+
+        list.add(titelPair);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            list.add(navPair);
+            list.add(statusPair);
+        }
+
+        //remove any views that are null
+        for (ListIterator<Pair<View, String>> iter = list.listIterator(); iter.hasNext();) {
+            Pair pair = iter.next();
+            if (pair.first == null) iter.remove();
+        }
+
+        Pair<View, String>[] sharedElements = list.toArray(new Pair[list.size()]);
+
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),sharedElements);
+        ActivityCompat.startActivity(getActivity(), transitionIntent, options.toBundle());
     }
 
 
@@ -259,7 +355,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Swipe
             case R.id.imageViewFavourite:
                 break;
             case R.id.topic_of_weekDetail:
-                startActivity(new Intent(getActivity(),TopicWeekDetailActivity.class).putExtra("Data",model));
+                final Intent intent = new Intent(getActivity(),TopicWeekDetailActivity.class).putExtra("Data",model);
+                startActivity(intent);
                 break;
         }
     }
@@ -284,4 +381,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Swipe
         mSwipeRefreshLayout.setRefreshing(false);
         }
 
-    }
+    HomeEventAdapter.OnItemClickListener mItemClickListener = new HomeEventAdapter.OnItemClickListener(){
+        @Override
+        public void onItemClick(View clickView, View view, int position) {
+            new Utils().startEventDetailPage(view,position,getActivity(),EventDetailActivity.class);
+        }
+    };
+}

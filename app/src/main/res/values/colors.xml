@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#66BC00</color>
-    <color name="colorPrimaryDark">#66000000</color>
+    <color name="colorPrimaryDark">#006825</color>
     <color name="colorAccent">#66BC00</color>
     <color name="bb_inActiveBottomBarItemColor">#747474</color>
     <color name="bb_darkBackgroundColor">#212121</color>

@@ -1,26 +1,83 @@
 package utils;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.graphics.Point;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AlertDialog;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.reformation.home.EventDetailActivity;
 import com.reformation.home.R;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.ListIterator;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * Created by Alok on 01-04-2017.
  */
 public class Utils {
 
+
+    private static int screenWidth = 0;
+    private static int screenHeight = 0;
+
+    public static int dpToPx(int dp) {
+        return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
+    }
+
+    public static int getScreenHeight(Context c) {
+        if (screenHeight == 0) {
+            WindowManager wm = (WindowManager) c.getSystemService(Context.WINDOW_SERVICE);
+            Display display = wm.getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            screenHeight = size.y;
+        }
+
+        return screenHeight;
+    }
+
+    public static int getScreenWidth(Context c) {
+        if (screenWidth == 0) {
+            WindowManager wm = (WindowManager) c.getSystemService(Context.WINDOW_SERVICE);
+            Display display = wm.getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            screenWidth = size.x;
+        }
+
+        return screenWidth;
+    }
+
+    public static boolean isAndroid5() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
+    }
 
 
 
@@ -133,4 +190,72 @@ public class Utils {
         return outputDateStr;
     }
 
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public static void revealView(FrameLayout view) {
+        int cx = view.getRight() - 30;
+        int cy = view.getBottom() - 60;
+        int finalRadius = Math.max(view.getWidth(), view.getHeight());
+        Animator anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, 0, finalRadius);
+        view.setVisibility(View.VISIBLE);
+        anim.start();
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public static void hideView(final FrameLayout view) {
+        int cx = view.getRight() - 30;
+        int cy = view.getBottom() - 60;
+        int initialRadius = view.getWidth();
+        Animator anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, initialRadius, 0);
+        anim.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                view.setVisibility(View.INVISIBLE);
+            }
+        });
+        anim.start();
+    }
+
+
+
+    public void startEventDetailPage(View v,int position,Context ctx,Class<?> calledActivity){
+        Intent transitionIntent = new Intent(ctx, calledActivity);
+        transitionIntent.putExtra(EventDetailActivity.EXTRA_PARAM_ID,position);
+        // transitionIntent.putExtra(DetailActivity.EXTRA_PARAM_HANDLER,recvMsgHandler);
+
+        LinearLayout catagPlaceHolder = (LinearLayout) v.findViewById(R.id.catgList);
+        TextView txtEventName = (TextView) v.findViewById(R.id.txtEventName);
+        TextView txtEventTime = (TextView) v.findViewById(R.id.txtEventTime);
+
+        View navigationBar = ((Activity)ctx).findViewById(android.R.id.navigationBarBackground);
+        View statusBar =((Activity)ctx).findViewById(android.R.id.statusBarBackground);
+
+        Pair<View, String> holderPair = Pair.create((View) catagPlaceHolder, "catgList");
+        Pair<View, String> titelPair = Pair.create((View) txtEventName, "txtEventName");
+        Pair<View, String> timePair = Pair.create((View) txtEventTime, "txtEventTime");
+        Pair<View, String> navPair = Pair.create(navigationBar, Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME);
+        Pair<View, String> statusPair = Pair.create(statusBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME);
+        ArrayList<Pair<View, String>> list = new ArrayList<>();
+
+        list.add(holderPair);
+        list.add(titelPair);
+        list.add(timePair);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            list.add(navPair);
+            list.add(statusPair);
+        }
+
+        //remove any views that are null
+        for (ListIterator<Pair<View, String>> iter = list.listIterator(); iter.hasNext();) {
+            Pair pair = iter.next();
+            if (pair.first == null) iter.remove();
+        }
+
+        Pair<View, String>[] sharedElements = list.toArray(new Pair[list.size()]);
+
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(((Activity)ctx),sharedElements);
+        ActivityCompat.startActivity(((Activity)ctx), transitionIntent, options.toBundle());
+    }
 }

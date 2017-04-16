@@ -14,6 +14,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import apihandler.ApiClient;
 import model.AnniversaryModelResponse;
 import model.TopicweekResponse;
 
@@ -52,7 +53,7 @@ public class AniversaryAdapter extends RecyclerView.Adapter<AniversaryAdapter.My
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         AnniversaryModelResponse.ResponseModel model = eventList.get(position);
         if(model.getImage()!=null) {
-            Picasso.with(ctx).load(model.getImage())
+            Picasso.with(ctx).load(ApiClient.BASE_URL+model.getImage())
                     // .placeholder(R.drawable.progress_animation)
                     .error(R.drawable.ic_photo_frame)
                     .into(holder.img);

@@ -14,7 +14,9 @@
         android:src="@drawable/ic_action_back"
         android:scaleType="fitXY"
         android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"/>
+        android:layout_centerVertical="true"
+        android:padding="@dimen/dp5"
+        android:background="@drawable/press_bag2"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -24,6 +26,7 @@
         android:layout_marginRight="@dimen/dp10"
        android:textSize="@dimen/sp17"
         android:textColor="@color/black"
+        android:transitionName="header"
         android:textStyle="bold"
         android:id="@+id/textViewHeaderTitle"
         android:layout_centerVertical="true"
@@ -37,5 +40,7 @@
         android:id="@+id/imageViewRight"
         android:layout_alignParentRight="true"
         android:scaleType="fitXY"
+        android:padding="@dimen/dp5"
+        android:background="@drawable/press_bag2"
         android:layout_centerVertical="true"/>
 </RelativeLayout>

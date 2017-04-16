@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.reformation.home.EventDetailActivity;
 import com.reformation.home.R;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import utils.Constant;
 import utils.CustomProgresDialog;
+import utils.Utils;
 
 /**
  * Created by Alok on 10-04-2017.
@@ -93,8 +95,16 @@ public class FragmentTmrwEvent extends Fragment {
             eventList = model.getResponseData();
             if (eventList != null) {
                 homeEventAdapter = new HomeEventAdapter(context, eventList,Constant.EVENT_TDAYTOMORW);
+                homeEventAdapter.setOnItemClickListener(mItemClickListener);
                 recyclerView.setAdapter(homeEventAdapter);
             }
         }
     }
+
+    HomeEventAdapter.OnItemClickListener mItemClickListener = new HomeEventAdapter.OnItemClickListener(){
+        @Override
+        public void onItemClick(View clickView, View view, int position) {
+            new Utils().startEventDetailPage(view,position,getActivity(),EventDetailActivity.class);
+        }
+    };
 }

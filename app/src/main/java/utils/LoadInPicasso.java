@@ -13,6 +13,9 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import apihandler.ApiClient;
+import apihandler.ApiInterface;
+
 /**
  * Created by Alok on 08-04-2017.
  */
@@ -61,7 +64,7 @@ public class LoadInPicasso {
         };
 
         imgPic.setTag(target);
-        picasso.load(path)
+        picasso.load(ApiClient.BASE_URL+path)
                 .into(target);
     }
 

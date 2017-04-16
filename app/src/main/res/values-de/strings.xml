@@ -21,4 +21,6 @@
     <string name="gate">Gates</string>
     <string name="today">Today</string>
     <string name="more">more</string>
+    <string name="chapter_audio">Chapter</string>
+    <string name="near_by_audio">Near By</string>
 </resources>

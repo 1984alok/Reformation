@@ -20,6 +20,7 @@
         android:padding="@dimen/dp5" >
         <TextView
             android:id="@+id/txtEventName"
+            android:transitionName="txtEventName"
             android:layout_width="wrap_content"
             android:layout_toLeftOf="@+id/txtEventTime"
             android:singleLine="true"
@@ -34,6 +35,7 @@
             android:padding="@dimen/dp5"/>
         <TextView
             android:id="@+id/txtEventTime"
+            android:transitionName="txtEventTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="24.05-10h"
@@ -54,6 +56,7 @@
             android:visibility="gone">
             <LinearLayout
                 android:id="@+id/catgList"
+                android:transitionName="catgList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">

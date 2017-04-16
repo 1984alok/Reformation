@@ -28,7 +28,7 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.MyView
         public ImageView imgPic;
         public MyViewHolder(View view) {
             super(view);
-            txtViewTitle = (TextView) view.findViewById(R.id.txtEventHomeMenuTxt);
+            txtViewTitle = (TextView) view.findViewById(R.id.textViewHeaderTitle);
             imgPic = (ImageView) view.findViewById(R.id.homeMenuImg);
 
         }

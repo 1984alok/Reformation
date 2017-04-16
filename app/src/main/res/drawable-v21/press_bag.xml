@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--drawable-v21/btn_default_light.xml-->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/highlight_green">
+    <item android:id="@android:id/mask"
+        android:drawable="@color/highlight_green"
+        >
+    </item>
+
+</ripple>

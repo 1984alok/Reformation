@@ -148,4 +148,10 @@ public class HomeScreen extends AppCompatActivity {
     };
 
 
+    public void startScreen(Intent mIntent){
+        startActivity(mIntent);
+        overridePendingTransition(R.anim.slide_up,R.anim.stay);
+    }
+
+
 }

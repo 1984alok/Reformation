@@ -24,47 +24,47 @@ import retrofit2.http.Field;
 public interface ApiInterface {
 
     //get all catagory
-    @POST("topicweek.php?")
+    @POST("webservices/topicweek.php?")
     @FormUrlEncoded
     Call<TopicweekResponse> getTopicWeek(@Field("lang") String lang);
 
-    @POST("home-menu-web.php?")
+    @POST("webservices/home-menu-web.php?")
     @FormUrlEncoded
     Call<HomeMenuModelResponse> getMenu(@Field("lang") String lang);
 
-    @POST("audioguide.php?")
+    @POST("webservices/audioguide.php?")
     @FormUrlEncoded
     Call<String> getAudio(@Field("lang") String lang);
 
 
 
-    @POST("ann-partner.php?")
+    @POST("webservices/ann-partner.php?")
     @FormUrlEncoded
     Call<AnniversaryModelResponse> getAnniversaryPartner(@Field("lang") String lang);
 
-    @POST("event_next.php?")
+    @POST("webservices/event_next.php?")
     @FormUrlEncoded
     Call<EventResponse> get7EventList(@Field("lang") String lang);
 
 
-    @POST("event_gate_area.php?")
+    @POST("webservices/event_gate_area.php?")
     @FormUrlEncoded
     Call<GateResponsModel> getGateList(@Field("lang") String lang);
 
-    @POST("today_event_list.php?")
+    @POST("webservices/today_event_list.php?")
     @FormUrlEncoded
     Call<EventResponse> getTodayEventList(@Field("lang") String lang);
 
-    @POST("next_day_event_list.php?")
+    @POST("webservices/next_day_event_list.php?")
     @FormUrlEncoded
     Call<EventResponse> getTomorrowEventList(@Field("lang") String lang);
 
-    @POST("topic_month.php?")
+    @POST("webservices/topic_month.php?")
     @FormUrlEncoded
     Call<TopicweekResponse> getTopicInMonthWise(@Field("lang") String lang);
 
 
-    @POST("date_wise_topic_week.php?")
+    @POST("webservices/date_wise_topic_week.php?")
     @FormUrlEncoded
     Call<TopicweekResponse> getTopicInDateWise(@Field("lang") String lang);
 

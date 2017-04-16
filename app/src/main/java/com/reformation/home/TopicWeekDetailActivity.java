@@ -1,7 +1,12 @@
 package com.reformation.home;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,15 +14,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.reformation.home.fragment.DividerItemDecoration;
-import com.squareup.picasso.Picasso;
+
 
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 import adapter.HomeEventAdapter;
 import adapter.TopicMonthWiseAdapter;
@@ -85,12 +91,14 @@ public class TopicWeekDetailActivity extends AppCompatActivity implements View.O
     }
 
 
+
     private void loadTopicWeek(TopicweekResponse model) {
         TopicweekResponse.TopicWeekModel topicWeekModel = model.getResponseData().get(0);
         if(topicWeekModel!=null){
                 eventList = topicWeekModel.getEvent();
             if(eventList!=null) {
                 homeEventAdapter = new HomeEventAdapter(this, eventList, Constant.EVENT_TOPIC_DETAIL_TYPE);
+                homeEventAdapter.setOnItemClickListener(mItemClickListener);
                 eventRecyclerView.setAdapter(homeEventAdapter);
             }
 
@@ -173,6 +181,16 @@ public class TopicWeekDetailActivity extends AppCompatActivity implements View.O
         getTopicWeek();
         mSwipeRefreshLayout.setRefreshing(false);
     }
+
+
+
+
+    HomeEventAdapter.OnItemClickListener mItemClickListener = new HomeEventAdapter.OnItemClickListener(){
+        @Override
+        public void onItemClick(View clickView, View view, int position) {
+            new Utils().startEventDetailPage(view,position,TopicWeekDetailActivity.this,EventDetailActivity.class);
+        }
+    };
 
 }
 

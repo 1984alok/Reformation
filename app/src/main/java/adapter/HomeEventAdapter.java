@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.reformation.home.R;
@@ -25,16 +26,26 @@ public class HomeEventAdapter  extends RecyclerView.Adapter<HomeEventAdapter.MyV
     private ArrayList<TopicweekResponse.Event> eventList;
     public Context ctx;
     private int type;
+    OnItemClickListener mItemClickListener;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView txtViewTitle,time;
-        public LinearLayout linearLayout;
+        public LinearLayout linearLayout; RelativeLayout frame;
         public MyViewHolder(View view) {
             super(view);
             txtViewTitle = (TextView) view.findViewById(R.id.txtEventName);
             time = (TextView) view.findViewById(R.id.txtEventTime);
             linearLayout = (LinearLayout) view.findViewById(R.id.catgList);
+            frame = (RelativeLayout)view.findViewById(R.id.frame);
+            frame.setOnClickListener(this);
 
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (mItemClickListener != null) {
+                mItemClickListener.onItemClick(v,itemView, getPosition());
+            }
         }
     }
 
@@ -93,17 +104,21 @@ public class HomeEventAdapter  extends RecyclerView.Adapter<HomeEventAdapter.MyV
             holder.linearLayout.setVisibility(View.VISIBLE);
            // holder.time.setTextSize(ctx.getResources().getDimension(R.dimen.px17));
         }*/
-        holder.txtViewTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utils.showToast(ctx,position+" selected");
-            }
-        });
+
 
     }
 
     @Override
     public int getItemCount() {
         return eventList.size();
+    }
+
+
+    public interface OnItemClickListener {
+        void onItemClick(View clickView,View view, int position);
+    }
+
+    public void setOnItemClickListener(final OnItemClickListener mItemClickListener) {
+        this.mItemClickListener = mItemClickListener;
     }
 }

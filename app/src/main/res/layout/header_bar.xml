@@ -13,6 +13,8 @@
         android:id="@+id/imageViewFavourite"
         android:src="@drawable/heart_filled"
         android:scaleType="fitXY"
+        android:padding="@dimen/dp5"
+        android:background="@drawable/press_bag2"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"/>
 
@@ -36,6 +38,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/imageViewSetting"
         android:src="@drawable/settings"
+        android:padding="@dimen/dp5"
+        android:background="@drawable/press_bag2"
         android:layout_alignParentRight="true"
         android:scaleType="fitXY"
         android:layout_centerVertical="true"/>
