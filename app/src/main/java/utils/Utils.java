@@ -33,10 +33,10 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.ListIterator;
 import java.util.Locale;
-import java.util.Objects;
 
 /**
  * Created by Alok on 01-04-2017.
@@ -257,5 +257,24 @@ public class Utils {
 
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(((Activity)ctx),sharedElements);
         ActivityCompat.startActivity(((Activity)ctx), transitionIntent, options.toBundle());
+    }
+
+
+    public static String getCurrentDate(){
+        long yourmilliseconds = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+        Date resultdate = new Date(yourmilliseconds);
+        System.out.println(sdf.format(resultdate));
+        return sdf.format(resultdate);
+    }
+
+    public static String getCurrentTime(){
+        String timeformat = "HH:mm:ss";
+        SimpleDateFormat obDateFormat = new SimpleDateFormat(timeformat);
+        Calendar time = Calendar.getInstance();
+        System.out.println("Time in 24-hour format :"
+                + obDateFormat.format(time.getTime()));
+        return obDateFormat.format(time.getTime());
+
     }
 }

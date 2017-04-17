@@ -33,4 +33,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="chapter_audio">Chapter</string>
     <string name="near_by_audio">Near By</string>
+    <string name="exhibitors">Exhibitors</string>
+    <string name="other_location">Other Locations</string>
 </resources>
