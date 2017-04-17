@@ -51,7 +51,7 @@ public class TopicWeekDetailActivity extends AppCompatActivity implements View.O
     private RecyclerView eventRecyclerView;
     private LinearLayoutManager layoutManager;
     SwipeRefreshLayout mSwipeRefreshLayout;
-    private TopicweekResponse topicweekResponse;
+    private TopicweekResponse.TopicWeekModel topicweekResponse;
     ProgressBar progressBar;
     TopicMonthWiseAdapter topicMonthWiseAdapter;
 
@@ -85,15 +85,15 @@ public class TopicWeekDetailActivity extends AppCompatActivity implements View.O
         mSwipeRefreshLayout.setOnRefreshListener(this);
         dlg = CustomProgresDialog.getInstance(this);
         topicHeader.setText(getResources().getString(R.string.topic_week_title));
-        topicweekResponse = (TopicweekResponse) getIntent().getSerializableExtra("Data");
+        topicweekResponse = (TopicweekResponse.TopicWeekModel) getIntent().getSerializableExtra("Data");
         if(topicweekResponse!=null)
         loadTopicWeek(topicweekResponse);
     }
 
 
 
-    private void loadTopicWeek(TopicweekResponse model) {
-        TopicweekResponse.TopicWeekModel topicWeekModel = model.getResponseData().get(0);
+    private void loadTopicWeek(TopicweekResponse.TopicWeekModel topicWeekModel) {
+
         if(topicWeekModel!=null){
                 eventList = topicWeekModel.getEvent();
             if(eventList!=null) {
@@ -138,7 +138,7 @@ public class TopicWeekDetailActivity extends AppCompatActivity implements View.O
                 dlg.hideDialog();
                 if(response.isSuccessful()){
                     TopicweekResponse model = response.body();
-                    loadTopicWeek(model);
+                   // loadTopicWeek(model);
                 }
 
             }
@@ -178,7 +178,7 @@ public class TopicWeekDetailActivity extends AppCompatActivity implements View.O
 
 
     private void refreshContent(){
-        getTopicWeek();
+       // getTopicWeek();
         mSwipeRefreshLayout.setRefreshing(false);
     }
 

@@ -21,10 +21,10 @@ public class GateModel {
     @SerializedName("title_long")
     @Expose
     private String titleLong;
-    @SerializedName("description")
+    @SerializedName("descp")
     @Expose
     private String description;
-    @SerializedName("header_image")
+    @SerializedName("pimage")
     @Expose
     private String headerImage;
     @SerializedName("gallary")

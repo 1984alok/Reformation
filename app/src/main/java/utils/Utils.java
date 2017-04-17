@@ -261,11 +261,10 @@ public class Utils {
 
 
     public static String getCurrentDate(){
-        long yourmilliseconds = System.currentTimeMillis();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
-        Date resultdate = new Date(yourmilliseconds);
-        System.out.println(sdf.format(resultdate));
-        return sdf.format(resultdate);
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        System.out.println(dateFormat.format(date));
+        return dateFormat.format(date);
     }
 
     public static String getCurrentTime(){

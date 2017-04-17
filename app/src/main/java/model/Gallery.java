@@ -7,16 +7,16 @@ import com.google.gson.annotations.SerializedName;
  * Created by Alok on 10-04-2017.
  */
 public class Gallery {
-    @SerializedName("img_id")
+    @SerializedName("USER_ID")
     @Expose
     private String imgId;
     @SerializedName("gate_id")
     @Expose
     private String gateId;
-    @SerializedName("file_name")
+    @SerializedName("FILE_NAME")
     @Expose
     private String fileName;
-    @SerializedName("file_size")
+    @SerializedName("FILE_SIZE")
     @Expose
     private String fileSize;
 

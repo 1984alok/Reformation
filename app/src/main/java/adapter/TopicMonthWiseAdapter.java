@@ -27,8 +27,9 @@ public class TopicMonthWiseAdapter extends RecyclerView.Adapter<TopicMonthWiseAd
 
     private ArrayList<TopicweekResponse.TopicWeekModel> modelList;
     public Context ctx;
+    OnItemClickListener mItemClickListener;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView txtViewTitle,txtViewDate,txtViewDesc;
         public Button more;
         public ImageView imgPic;
@@ -41,7 +42,15 @@ public class TopicMonthWiseAdapter extends RecyclerView.Adapter<TopicMonthWiseAd
             more = (Button) view.findViewById(R.id.buttonMore);
             progressBar = (ProgressBar) view.findViewById(R.id.dlg);
             imgPic = (ImageView) view.findViewById(R.id.homeMenuImg);
+            more.setOnClickListener(this);
 
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (mItemClickListener != null) {
+                mItemClickListener.onItemClick(v,itemView, getPosition());
+            }
         }
     }
 
@@ -77,5 +86,13 @@ public class TopicMonthWiseAdapter extends RecyclerView.Adapter<TopicMonthWiseAd
     @Override
     public int getItemCount() {
         return modelList.size();
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View clickView,View view, int position);
+    }
+
+    public void setOnItemClickListener(final OnItemClickListener mItemClickListener) {
+        this.mItemClickListener = mItemClickListener;
     }
 }

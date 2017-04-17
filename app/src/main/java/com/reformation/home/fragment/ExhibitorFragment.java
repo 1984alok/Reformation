@@ -96,7 +96,7 @@ public class ExhibitorFragment extends Fragment {
             @Override
             public void onResponse(Call<ExhibitorResponse> call, Response<ExhibitorResponse> response) {
                 dlg.hideDialog();
-                if (response.isSuccessful()) {
+                if (response.isSuccessful()&&response.code()==200) {
                     ExhibitorResponse model = response.body();
                     loadExhibitor(model);
                 }
@@ -105,7 +105,7 @@ public class ExhibitorFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ExhibitorResponse> call, Throwable t) {
-                Log.d("onFailure ::", t.getMessage());
+              //  Log.d("onFailure ::", t.getMessage());
                 if (dlg != null)
                     dlg.hideDialog();
 

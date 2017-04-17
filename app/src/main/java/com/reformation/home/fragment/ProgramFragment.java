@@ -1,6 +1,7 @@
 package com.reformation.home.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -17,12 +18,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.reformation.home.R;
+import com.reformation.home.TopicWeekDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import adapter.FragAdapter;
 import adapter.TopicMonthWiseAdapter;
+import adapter.TopicOverviewAdapter;
 import apihandler.ApiClient;
 import apihandler.ApiInterface;
 import model.TopicweekResponse;
@@ -49,6 +52,8 @@ public class ProgramFragment extends Fragment implements View.OnClickListener{
     ApiInterface mApiInterface;
     Context context;
     TopicMonthWiseAdapter topicMonthWiseAdapter;
+    TopicOverviewAdapter topicOverviewAdapter;
+    ArrayList<TopicweekResponse.TopicWeekModel> mnthDatalist,topicOvrvwList;
 
     private void setupViewPager(ViewPager viewPager) {
         adapter = new FragAdapter(getChildFragmentManager());
@@ -76,10 +81,20 @@ public class ProgramFragment extends Fragment implements View.OnClickListener{
         topicHeader =(TextView)view.findViewById(R.id.textViewHeaderTitle);
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
         topicMnthRecyclerView = (RecyclerView)view.findViewById(R.id.horizontal_recycler_topic);
+        topicOvrvwRecyclerView = (RecyclerView)view.findViewById(R.id.horizontal_recycler_topicoverview);
         horizontalLayoutManagaer
                 = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        verticalLayoutManagaer
+                = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
 
          Drawable drawable = getResources().getDrawable(R.drawable.line_devider_two);
+
+
+        topicOvrvwRecyclerView.setFocusable(false);
+        topicOvrvwRecyclerView.setNestedScrollingEnabled(false);
+        topicOvrvwRecyclerView.setHasFixedSize(true);
+        topicOvrvwRecyclerView.setLayoutManager(verticalLayoutManagaer);
+        
         topicMnthRecyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL_LIST,drawable));
         topicMnthRecyclerView.setHasFixedSize(true);
         topicMnthRecyclerView.setLayoutManager(horizontalLayoutManagaer);
@@ -89,8 +104,38 @@ public class ProgramFragment extends Fragment implements View.OnClickListener{
         topicHeader.setText(getResources().getString(R.string.program_text));
 
         getTopicMonthWise();
+        getTopicDateWise();
 
         return view;
+    }
+
+    private void getTopicDateWise() {
+        dlg.showDialog();
+        Call<TopicweekResponse> call = mApiInterface.getTopicInDateWise(Constant.SELECTED_LANG);
+        call.enqueue(new Callback<TopicweekResponse>() {
+            @Override
+            public void onResponse(Call<TopicweekResponse> call, Response<TopicweekResponse> response) {
+                dlg.hideDialog();
+                if(response.isSuccessful()){
+                    TopicweekResponse model = response.body();
+                    topicOvrvwList = model.getResponseData();
+                    if(topicOvrvwList!=null&topicOvrvwList.size()>0){
+                        topicOverviewAdapter = new TopicOverviewAdapter(context,topicOvrvwList);
+                        topicOverviewAdapter.setOnItemClickListener(onItemClickListener);
+                        topicOvrvwRecyclerView.setAdapter(topicOverviewAdapter);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<TopicweekResponse> call, Throwable t) {
+                Log.d("onFailure ::",t.getMessage());
+                if(dlg!=null)
+                    dlg.hideDialog();
+
+            }
+        });
     }
 
     private void getTopicMonthWise() {
@@ -103,9 +148,10 @@ public class ProgramFragment extends Fragment implements View.OnClickListener{
                 dlg.hideDialog();
                 if(response.isSuccessful()){
                     TopicweekResponse model = response.body();
-                    ArrayList<TopicweekResponse.TopicWeekModel> dataList = model.getResponseData();
-                    if(dataList!=null&dataList.size()>0){
-                        topicMonthWiseAdapter = new TopicMonthWiseAdapter(context,dataList);
+                    mnthDatalist = model.getResponseData();
+                    if(mnthDatalist!=null&mnthDatalist.size()>0){
+                        topicMonthWiseAdapter = new TopicMonthWiseAdapter(context,mnthDatalist);
+                        topicMonthWiseAdapter.setOnItemClickListener(onItemMonthClickListener);
                         topicMnthRecyclerView.setAdapter(topicMonthWiseAdapter);
                     }
                 }
@@ -126,6 +172,24 @@ public class ProgramFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
 
     }
+
+
+
+    TopicOverviewAdapter.OnItemClickListener onItemClickListener = new TopicOverviewAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(View clickView, View view, int position) {
+            final Intent intent = new Intent(getActivity(),TopicWeekDetailActivity.class).putExtra("Data",topicOvrvwList.get(position));
+            startActivity(intent);
+        }
+    };
+
+    TopicMonthWiseAdapter.OnItemClickListener onItemMonthClickListener = new TopicMonthWiseAdapter.OnItemClickListener(){
+        @Override
+        public void onItemClick(View clickView, View view, int position) {
+            final Intent intent = new Intent(getActivity(),TopicWeekDetailActivity.class).putExtra("Data",mnthDatalist.get(position));
+            startActivity(intent);
+        }
+    };
 
 
 }

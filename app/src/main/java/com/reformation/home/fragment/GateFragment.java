@@ -1,6 +1,7 @@
 package com.reformation.home.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,7 +15,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.reformation.home.GateDetail;
 import com.reformation.home.R;
+import com.reformation.home.TopicWeekDetailActivity;
 
 import java.util.ArrayList;
 
@@ -125,6 +128,7 @@ public class GateFragment extends Fragment {
             ArrayList<GateModel> gateList = model.getResponseData();
             if(gateList!=null){
                 gateAdapter = new GateAdapter(context,gateList);
+                gateAdapter.setOnItemClickListener(onItemClickListener);
                 gateRecyclerView.setAdapter(gateAdapter);
             }
 
@@ -135,4 +139,14 @@ public class GateFragment extends Fragment {
            // FontUtls.loadFont(context, "fonts/RobotoCondensed-Bold.ttf", gateDesc);
         }
     }
+
+
+
+    GateAdapter.OnItemClickListener onItemClickListener = new GateAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(View clickView, View view, int position) {
+            final Intent intent = new Intent(getActivity(),GateDetail.class).putExtra("Data","");
+            startActivity(intent);
+        }
+    };
 }

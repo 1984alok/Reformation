@@ -6,85 +6,85 @@
     android:background="@color/light_blue">
 
 
-        <ScrollView
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:orientation="vertical"
+            android:paddingTop="@dimen/dp40"
+            android:paddingBottom="@dimen/dp40">
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
+                android:background="@color/white"
+                android:layout_height="@dimen/home_imageHeight"
+                android:orientation="vertical">
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:tabGravity="fill"
+                    app:tabMode="fixed" />
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewTopicTitle"
+                android:textStyle="bold"
+                android:textSize="@dimen/sp15"
+                android:text="@string/topic_week_title"
+                android:textColor="@color/text_color_seven"
+                android:layout_marginTop="@dimen/dp20"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/horizontal_recycler_topic"
+                android:layout_width="wrap_content"
+                android:layout_margin="@dimen/dp10"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:background="@color/white"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:paddingTop="@dimen/dp40"
+                android:paddingLeft="@dimen/dp10"
+                android:paddingRight="@dimen/dp10"
                 android:paddingBottom="@dimen/dp40">
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:background="@color/white"
-                    android:layout_height="@dimen/home_imageHeight"
-                    android:orientation="vertical">
-
-                    <android.support.design.widget.TabLayout
-                        android:id="@+id/tabs"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:tabGravity="fill"
-                        app:tabMode="fixed" />
-
-                    <android.support.v4.view.ViewPager
-                        android:id="@+id/viewpager"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
-
-                </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textViewTopicTitle"
+                    android:textSize="@dimen/sp17"
+                    android:id="@+id/textViewTopicweekOverview"
                     android:textStyle="bold"
-                    android:textSize="@dimen/sp15"
-                    android:text="@string/topic_week_title"
-                    android:textColor="@color/text_color_seven"
+                    android:text="@string/topic_week_overview"
+                    android:textColor="@color/black"
                     android:layout_marginTop="@dimen/dp20"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_gravity="left"
                     android:gravity="center"/>
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/horizontal_recycler_topic"
-                    android:layout_width="wrap_content"
-                    android:layout_margin="@dimen/dp10"
+                    android:id="@+id/horizontal_recycler_topicoverview"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/dp10"
                     android:layout_height="wrap_content"/>
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:background="@color/white"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:paddingLeft="@dimen/dp10"
-                    android:paddingRight="@dimen/dp10"
-                    >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/sp17"
-                        android:id="@+id/textViewTopicweekOverview"
-                        android:textStyle="bold"
-                        android:text="@string/topic_week_overview"
-                        android:textColor="@color/black"
-                        android:layout_marginTop="@dimen/dp20"
-                        android:layout_gravity="left"
-                        android:gravity="center"/>
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/horizontal_recycler_topicoverview"
-                        android:layout_width="match_parent"
-                        android:layout_marginTop="@dimen/dp10"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-
             </LinearLayout>
-        </ScrollView>
+
+        </LinearLayout>
+    </ScrollView>
     <include
         android:id="@+id/header"
         android:layout_height="wrap_content"
