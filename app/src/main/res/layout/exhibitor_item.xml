@@ -13,7 +13,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/dp10">
+        android:padding="@dimen/dp10"
+        android:background="@drawable/press_bag"
+        android:id="@+id/frame">
         <FrameLayout
             android:id="@+id/imageViewExhibitorFrame"
             android:layout_width="@dimen/dp90"
@@ -56,6 +58,20 @@
             android:ellipsize="end"
             android:layout_marginLeft="@dimen/dp10"
             android:layout_toRightOf="@+id/imageViewExhibitorFrame"
+            android:gravity="left">
+        </TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imageViewExhibitorFrame"
+            android:textColor="@color/red"
+            android:textSize="@dimen/sp11"
+            android:text="closed"
+            android:id="@+id/status"
+            android:layout_alignParentRight="true"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:layout_marginRight="@dimen/dp10"
             android:gravity="left">
         </TextView>
         <ImageView

@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +19,10 @@ import apihandler.ApiClient;
 import apihandler.ApiInterface;
 import model.Exhibitor;
 import model.ExhibitorResponse;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import utils.Constant;
-import utils.CustomProgresDialog;
 import utils.FontUtls;
 import utils.LoadInPicasso;
-import utils.Utils;
+
+import static com.reformation.home.R.id.dlg;
 
 /**
  * Created by Alok on 26-03-2017.
@@ -42,17 +37,18 @@ public class ExhibitorFragment extends Fragment {
     TabLayout tabLayout;
     private TextView topicHeader,gateTitle, gateDesc;
     private ImageView gateImgview;
-    private CustomProgresDialog dlg;
     ProgressBar progressBar;
-
+    public   ExhibitorResponse model;
+    FragmentExhibitorTab fragmentExhibitorTab;
     private void setupViewPager(ViewPager viewPager) {
         adapter = new FragAdapter(getChildFragmentManager());
-        adapter.addFragment(new FragmentExhibitorTab(),getResources().getString(R.string.exhibitors));
+        fragmentExhibitorTab = new FragmentExhibitorTab();
+        adapter.addFragment(fragmentExhibitorTab,getResources().getString(R.string.exhibitors));
         adapter.addFragment(new FragmentOtherLocationTab(),getResources().getString(R.string.other_location));
         viewPager.setAdapter(adapter);
     }
 
-    public ExhibitorFragment(){}
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,43 +71,21 @@ public class ExhibitorFragment extends Fragment {
             tabLayout.setupWithViewPager(viewPager);
             topicHeader = (TextView) view.findViewById(R.id.textViewHeaderTitle);
             topicHeader.setText(getResources().getString(R.string.exhibitors));
-            dlg = CustomProgresDialog.getInstance(getActivity());
             gateImgview = (ImageView) view.findViewById(R.id.homeMenuImg);
             gateTitle = (TextView) view.findViewById(R.id.textViewTopicTitle);
             gateDesc = (TextView) view.findViewById(R.id.textViewTopicDesc);
-            progressBar = (ProgressBar) view.findViewById(R.id.dlg);
-            getGateList();
+            progressBar = (ProgressBar) view.findViewById(dlg);
         }
+
+        if(fragmentExhibitorTab!=null){
+            loadExhibitor(fragmentExhibitorTab.exhibitorResponse);
+        }
+
     }
 
 
 
-    private void getGateList() {
 
-        dlg.showDialog();
-        String date = Utils.getCurrentDate();
-        String time = Utils.getCurrentTime();
-        Call<ExhibitorResponse> call = apiInterface.getExhibitorList(Constant.SELECTED_LANG,date,time,"Exhibitors");
-        call.enqueue(new Callback<ExhibitorResponse>() {
-            @Override
-            public void onResponse(Call<ExhibitorResponse> call, Response<ExhibitorResponse> response) {
-                dlg.hideDialog();
-                if (response.isSuccessful()&&response.code()==200) {
-                    ExhibitorResponse model = response.body();
-                    loadExhibitor(model);
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<ExhibitorResponse> call, Throwable t) {
-              //  Log.d("onFailure ::", t.getMessage());
-                if (dlg != null)
-                    dlg.hideDialog();
-
-            }
-        });
-    }
 
     private void loadExhibitor(ExhibitorResponse model) {
         if (model != null) {
