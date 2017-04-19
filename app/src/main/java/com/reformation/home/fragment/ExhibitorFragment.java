@@ -21,17 +21,17 @@ import model.Exhibitor;
 import model.ExhibitorResponse;
 import utils.FontUtls;
 import utils.LoadInPicasso;
+import utils.OnLoadListener;
 
 import static com.reformation.home.R.id.dlg;
 
 /**
  * Created by Alok on 26-03-2017.
  */
-public class ExhibitorFragment extends Fragment {
+public class ExhibitorFragment extends Fragment implements OnLoadListener{
 
 
     View view;
-    ApiInterface apiInterface;
     FragAdapter adapter;
     ViewPager viewPager;
     TabLayout tabLayout;
@@ -63,32 +63,25 @@ public class ExhibitorFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if(view!=null) {
-            apiInterface = ApiClient.getClient().create(ApiInterface.class);
-            viewPager = (ViewPager) view.findViewById(R.id.viewpager);
-            setupViewPager(viewPager);
-            tabLayout = (TabLayout) view.findViewById(R.id.tabs);
-            tabLayout.setupWithViewPager(viewPager);
-            topicHeader = (TextView) view.findViewById(R.id.textViewHeaderTitle);
-            topicHeader.setText(getResources().getString(R.string.exhibitors));
-            gateImgview = (ImageView) view.findViewById(R.id.homeMenuImg);
-            gateTitle = (TextView) view.findViewById(R.id.textViewTopicTitle);
-            gateDesc = (TextView) view.findViewById(R.id.textViewTopicDesc);
-            progressBar = (ProgressBar) view.findViewById(dlg);
-        }
-
-        if(fragmentExhibitorTab!=null){
-            loadExhibitor(fragmentExhibitorTab.exhibitorResponse);
-        }
-
+        viewPager = (ViewPager) view.findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
+        fragmentExhibitorTab.setOnLoadListener(this);
+        tabLayout = (TabLayout) view.findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+        topicHeader = (TextView) view.findViewById(R.id.textViewHeaderTitle);
+        topicHeader.setText(getResources().getString(R.string.exhibitors));
+        gateImgview = (ImageView) view.findViewById(R.id.homeMenuImg);
+        gateTitle = (TextView) view.findViewById(R.id.textViewTopicTitle);
+        gateDesc = (TextView) view.findViewById(R.id.textViewTopicDesc);
+        progressBar = (ProgressBar) view.findViewById(dlg);
     }
 
 
 
 
 
-    private void loadExhibitor(ExhibitorResponse model) {
-        if (model != null) {
+    public void loadExhibitor(ExhibitorResponse model) {
+        if (model != null&&model.getResponseData()!=null) {
 
             Exhibitor gateModel = model.getResponseData().get(0);
             if (gateModel!=null
@@ -108,6 +101,13 @@ public class ExhibitorFragment extends Fragment {
             }
         }
     }
+
+        @Override
+        public void onLoad(ExhibitorResponse model) {
+            loadExhibitor(model);
+        }
+
+
 }
 
 

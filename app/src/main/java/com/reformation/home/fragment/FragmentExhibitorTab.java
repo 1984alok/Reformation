@@ -24,12 +24,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import utils.Constant;
 import utils.CustomProgresDialog;
+import utils.OnLoadListener;
 import utils.Utils;
 
 /**
  * Created by IMFCORP\alok.acharya on 17/4/17.
  */
-public class FragmentExhibitorTab extends Fragment {
+public class FragmentExhibitorTab extends Fragment implements OnLoadListener{
 
     ApiInterface mApiInterface;
     private CustomProgresDialog dlg;
@@ -41,8 +42,11 @@ public class FragmentExhibitorTab extends Fragment {
     public Exhibitor exhibitor;
     public ExhibitorResponse exhibitorResponse;
     private ExhibitorTabAdapter exhibitorTabAdapter;
+    OnLoadListener mOnLoadListener;
 
     public FragmentExhibitorTab(){}
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -101,6 +105,7 @@ public class FragmentExhibitorTab extends Fragment {
 
     private void loadExhibitor(ExhibitorResponse model) {
         if (model != null) {
+            onLoad(model);
             exhibitorArrayList = model.getResponseData();
             if(exhibitorArrayList!=null&&exhibitorArrayList.size()>0){
                 exhibitorTabAdapter = new ExhibitorTabAdapter(getActivity(),exhibitorArrayList);
@@ -119,4 +124,17 @@ public class FragmentExhibitorTab extends Fragment {
             Utils.showToast(getActivity(),"On Progress");
         }
     };
+
+
+
+    public void setOnLoadListener(final OnLoadListener mOnLoadListener) {
+        this.mOnLoadListener = mOnLoadListener;
+    }
+
+    @Override
+    public void onLoad(ExhibitorResponse model) {
+        if(mOnLoadListener!=null){
+            mOnLoadListener.onLoad(model);
+        }
+    }
 }

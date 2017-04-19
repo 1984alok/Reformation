@@ -1,6 +1,7 @@
 package com.reformation.home.fragment;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +21,7 @@ import adapter.TodayEventAdapter;
 import apihandler.ApiClient;
 import apihandler.ApiInterface;
 import model.EventResponse;
+import model.Exhibitor;
 import model.TopicweekResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -66,6 +68,7 @@ public class FragmentTodayEvent extends Fragment {
     }
 
 
+
     private void getEventList() {
         dlg.showDialog();
         Call<EventResponse> call = mApiInterface.getTodayEventList(Constant.SELECTED_LANG);
@@ -108,5 +111,7 @@ public class FragmentTodayEvent extends Fragment {
             new Utils().startEventDetailPage(view,position,getActivity(),EventDetailActivity.class);
         }
     };
+
+
 
 }

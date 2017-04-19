@@ -65,7 +65,6 @@ public class FragmentOtherLocationTab extends Fragment {
 
 
     public void getGateList(String tag) {
-
         dlg.showDialog();
         String date = Utils.getCurrentDate();
         String time = Utils.getCurrentTime();
