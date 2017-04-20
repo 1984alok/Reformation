@@ -37,4 +37,7 @@
     <string name="other_location">Other Locations</string>
     <string name="maps_api_key">AIzaSyBaJDivZ2OP4UT9AjTq2DjYhaNoF5ffe88</string>
     <string name="title_activity_maps">Map</string>
+    <string name="no_record_found">No record found.</string>
+    <string name="unable_to_map_create">Sorry! unable to create maps</string>
+    <string name="more_information">More Information</string>
 </resources>

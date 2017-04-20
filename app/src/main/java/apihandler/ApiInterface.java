@@ -5,6 +5,7 @@ import model.EventResponse;
 import model.ExhibitorResponse;
 import model.GateResponsModel;
 import model.HomeMenuModelResponse;
+import model.MapResponse;
 import model.TopicweekResponse;
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -68,6 +69,11 @@ public interface ApiInterface {
                                              @Field("date") String date,
                                              @Field("time") String time,
                                              @Field("tags") String tags);
+
+
+    @POST("webservices/map_location_details.php?")
+    @FormUrlEncoded
+    Call<MapResponse> getMapDetail(@Field("lang") String lang);
 
 
 

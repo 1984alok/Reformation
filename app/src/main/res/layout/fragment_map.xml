@@ -1,11 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/rlMapLayout">
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
-</RelativeLayout>
+
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/design_bottom_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        card_view:cardCornerRadius="4dp"
+        app:cardElevation="6dp"
+        android:background="@color/white"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="50dp"
+        app:elevation="4dp"
+        app:layout_behavior="@string/bottom_sheet_behavior">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/dp60"
+            android:paddingTop="@dimen/dp10">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/header_title_17px"
+                android:textColor="@color/black"
+                android:id="@+id/title"
+                android:gravity="center"
+                android:text="Wel Come"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_marginRight="@dimen/dp10"
+                >
+            </TextView>
+            <TextView
+                android:layout_below="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:id="@+id/titleDate"
+                android:background="@color/grey"
+                android:layout_margin="@dimen/dp10">
+            </TextView>
+
+            <TextView
+                android:layout_below="@+id/titleDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/header_title_15px"
+                android:maxLines="5"
+                android:ellipsize="end"
+                android:textColor="@color/text_color_six"
+                android:id="@+id/titleDesc"
+                android:gravity="top|left"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_marginRight="@dimen/dp10"
+                >
+            </TextView>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/more_information"
+                android:id="@+id/buttonMore"
+                android:background="@drawable/btn_selector"
+                android:layout_margin ="@dimen/dp10"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:textSize="@dimen/sp17"
+                android:textAllCaps="false"
+                android:textColor="@drawable/btn_text_selector"
+                />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+</android.support.design.widget.CoordinatorLayout>

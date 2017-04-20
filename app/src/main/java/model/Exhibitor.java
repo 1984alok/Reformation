@@ -33,6 +33,43 @@ public class Exhibitor {
     @Expose
     private String headerPic;
 
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    @SerializedName("longitude")
+    @Expose
+
+    private String longitude;
+
+    @SerializedName("category")
+    @Expose
+    private String category;
+
+    @SerializedName("latitude")
+    @Expose
+    private String latitude;
+
     public String getUserid() {
         return userid;
     }
