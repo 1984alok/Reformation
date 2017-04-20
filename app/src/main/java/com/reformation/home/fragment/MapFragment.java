@@ -69,6 +69,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
     View rootView;
     TextView title,desc;
     Button more;
+    Marker clickMarker;
     public MapFragment(){}
 
 
@@ -102,10 +103,19 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
                             title.setText("Wel Come");
                             desc.setText(exhibitorData.getDescp());
                         }
+                        if(googleMap!=null){
+                            googleMap.setOnMarkerClickListener(null);
+                        }
 
                         break;
                     case BottomSheetBehavior.STATE_COLLAPSED:
                         Log.i("BottomSheetCallback", "BottomSheetBehavior.STATE_COLLAPSED");
+                        if(googleMap!=null){
+                            googleMap.setOnMarkerClickListener(MapFragment.this);
+                        }
+                        if(clickMarker!=null){
+                            markerAnimationInCollapseBottomSheet(clickMarker);
+                        }
                         break;
                     case BottomSheetBehavior.STATE_HIDDEN:
                         Log.i("BottomSheetCallback", "BottomSheetBehavior.STATE_HIDDEN");
@@ -301,6 +311,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
     @Override
     public boolean onMarkerClick(final Marker marker) {
 
+        clickMarker = marker;
         //Make the marker bounce
         final Handler handler = new Handler();
 
@@ -344,6 +355,45 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
 
         //return false; //have not consumed the event
         return true; //have consumed the event
+    }
+
+
+
+    private void markerAnimationInCollapseBottomSheet(final Marker marker){
+        final Handler handler = new Handler();
+
+        final long startTime = SystemClock.uptimeMillis();
+        final long duration = 2000;
+
+        Projection proj = googleMap.getProjection();
+        final LatLng markerLatLng = marker.getPosition();
+        Point startPoint = proj.toScreenLocation(markerLatLng);
+        startPoint.offset(0, -50);
+        final LatLng startLatLng = proj.fromScreenLocation(startPoint);
+
+        final Interpolator interpolator = new BounceInterpolator();
+        exhibitorData = hashMapMarker.get(marker);
+
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                long elapsed = SystemClock.uptimeMillis() - startTime;
+                float t = interpolator.getInterpolation((float) elapsed / duration);
+                double lng = t * markerLatLng.longitude + (1 - t) * startLatLng.longitude;
+                double lat = t * markerLatLng.latitude + (1 - t) * startLatLng.latitude;
+                marker.setPosition(new LatLng(lat, lng));
+                marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.exhibitors_point_small));
+
+                if (t < 1.0) {
+                    // Post again 16ms later.
+                    handler.postDelayed(this, 16);
+                }
+
+
+            }
+        });
+
+
     }
 
 }

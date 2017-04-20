@@ -13,82 +13,87 @@
         />
 
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/design_bottom_sheet"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="1dp"
-        card_view:cardCornerRadius="4dp"
-        app:cardElevation="6dp"
-        android:background="@color/white"
+        android:layout_height="match_parent"
+        android:id="@+id/design_bottom_sheet"
         app:behavior_hideable="true"
         app:behavior_peekHeight="50dp"
         app:elevation="4dp"
         app:layout_behavior="@string/bottom_sheet_behavior">
-        <LinearLayout
+
+
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            card_view:cardCornerRadius="4dp"
+            app:cardElevation="6dp"
             android:background="@color/white"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/dp60"
-            android:paddingTop="@dimen/dp10">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/header_title_17px"
-                android:textColor="@color/black"
-                android:id="@+id/title"
-                android:gravity="center"
-                android:text="Wel Come"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="@dimen/dp10"
-                android:layout_marginRight="@dimen/dp10"
-                >
-            </TextView>
-            <TextView
-                android:layout_below="@+id/title"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:id="@+id/titleDate"
-                android:background="@color/grey"
-                android:layout_margin="@dimen/dp10">
-            </TextView>
-
-            <TextView
-                android:layout_below="@+id/titleDate"
+            android:layout_gravity="bottom">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/header_title_15px"
-                android:maxLines="5"
-                android:ellipsize="end"
-                android:textColor="@color/text_color_six"
-                android:id="@+id/titleDesc"
-                android:gravity="top|left"
-                android:layout_marginLeft="@dimen/dp10"
-                android:layout_marginRight="@dimen/dp10"
-                >
-            </TextView>
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dp60"
+                android:paddingTop="@dimen/dp10">
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/more_information"
-                android:id="@+id/buttonMore"
-                android:background="@drawable/btn_selector"
-                android:layout_margin ="@dimen/dp10"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:gravity="center"
-                android:textSize="@dimen/sp17"
-                android:textAllCaps="false"
-                android:textColor="@drawable/btn_text_selector"
-                />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/header_title_17px"
+                    android:textColor="@color/black"
+                    android:id="@+id/title"
+                    android:gravity="center"
+                    android:text="Wel Come"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginRight="@dimen/dp10"
+                    >
+                </TextView>
+                <TextView
+                    android:layout_below="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:id="@+id/titleDate"
+                    android:background="@color/grey"
+                    android:layout_margin="@dimen/dp10">
+                </TextView>
 
-        </LinearLayout>
+                <TextView
+                    android:layout_below="@+id/titleDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/header_title_15px"
+                    android:maxLines="5"
+                    android:ellipsize="end"
+                    android:textColor="@color/text_color_six"
+                    android:id="@+id/titleDesc"
+                    android:gravity="top|left"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginRight="@dimen/dp10"
+                    >
+                </TextView>
 
-    </android.support.v7.widget.CardView>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/more_information"
+                    android:id="@+id/buttonMore"
+                    android:background="@drawable/btn_selector"
+                    android:layout_margin ="@dimen/dp10"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:textSize="@dimen/sp17"
+                    android:textAllCaps="false"
+                    android:textColor="@drawable/btn_text_selector"
+                    />
 
+            </LinearLayout>
 
+        </android.support.v7.widget.CardView>
+    </FrameLayout>
 </android.support.design.widget.CoordinatorLayout>
