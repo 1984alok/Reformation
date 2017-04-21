@@ -109,12 +109,26 @@ public class FragmentExhibitorTab extends Fragment implements OnLoadListener{
             exhibitorArrayList = model.getResponseData();
             if(exhibitorArrayList!=null&&exhibitorArrayList.size()>0){
                 exhibitorTabAdapter = new ExhibitorTabAdapter(getActivity(),exhibitorArrayList);
+               // setHeightOfRecyclerView();
                 exhibitorTabAdapter.setOnItemClickListener(onItemClickListener);
                 recyclerView.setAdapter(exhibitorTabAdapter);
+
 
             }
 
         }
+    }
+
+
+    private void setHeightOfRecyclerView(){
+        int height = exhibitorTabAdapter.getHeightOfView();
+        ViewGroup.LayoutParams params=recyclerView.getLayoutParams();
+        if(exhibitorArrayList.size()>0){
+            height = height*exhibitorArrayList.size();
+        }
+        params.height=height;
+
+        recyclerView.setLayoutParams(params);
     }
 
 

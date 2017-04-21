@@ -15,8 +15,6 @@ import android.widget.TextView;
 import com.reformation.home.R;
 
 import adapter.FragAdapter;
-import apihandler.ApiClient;
-import apihandler.ApiInterface;
 import model.Exhibitor;
 import model.ExhibitorResponse;
 import utils.FontUtls;
@@ -36,7 +34,7 @@ public class ExhibitorFragment extends Fragment implements OnLoadListener{
     ViewPager viewPager;
     TabLayout tabLayout;
     private TextView topicHeader,gateTitle, gateDesc;
-    private ImageView gateImgview;
+    private ImageView gateImgview,leftImg;
     ProgressBar progressBar;
     public   ExhibitorResponse model;
     FragmentExhibitorTab fragmentExhibitorTab;
@@ -71,9 +69,11 @@ public class ExhibitorFragment extends Fragment implements OnLoadListener{
         topicHeader = (TextView) view.findViewById(R.id.textViewHeaderTitle);
         topicHeader.setText(getResources().getString(R.string.exhibitors));
         gateImgview = (ImageView) view.findViewById(R.id.homeMenuImg);
+        leftImg=(ImageView)view.findViewById(R.id.imageViewLeft);
         gateTitle = (TextView) view.findViewById(R.id.textViewTopicTitle);
         gateDesc = (TextView) view.findViewById(R.id.textViewTopicDesc);
         progressBar = (ProgressBar) view.findViewById(dlg);
+        leftImg.setVisibility(View.GONE);
     }
 
 

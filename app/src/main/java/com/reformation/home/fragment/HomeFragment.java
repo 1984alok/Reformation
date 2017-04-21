@@ -1,9 +1,5 @@
 package com.reformation.home.fragment;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -23,7 +19,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -32,7 +27,7 @@ import android.widget.TextView;
 
 import com.reformation.home.AudioGuideActivity;
 import com.reformation.home.EventDetailActivity;
-import com.reformation.home.HomeScreen;
+import com.reformation.home.FaqActivity;
 import com.reformation.home.R;
 import com.reformation.home.SettingScreen;
 import com.reformation.home.TopicWeekDetailActivity;
@@ -312,14 +307,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Swipe
             menuLayout.getChildAt(0).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startAudioPage(v,0);
+                    startAudioPage(v,0,AudioGuideActivity.class);
+                }
+            });
+            menuLayout.getChildAt(1).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startAudioPage(v,0, FaqActivity.class);
                 }
             });
         }
     }
 
-    private void startAudioPage(View v,int position){
-        Intent transitionIntent = new Intent(getActivity(), AudioGuideActivity.class);
+    private void startAudioPage(View v,int position,Class obj){
+        Intent transitionIntent = new Intent(getActivity(), obj);
         TextView txtEventName = (TextView) v.findViewById(R.id.textViewHeaderTitle);
 
         View navigationBar = v.findViewById(android.R.id.navigationBarBackground);

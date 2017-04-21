@@ -100,7 +100,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
                     case BottomSheetBehavior.STATE_EXPANDED:
                         Log.i("BottomSheetCallback", "BottomSheetBehavior.STATE_EXPANDED");
                         if(exhibitorData!=null){
-                            title.setText("Wel Come");
+                            title.setText(exhibitorData.getPlaceName());
                             desc.setText(exhibitorData.getDescp());
                         }
                         if(googleMap!=null){

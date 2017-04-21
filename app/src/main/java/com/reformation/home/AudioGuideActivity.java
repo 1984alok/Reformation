@@ -2,13 +2,14 @@ package com.reformation.home;
 
 import android.annotation.TargetApi;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.transition.Fade;
 import android.transition.Transition;
-import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.reformation.home.fragment.FragmentTmrwEvent;
@@ -17,19 +18,16 @@ import com.reformation.home.fragment.FragmentTodayEvent;
 import adapter.FragAdapter;
 import apihandler.ApiClient;
 import apihandler.ApiInterface;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import utils.Constant;
 
 import static utils.Utils.isAndroid5;
 
-public class AudioGuideActivity extends AppCompatActivity {
+public class AudioGuideActivity extends AppCompatActivity implements View.OnClickListener {
     ApiInterface apiInterface;
     FragAdapter adapter;
     ViewPager viewPager;
     TabLayout tabLayout;
     private TextView topicHeader;
+    private ImageView back;
 
     private void setupViewPager(ViewPager viewPager) {
         adapter = new FragAdapter(getSupportFragmentManager());
@@ -53,13 +51,14 @@ public class AudioGuideActivity extends AppCompatActivity {
         setupViewPager(viewPager);
         tabLayout = (TabLayout)findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-
+        back=(ImageView)findViewById(R.id.imageViewLeft);
         topicHeader =(TextView)findViewById(R.id.textViewHeaderTitle);
         topicHeader.setText(getResources().getString(R.string.audio_guide));
 
+        back.setOnClickListener(this);
 
 
-        Call<String> call = apiInterface.getAudio(Constant.SELECTED_LANG);
+        /*Call<String> call = apiInterface.getAudio(Constant.SELECTED_LANG);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
@@ -70,7 +69,7 @@ public class AudioGuideActivity extends AppCompatActivity {
             public void onFailure(Call<String> call, Throwable t) {
 
             }
-        });
+        });*/
 
     }
 
@@ -96,5 +95,15 @@ public class AudioGuideActivity extends AppCompatActivity {
         fade.excludeTarget(android.R.id.navigationBarBackground, true);
         fade.excludeTarget(android.R.id.statusBarBackground, true);
         return fade;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.imageViewLeft:
+                super.onBackPressed();
+                break;
+
+        }
     }
 }
