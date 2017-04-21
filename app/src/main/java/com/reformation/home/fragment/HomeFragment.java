@@ -39,6 +39,7 @@ import java.util.ListIterator;
 import adapter.HomeEventAdapter;
 import apihandler.ApiClient;
 import apihandler.ApiInterface;
+import model.EventModel;
 import model.EventResponse;
 import model.HomeMenuModelResponse;
 import model.TopicweekResponse;
@@ -60,7 +61,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Swipe
     View view;
     ApiInterface mApiInterface;
     ArrayList<String> evenCatg = new ArrayList<>();
-    ArrayList<TopicweekResponse.Event> eventList = new ArrayList<>();
+    ArrayList<EventModel> eventList = new ArrayList<>();
     private ImageView topicImgview,settingImg,favImg;
     private TextView topicTitle,topicDesc;
     private CustomProgresDialog dlg;
@@ -388,7 +389,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Swipe
     HomeEventAdapter.OnItemClickListener mItemClickListener = new HomeEventAdapter.OnItemClickListener(){
         @Override
         public void onItemClick(View clickView, View view, int position) {
-            new Utils().startEventDetailPage(view,position,getActivity(),EventDetailActivity.class);
+            new Utils().startEventDetailPage(view,position,getActivity(),EventDetailActivity.class,eventList.get(position));
         }
     };
 }

@@ -13,6 +13,7 @@ import com.reformation.home.R;
 
 import java.util.ArrayList;
 
+import model.EventModel;
 import model.TopicweekResponse;
 import utils.Constant;
 import utils.FontUtls;
@@ -23,7 +24,7 @@ import utils.Utils;
  */
 public class HomeEventAdapter  extends RecyclerView.Adapter<HomeEventAdapter.MyViewHolder> {
 
-    private ArrayList<TopicweekResponse.Event> eventList;
+    private ArrayList<EventModel> eventList;
     public Context ctx;
     private int type;
     OnItemClickListener mItemClickListener;
@@ -50,7 +51,7 @@ public class HomeEventAdapter  extends RecyclerView.Adapter<HomeEventAdapter.MyV
     }
 
 
-    public HomeEventAdapter(Context ctx,ArrayList<TopicweekResponse.Event> horizontalList,int type) {
+    public HomeEventAdapter(Context ctx,ArrayList<EventModel> horizontalList,int type) {
         this.eventList = horizontalList;
         this.ctx=ctx;
         this.type=type;
@@ -74,8 +75,8 @@ public class HomeEventAdapter  extends RecyclerView.Adapter<HomeEventAdapter.MyV
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        TopicweekResponse.Event event = eventList.get(position);
-        holder.txtViewTitle.setText(event.getTitel());
+        EventModel event = eventList.get(position);
+        holder.txtViewTitle.setText(event.getTitle());
         FontUtls.loadFont(ctx, "fonts/RobotoCondensed-Regular.ttf",  holder.txtViewTitle);
         holder.time.setText(Utils.formatEvenrtDate(event.getDate())+" - "+event.getStart());
         if(event.getCategory()!=null){

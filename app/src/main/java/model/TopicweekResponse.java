@@ -65,7 +65,7 @@ public class TopicweekResponse implements Serializable{
         private String perEnd;
         @SerializedName("event")
         @Expose
-        private ArrayList<Event> event = null;
+        private ArrayList<EventModel> event = null;
 
         public String getHeaderPic() {
             return headerPic;
@@ -107,75 +107,16 @@ public class TopicweekResponse implements Serializable{
             this.perEnd = perEnd;
         }
 
-        public ArrayList<Event> getEvent() {
+        public ArrayList<EventModel> getEvent() {
             return event;
         }
 
-        public void setEvent(ArrayList<Event> event) {
+        public void setEvent(ArrayList<EventModel> event) {
             this.event = event;
         }
 
     }
-    public class Event implements Serializable{
 
-
-        @SerializedName("id")
-        @Expose
-        private String id;
-        @SerializedName("title")
-        @Expose
-        private String titel;
-        @SerializedName("category")
-        @Expose
-        private String category;
-        @SerializedName("start")
-        @Expose
-        private String start;
-        @SerializedName("date")
-        @Expose
-        private String date;
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getTitel() {
-            return titel;
-        }
-
-        public void setTitel(String titel) {
-            this.titel = titel;
-        }
-
-        public String getCategory() {
-            return category;
-        }
-
-        public void setCategory(String category) {
-            this.category = category;
-        }
-
-        public String getStart() {
-            return start;
-        }
-
-        public void setStart(String start) {
-            this.start = start;
-        }
-
-        public String getDate() {
-            return date;
-        }
-
-        public void setDate(String date) {
-            this.date = date;
-        }
-
-    }
 
 
 }

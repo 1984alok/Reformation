@@ -7,309 +7,308 @@
     android:layout_height="match_parent"
     android:background="@color/light_blue"
     android:visibility="visible">
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/activity_main_swipe_refresh_layout"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ScrollView
+        android:layout_height="match_parent">
+        android:fillViewport="true">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            android:fillViewport="true">
-            <LinearLayout
+            android:layout_height="match_parent"
+            android:background="@color/light_blue"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/dp40">
+            <include
+                android:layout_height="@dimen/home_imageHeight"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/light_blue"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/dp40">
-                <include
-                    android:layout_height="@dimen/home_imageHeight"
-                    android:layout_width="match_parent"
-                    layout="@layout/image_layout"/>
-                <android.support.v7.widget.CardView
-                    android:id="@+id/card_view"
+                layout="@layout/image_layout"/>
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                card_view:cardCornerRadius="4dp"
+                app:cardElevation="3dp"
+                android:background="@color/white">
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    card_view:cardCornerRadius="4dp"
-                    app:cardElevation="3dp"
-                    android:background="@color/white">
+                    android:paddingLeft="@dimen/dp10"
+                    android:paddingRight="@dimen/dp10">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/sp17"
+                        android:text="Medium Text"
+                        android:id="@+id/txtEventName"
+                        android:transitionName="txtEventName"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="@dimen/dp10"
+                        android:layout_gravity="left"
+                        android:gravity="center"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/sp15"
+                        android:text="Medium Text"
+                        android:id="@+id/textViewTopicSubTitle1"
+                        android:layout_below="@+id/txtEventName"
+                        android:textStyle="bold"
+                        android:textColor="@color/medium_grey"
+                        android:layout_marginTop="@dimen/dp5"
+                        android:layout_gravity="left"
+                        android:gravity="center"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/sp15"
+                        android:layout_below="@+id/textViewTopicSubTitle1"
+                        android:text="Medium Text"
+                        android:id="@+id/artist"
+                        android:textStyle="bold"
+                        android:textColor="@color/medium_grey"
+                        android:layout_marginBottom="@dimen/dp10"
+                        android:layout_gravity="left"
+                        android:gravity="center"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/imageViewShare"
+                        android:layout_marginRight="@dimen/dp20"
+                        android:layout_alignParentRight="true"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/share"
+                        android:padding="@dimen/dp5"
+                        android:background="@drawable/press_bag2"
+                        android:layout_centerVertical="true"/>
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="@dimen/dp3"
+                android:layout_marginRight="@dimen/dp10"
+                card_view:cardCornerRadius="4dp"
+                app:cardElevation="3dp"
+                android:background="@color/white">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/dp10"
-                        android:paddingRight="@dimen/dp10">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/sp17"
-                            android:text="Medium Text"
-                            android:id="@+id/txtEventName"
-                            android:transitionName="txtEventName"
-                            android:textStyle="bold"
-                            android:textColor="@color/black"
-                            android:layout_marginTop="@dimen/dp10"
-                            android:layout_gravity="left"
-                            android:gravity="center"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/sp15"
-                            android:text="Medium Text"
-                            android:id="@+id/textViewTopicSubTitle1"
-                            android:layout_below="@+id/txtEventName"
-                            android:textStyle="bold"
-                            android:textColor="@color/medium_grey"
-                            android:layout_marginTop="@dimen/dp5"
-                            android:layout_gravity="left"
-                            android:gravity="center"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/sp15"
-                            android:layout_below="@+id/textViewTopicSubTitle1"
-                            android:text="Medium Text"
-                            android:id="@+id/textViewTopicSubTitle2"
-                            android:textStyle="bold"
-                            android:textColor="@color/medium_grey"
-                            android:layout_marginBottom="@dimen/dp10"
-                            android:layout_gravity="left"
-                            android:gravity="center"/>
+                        android:padding="@dimen/dp10"
+                        android:id="@+id/frame"
+                        >
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/imageViewShare"
-                            android:layout_marginRight="@dimen/dp20"
-                            android:layout_alignParentRight="true"
+                            android:id="@+id/imageCalandar"
+                            android:layout_alignParentLeft="true"
                             android:scaleType="fitXY"
-                            android:src="@drawable/share"
+                            android:src="@drawable/calendar"
                             android:padding="@dimen/dp5"
                             android:background="@drawable/press_bag2"
                             android:layout_centerVertical="true"/>
-
-                    </RelativeLayout>
-                </android.support.v7.widget.CardView>
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="@dimen/dp3"
-                    android:layout_marginRight="@dimen/dp10"
-                    card_view:cardCornerRadius="4dp"
-                    app:cardElevation="3dp"
-                    android:background="@color/white">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                        <RelativeLayout
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/sp17"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:ellipsize="end"
+                            android:id="@+id/txtEventTime"
+                            android:transitionName="txtEventTime"
+                            android:gravity="left"
+                            android:text="Period: 24th-29th May"
+                            android:layout_toRightOf="@+id/imageCalandar"
+                            android:layout_marginLeft="@dimen/dp20"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/sp15"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:ellipsize="end"
+                            android:layout_below="@+id/txtEventTime"
+                            android:id="@+id/textViewTicket"
+                            android:gravity="left"
+                            android:layout_marginLeft="@dimen/dp20"
+                            android:text="Period: 24th-29th May"
+                            android:layout_toRightOf="@+id/imageCalandar"/>
+                        <HorizontalScrollView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/dp10"
-                            android:id="@+id/frame"
-                            >
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/imageCalandar"
-                                android:layout_alignParentLeft="true"
-                                android:scaleType="fitXY"
-                                android:src="@drawable/calendar"
-                                android:padding="@dimen/dp5"
-                                android:background="@drawable/press_bag2"
-                                android:layout_centerVertical="true"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="@dimen/sp17"
-                                android:textColor="@color/black"
-                                android:textStyle="bold"
-                                android:ellipsize="end"
-                                android:id="@+id/txtEventTime"
-                                android:transitionName="txtEventTime"
-                                android:gravity="left"
-                                android:text="Period: 24th-29th May"
-                                android:layout_toRightOf="@+id/imageCalandar"
-                                android:layout_marginLeft="@dimen/dp20"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="@dimen/sp17"
-                                android:textColor="@color/black"
-                                android:textStyle="bold"
-                                android:ellipsize="end"
-                                android:layout_below="@+id/txtEventTime"
-                                android:id="@+id/textViewTicket"
-                                android:gravity="left"
-                                android:layout_marginLeft="@dimen/dp20"
-                                android:text="Period: 24th-29th May"
-                                android:layout_toRightOf="@+id/imageCalandar"/>
+                            android:layout_below="@+id/textViewTicket"
+                            android:layout_marginLeft="@dimen/dp20"
+                            android:layout_marginTop="@dimen/dp10"
+                            android:layout_marginBottom="@dimen/dp10"
+                            android:layout_toRightOf="@+id/imageCalandar">
                             <LinearLayout
                                 android:id="@+id/catgList"
                                 android:transitionName="catgList"
-                                android:layout_below="@+id/textViewTicket"
-                                android:orientation="vertical"
+                                android:orientation="horizontal"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/dp20"
-                                android:layout_toRightOf="@+id/imageCalandar"/>
+                                />
+                        </HorizontalScrollView>
 
-                        </RelativeLayout>
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/dp10"
-                            android:background="@color/light_blue">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="@dimen/sp17"
-                                android:text="Medium Text"
-                                android:id="@+id/textViewDirection"
-                                android:textStyle="bold"
-                                android:textColor="@color/text_color_two"
-                                android:layout_marginTop="@dimen/dp10"
-                                android:layout_gravity="left"
-                                android:gravity="center"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="@dimen/sp17"
-                                android:text="Medium Text"
-                                android:id="@+id/textViewMap"
-                                android:layout_below="@+id/textViewDirection"
-                                android:textStyle="bold"
-                                android:textColor="@color/text_color_two"
-                                android:layout_gravity="left"
-                                android:gravity="center"/>
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/imageViewSh"
-                                android:layout_alignParentRight="true"
-                                android:scaleType="fitXY"
-                                android:src="@drawable/map_button"
-                                android:padding="@dimen/dp5"
-                                android:background="@drawable/press_bag2"
-                                android:layout_centerVertical="true"/>
-                        </RelativeLayout>
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="@dimen/dp3"
-                    android:layout_marginRight="@dimen/dp10"
-                    card_view:cardCornerRadius="4dp"
-                    app:cardElevation="3dp"
-                    android:background="@color/white">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/dp10"
-                            style="@style/header_title_15px"
-                            android:textSize="@dimen/sp15"
-                            android:textColor="@color/text_color_six"
-                            android:id="@+id/textViewTopicDesc"
-                            android:gravity="top"
-                            android:text="@string/topic_desc"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/gallery"
-                            android:textStyle="bold"
-                            android:textSize="@dimen/sp17"
-                            android:textColor="@color/black"
-                            android:layout_margin="@dimen/dp10"
-                            android:layout_gravity="left"
-                            android:gravity="center"/>
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/horizontal_recycler_eventView"
-                    android:background="@color/white"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="@dimen/dp3"
-                    android:layout_marginRight="@dimen/dp10"
-                    card_view:cardCornerRadius="4dp"
-                    app:cardElevation="3dp"
-                    android:background="@color/white">
+                    </RelativeLayout>
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp10"
+                        android:id="@+id/mapFrame"
+                        android:background="@color/light_blue">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/textViewFreeTxt"
                             android:textSize="@dimen/sp17"
-                            android:textColor="@color/text_color_seven"
+                            android:text="@string/direction"
+                            android:id="@+id/textViewDirection"
+                            android:textStyle="bold"
+                            android:textColor="@color/text_color_two"
                             android:layout_marginTop="@dimen/dp10"
-                            android:layout_marginLeft="@dimen/dp10"
                             android:layout_gravity="left"
-                            android:gravity="center"
-                            android:text="@string/free"/>
+                            android:gravity="center"/>
                         <TextView
-                            android:layout_below="@+id/textViewFreeTxt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/textViewAudioGuide"
+                            android:textSize="@dimen/sp17"
+                            android:text="Medium Text"
+                            android:id="@+id/textViewMap"
+                            android:layout_below="@+id/textViewDirection"
                             android:textStyle="bold"
-                            android:textSize="@dimen/sp15"
-                            android:textColor="@color/black"
-                            android:layout_marginLeft="@dimen/dp10"
+                            android:textColor="@color/text_color_two"
                             android:layout_gravity="left"
-                            android:gravity="center"
-                            android:text="@string/audio_guide"
-                            android:layout_alignParentLeft="true"/>
-                        <TextView
-                            android:layout_alignTop="@+id/textViewAudioGuide"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/textViewOverview"
-                            android:textStyle="bold"
-                            android:textSize="@dimen/sp15"
-                            android:textColor="@color/blue"
-                            android:layout_marginRight="@dimen/dp10"
-                            android:layout_gravity="left"
-                            android:gravity="center"
-                            android:text="@string/overview"
-                            android:layout_alignParentRight="true"/>
-                    </RelativeLayout>
-                </android.support.v7.widget.CardView>
-                <android.support.v7.widget.RecyclerView
-                    android:layout_below="@+id/textViewAudioGuide"
-                    android:id="@+id/recyclerview_audioguide"
-                    android:background="@drawable/gray_roundshape_bg"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                            android:gravity="center"/>
 
-            </LinearLayout>
-        </ScrollView>
-    </android.support.v4.widget.SwipeRefreshLayout>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/imageViewSh"
+                            android:layout_alignParentRight="true"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/map_button"
+                            android:padding="@dimen/dp5"
+                            android:background="@drawable/press_bag2"
+                            android:layout_centerVertical="true"/>
+                    </RelativeLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="@dimen/dp3"
+                android:layout_marginRight="@dimen/dp10"
+                card_view:cardCornerRadius="4dp"
+                app:cardElevation="3dp"
+                android:background="@color/white">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dp10"
+                        style="@style/header_title_15px"
+                        android:textSize="@dimen/sp15"
+                        android:textColor="@color/text_color_six"
+                        android:id="@+id/textViewTopicDesc"
+                        android:gravity="top"
+                        android:text="@string/topic_desc"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/gallery"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/sp17"
+                        android:textColor="@color/black"
+                        android:layout_margin="@dimen/dp10"
+                        android:layout_gravity="left"
+                        android:gravity="center"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/horizontal_recycler_eventView"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="@dimen/dp3"
+                android:layout_marginRight="@dimen/dp10"
+                card_view:cardCornerRadius="4dp"
+                app:cardElevation="3dp"
+                android:background="@color/white">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textViewFreeTxt"
+                        android:textSize="@dimen/sp17"
+                        android:textColor="@color/text_color_seven"
+                        android:layout_marginTop="@dimen/dp10"
+                        android:layout_marginLeft="@dimen/dp10"
+                        android:layout_gravity="left"
+                        android:gravity="center"
+                        android:text="@string/free"/>
+                    <TextView
+                        android:layout_below="@+id/textViewFreeTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textViewAudioGuide"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/sp15"
+                        android:textColor="@color/black"
+                        android:layout_marginLeft="@dimen/dp10"
+                        android:layout_gravity="left"
+                        android:gravity="center"
+                        android:text="@string/audio_guide"
+                        android:layout_alignParentLeft="true"/>
+                    <TextView
+                        android:layout_alignTop="@+id/textViewAudioGuide"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textViewOverview"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/sp15"
+                        android:textColor="@color/blue"
+                        android:layout_marginRight="@dimen/dp10"
+                        android:layout_gravity="left"
+                        android:gravity="center"
+                        android:text="@string/overview"
+                        android:layout_alignParentRight="true"/>
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+            <android.support.v7.widget.RecyclerView
+                android:layout_below="@+id/textViewAudioGuide"
+                android:id="@+id/recyclerview_audioguide"
+                android:background="@drawable/gray_roundshape_bg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+    </ScrollView>
     <include
         android:id="@+id/header"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         layout="@layout/header_two"
         android:layout_gravity="top"/>
-
-
-
 
 </FrameLayout>

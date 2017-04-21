@@ -19,6 +19,7 @@ import adapter.HomeEventAdapter;
 import adapter.TodayEventAdapter;
 import apihandler.ApiClient;
 import apihandler.ApiInterface;
+import model.EventModel;
 import model.EventResponse;
 import model.TopicweekResponse;
 import retrofit2.Call;
@@ -41,7 +42,7 @@ public class FragmentTmrwEvent extends Fragment {
     private TodayEventAdapter gateAdapter;
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManagaer;
-    ArrayList<TopicweekResponse.Event> eventList;
+    ArrayList<EventModel> eventList;
     private HomeEventAdapter homeEventAdapter;
 
     @Override
@@ -104,7 +105,7 @@ public class FragmentTmrwEvent extends Fragment {
     HomeEventAdapter.OnItemClickListener mItemClickListener = new HomeEventAdapter.OnItemClickListener(){
         @Override
         public void onItemClick(View clickView, View view, int position) {
-            new Utils().startEventDetailPage(view,position,getActivity(),EventDetailActivity.class);
+            new Utils().startEventDetailPage(view,position,getActivity(),EventDetailActivity.class,eventList.get(position));
         }
     };
 }

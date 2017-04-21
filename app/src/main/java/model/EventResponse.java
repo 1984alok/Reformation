@@ -17,7 +17,7 @@ public class EventResponse {
     private String statusCode;
     @SerializedName("responseData")
     @Expose
-    private ArrayList<TopicweekResponse.Event> responseData = null;
+    private ArrayList<EventModel> responseData = null;
 
     public Boolean getStatus() {
         return status;
@@ -35,11 +35,11 @@ public class EventResponse {
         this.statusCode = statusCode;
     }
 
-    public ArrayList<TopicweekResponse.Event> getResponseData() {
+    public ArrayList<EventModel> getResponseData() {
         return responseData;
     }
 
-    public void setResponseData(ArrayList<TopicweekResponse.Event> responseData) {
+    public void setResponseData(ArrayList<EventModel> responseData) {
         this.responseData = responseData;
     }
 }

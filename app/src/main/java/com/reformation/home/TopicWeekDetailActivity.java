@@ -29,6 +29,7 @@ import adapter.HomeEventAdapter;
 import adapter.TopicMonthWiseAdapter;
 import apihandler.ApiClient;
 import apihandler.ApiInterface;
+import model.EventModel;
 import model.TopicweekResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,7 +44,7 @@ public class TopicWeekDetailActivity extends AppCompatActivity implements View.O
 
     ApiInterface mApiInterface;
     ArrayList<String> evenCatg;
-    ArrayList<TopicweekResponse.Event> eventList;
+    ArrayList<EventModel> eventList;
     private ImageView topicImgview,leftImg,rightFilterImg;
     private TextView topicTitle,topicDesc,topic_date,topicHeader;
     private CustomProgresDialog dlg;
@@ -188,7 +189,7 @@ public class TopicWeekDetailActivity extends AppCompatActivity implements View.O
     HomeEventAdapter.OnItemClickListener mItemClickListener = new HomeEventAdapter.OnItemClickListener(){
         @Override
         public void onItemClick(View clickView, View view, int position) {
-            new Utils().startEventDetailPage(view,position,TopicWeekDetailActivity.this,EventDetailActivity.class);
+            new Utils().startEventDetailPage(view,position,TopicWeekDetailActivity.this,EventDetailActivity.class,eventList.get(position));
         }
     };
 

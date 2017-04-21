@@ -38,6 +38,8 @@ import java.util.Date;
 import java.util.ListIterator;
 import java.util.Locale;
 
+import model.EventModel;
+
 /**
  * Created by Alok on 01-04-2017.
  */
@@ -147,6 +149,18 @@ public class Utils {
         return dateArr[2]+getDayOfMonthSuffix(Integer.parseInt(dateArr[2]));
     }
 
+    public static String getWeekNameFromDay(String dateString){
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE");
+        Date date = null;
+        try {
+            date = inputFormat.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return sdf.format(date);
+    }
+
     public static String getDayOfMonthSuffix(final int n) {
        /* if(n >= 1 && n <= 31){
             LogUtil.createLog("illegal day of month: ","" + n);
@@ -175,6 +189,9 @@ public class Utils {
         String outputDateStr = outputFormat.format(date);
         return outputDateStr;
     }
+
+
+
 
 
     public static String formatEvenrtDate( String inputDateStr){
@@ -219,10 +236,10 @@ public class Utils {
 
 
 
-    public void startEventDetailPage(View v,int position,Context ctx,Class<?> calledActivity){
+    public void startEventDetailPage(View v, int position, Context ctx, Class<?> calledActivity, EventModel eventModel){
         Intent transitionIntent = new Intent(ctx, calledActivity);
         transitionIntent.putExtra(EventDetailActivity.EXTRA_PARAM_ID,position);
-        // transitionIntent.putExtra(DetailActivity.EXTRA_PARAM_HANDLER,recvMsgHandler);
+        transitionIntent.putExtra("DATA",eventModel);
 
         LinearLayout catagPlaceHolder = (LinearLayout) v.findViewById(R.id.catgList);
         TextView txtEventName = (TextView) v.findViewById(R.id.txtEventName);
