@@ -8,7 +8,7 @@
     <dimen name="dp1">1dp</dimen>
     <dimen name="dp20">20dp</dimen>
     <dimen name="dp10">10dp</dimen>
-    <dimen name="header_height">60dp</dimen>
+    <dimen name="header_height">40dp</dimen>
     <dimen name="home_imageHeight">230dp</dimen>
     <dimen name="dp110">110dp</dimen>
     <dimen name="dp90">90dp</dimen>
@@ -26,4 +26,5 @@
     <dimen name="dp350">350dp</dimen>
     <dimen name="dp250">250dp</dimen>
     <dimen name="topic_width">320dp</dimen>
+    <dimen name="sp10">10sp</dimen>
 </resources>

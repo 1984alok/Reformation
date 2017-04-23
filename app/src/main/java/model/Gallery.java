@@ -3,10 +3,12 @@ package model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by Alok on 10-04-2017.
  */
-public class Gallery {
+public class Gallery implements Serializable{
     @SerializedName("USER_ID")
     @Expose
     private String imgId;

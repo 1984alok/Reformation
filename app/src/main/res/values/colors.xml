@@ -23,6 +23,7 @@
     <color name="text_color_seven">#006825</color>
     <color name="text_color_eight">#86BC24</color>
     <color name="light_white">#66FFFFFF</color>
+    <color name="text_color_nine">#555555</color>
 
     <color name="language_dialog_background">#EFEFEF</color>
     <color name="white">#FFFFFF</color>

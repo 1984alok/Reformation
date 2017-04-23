@@ -3,12 +3,13 @@ package model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Alok on 10-04-2017.
  */
-public class GateModel {
+public class GateModel implements Serializable{
     @SerializedName("id")
     @Expose
     private String id;

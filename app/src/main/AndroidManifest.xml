@@ -51,7 +51,8 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".FaqActivity"></activity>
+        <activity android:name=".FaqActivity" />
+        <activity android:name=".ExhibitorDetailActivity"></activity>
     </application>
 
 </manifest>

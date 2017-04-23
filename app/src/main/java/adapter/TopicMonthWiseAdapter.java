@@ -72,8 +72,12 @@ public class TopicMonthWiseAdapter extends RecyclerView.Adapter<TopicMonthWiseAd
         TopicweekResponse.TopicWeekModel model = modelList.get(position);
         if(model!=null) {
             holder.txtViewTitle.setText(model.getToWeekTitle());
-            String sdate  = Utils.getDaywithTHFormatFromDate(model.getPerStart())+" "+Utils.getMonthFromDate(model.getPerStart());
-            String edate  = Utils.getDaywithTHFormatFromDate(model.getPerEnd())+" "+Utils.getMonthFromDate(model.getPerEnd());
+
+            String sdate = Utils.formatDate(model.getPerStart());
+            String edate = Utils.formatDate(model.getPerEnd());
+
+            sdate  = Utils.getDaywithTHFormatFromDate(sdate)+" "+Utils.getMonthFromDate(sdate);
+            edate  = Utils.getDaywithTHFormatFromDate(edate)+" "+Utils.getMonthFromDate(edate);
 
             holder.txtViewDate.setText(sdate+"-"+edate);
             holder.txtViewDesc.setText(model.getToWeekDes());

@@ -16,20 +16,22 @@
             android:orientation="vertical"
             android:paddingBottom="@dimen/dp40">
             <include
+                android:transitionName="headerPic"
                 android:layout_height="@dimen/home_imageHeight"
                 android:layout_width="match_parent"
                 layout="@layout/image_layout"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textViewTopicTitle"
+                android:id="@+id/gateName"
                 android:textStyle="bold"
+                android:transitionName="txtGateName"
                 android:textSize="@dimen/sp17"
                 android:textColor="@color/black"
                 android:layout_marginTop="@dimen/dp10"
                 android:layout_marginLeft="@dimen/dp10"
                 android:layout_gravity="left"
-                android:gravity="center"
+                android:gravity="left"
                 android:text="title"/>
 
             <TextView
@@ -38,11 +40,12 @@
                 android:layout_marginLeft="@dimen/dp10"
                 android:layout_marginRight="@dimen/dp10"
                 android:layout_marginTop="@dimen/dp5"
+                android:transitionName="txtGateDesc"
                 style="@style/header_title_15px"
                 android:textColor="@color/text_color_six"
                 android:textSize="@dimen/sp15"
                 android:id="@+id/textViewTopicDesc"
-                android:gravity="top"
+                android:gravity="top|left"
                 android:text="desc"/>
             <TextView
                 android:layout_width="match_parent"

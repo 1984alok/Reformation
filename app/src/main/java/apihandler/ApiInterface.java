@@ -5,8 +5,11 @@ import com.google.gson.JsonObject;
 import org.json.JSONObject;
 
 import model.AnniversaryModelResponse;
+import model.EventDetailGateData;
 import model.EventResponse;
+import model.EventdetailResponse;
 import model.ExhibitorResponse;
+import model.GateDetailResponse;
 import model.GateResponsModel;
 import model.HomeMenuModelResponse;
 import model.MapResponse;
@@ -75,16 +78,24 @@ public interface ApiInterface {
                                              @Field("tags") String tags);
 
 
-    @POST("webservices/map_location_details.php?")
+    @POST("webservices/map_location_details.php")
     @FormUrlEncoded
     Call<MapResponse> getMapDetail(@Field("lang") String lang);
 
 
 
-    @POST("webservices/audioguide.php?")
+    @POST("webservices/event_details_via_id.php")
     @FormUrlEncoded
-    Call<JsonObject> getEventDetailById(@Field("lang") String lang,
-                                        @Field("event_id ") String event_id );
+    Call<EventdetailResponse> getEventDetailById(@Field("lang") String lang,
+                                                 @Field("event_id") String event_id );
+
+
+    @POST("webservices/gate_details_via_id.php")
+    @FormUrlEncoded
+    Call<GateDetailResponse> getGateDetaillById(@Field("lang") String lang,
+                                                @Field("gatearea_id") String gatearea_id );
+
+
 
 
 
