@@ -5,6 +5,7 @@ import model.AudioResponse;
 import model.EventResponse;
 import model.EventdetailResponse;
 import model.ExhibitorResponse;
+import model.FaqResponse;
 import model.GateDetailResponse;
 import model.GateResponsModel;
 import model.HomeMenuModelResponse;
@@ -32,6 +33,10 @@ public interface ApiInterface {
     @POST("webservices/audioguide.php?")
     @FormUrlEncoded
     Call<AudioResponse> getAudio(@Field("lang") String lang);
+
+    @POST("webservices/faq.php?")
+    @FormUrlEncoded
+    Call<FaqResponse> getFaq(@Field("lang") String lang);
 
 
 

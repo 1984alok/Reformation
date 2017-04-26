@@ -17,7 +17,9 @@ import com.reformation.home.R;
 import java.util.ArrayList;
 
 import adapter.AudioAdapter;
+import adapter.AudioDetailAdapter;
 import model.Audio;
+import utils.CustomProgresDialog;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,7 +37,7 @@ public class Chapter_Audio extends Fragment {
     // TODO: Rename and change types of parameters
 
     private OnFragmentInteractionListener mListener;
-    private AudioAdapter audioAdapter;
+    private AudioDetailAdapter audioAdapter;
     private ArrayList<Audio> audios;
     private RecyclerView recyclerview_audioguide;
     private LinearLayoutManager audiLayoutManager;
@@ -99,10 +101,14 @@ public class Chapter_Audio extends Fragment {
         recyclerview_audioguide.setLayoutManager(audiLayoutManager);
         noData = (TextView)view.findViewById(R.id.nodataTxt);
         if(audios!=null&&audios.size()>0){
-            audioAdapter = new AudioAdapter(getActivity(),audios);
+            audioAdapter = new AudioDetailAdapter(getActivity(),audios);
             recyclerview_audioguide.setAdapter(audioAdapter);
+            noData.setVisibility(View.GONE);
+            recyclerview_audioguide.setVisibility(View.VISIBLE);
         }else{
             noData.setText(getResources().getString(R.string.no_record_found));
+            noData.setVisibility(View.VISIBLE);
+            recyclerview_audioguide.setVisibility(View.GONE);
         }
     }
 

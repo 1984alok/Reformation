@@ -140,7 +140,8 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
             id = event.getId();
             topicTitle.setText(event.getTitle());
             String sdate = Utils.formatDate(event.getDate());
-            String dtTxt =  Utils.getWeekNameFromDay(event.getDate())+", "+Utils.getDaywithTHFormatFromDate(sdate)+" "+Utils.getMonthFromDate(sdate)+" | "+ event.getStart().split(":")[0]+"h -";
+            String dtTxt =  Utils.getWeekNameFromDay(event.getDate())+", "+Utils.getDaywithTHFormatFromDate(sdate)+" "+
+                    Utils.getMonthFromDate(sdate)+" | "+ event.getStart().split(":")[0]+Utils.getHrFormat()+"-";
             topic_date.setText(dtTxt);
             createEventCatgList(this,catgList,event.getCategory());
             textViewTicket.setText(getResources().getString(R.string.ticket_info));
@@ -221,7 +222,8 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
             String sdate = Utils.formatDate(event.getDate());
             String dtTxt =  Utils.getWeekNameFromDay(event.getDate())+", "+
                     Utils.getDaywithTHFormatFromDate(sdate)+" "+
-                    Utils.getMonthFromDate(sdate)+" | "+ event.getStart().split(":")[0]+"h -"+event.getEnd().split(":")[0]+"h";
+                    Utils.getMonthFromDate(sdate)+" | "+ event.getStart().split(":")[0]+Utils.getHrFormat()+"-"
+                    +event.getEnd().split(":")[0]+Utils.getHrFormat();
             topic_date.setText(dtTxt);
             createEventCatgList(this,catgList,event.getCategory());
             textViewTicket.setText(getResources().getString(R.string.ticket_info)+":"+event.getTicket());

@@ -9,8 +9,8 @@
     <string name="lang_eng">English</string>
     <string name="lang_german">German</string>
     <string name="visitor_info">Visitor Information A - Z</string>
-    <string name="audio_video_guide">Audio / Video Guide</string>
-    <string name="contact">Contact\nInfo-und Servicephone:\n+41 3491 6434-700</string>
+    <string name="audio_video_guide">Audio Guide</string>
+    <string name="contact">Contact\nReformationsjubiläum 2017 e.V.\nNeustr. 10 b\n06886 Lutherstadt Wittenberg, Germany\ninfo@r2017.org\n0049-3491-6434-700</string>
     <string name="email_contact">E-Mail Contact</string>
     <string name="imprintTxt">Imprint</string>
     <string name="aniversary_partner">Anniversary Partners</string>

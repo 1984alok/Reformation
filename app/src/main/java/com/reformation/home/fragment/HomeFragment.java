@@ -177,7 +177,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Swipe
 
             @Override
             public void onFailure(Call<EventResponse> call, Throwable t) {
-                Log.d("onFailure ::",t.getMessage());
+          //      Log.d("onFailure ::",t.getMessage());
                 if(dlg!=null)
                     dlg.hideDialog();
 
@@ -213,9 +213,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Swipe
 
             @Override
             public void onFailure(Call<TopicweekResponse> call, Throwable t) {
-                Log.d("onFailure ::",t.getMessage());
+//                Log.d("onFailure ::",t.getMessage());
                 if(dlg!=null)
                     dlg.hideDialog();
+                Utils.showSnackBar(getActivity().getResources().getString(R.string.network_error_txt),view);
 
             }
         });
@@ -311,6 +312,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Swipe
                 @Override
                 public void onClick(View v) {
                     startAudioPage(v,0,AudioGuideActivity.class);
+                   // startActivity(new Intent(getActivity(),AudioGuideActivity.class));
                 }
             });
             menuLayout.getChildAt(1).setOnClickListener(new View.OnClickListener() {

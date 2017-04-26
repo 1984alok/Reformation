@@ -78,7 +78,7 @@ public class HomeEventAdapter  extends RecyclerView.Adapter<HomeEventAdapter.MyV
         EventModel event = eventList.get(position);
         holder.txtViewTitle.setText(event.getTitle());
         FontUtls.loadFont(ctx, "fonts/RobotoCondensed-Regular.ttf",  holder.txtViewTitle);
-        holder.time.setText(Utils.formatEvenrtDate(event.getDate())+" - "+event.getStart());
+        holder.time.setText(Utils.formatEvenrtDate(event.getDate())+" - "+event.getStart().split(":")[0]+Utils.getHrFormat());
         if(event.getCategory()!=null){
             String[] catList = event.getCategory().split(",");
             if(holder.linearLayout.getChildCount()>0){

@@ -48,9 +48,9 @@ public class AudioGuideActivity extends AppCompatActivity implements View.OnClic
     private void setupViewPager(ViewPager viewPager) {
         adapter = new FragAdapter(getSupportFragmentManager());
         chapter_audioFragment = Chapter_Audio.newInstance(audios);
-    //    nearBy_audioFragment = NearBy_Audio.newInstance(audios);
+        nearBy_audioFragment = NearBy_Audio.newInstance(audios);
         adapter.addFragment(chapter_audioFragment,getResources().getString(R.string.chapter_audio));
-     //   adapter.addFragment(nearBy_audioFragment,getResources().getString(R.string.near_by_audio));
+        adapter.addFragment(nearBy_audioFragment,getResources().getString(R.string.near_by_audio));
         viewPager.setAdapter(adapter);
     }
 
@@ -135,7 +135,8 @@ public class AudioGuideActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.imageViewLeft:
-                super.onBackPressed();
+               // super.onBackPressed();
+                finish();
                 break;
 
         }

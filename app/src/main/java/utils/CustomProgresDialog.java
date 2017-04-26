@@ -28,14 +28,17 @@ public class CustomProgresDialog{
 
     public void hideDialog(){
         if(dlg!=null&&dlg.isShowing()){
-            dlg.hide();
+            dlg.dismiss();
+            LogUtil.createLog("Dialog","hideDialog");
         }
     }
 
     public void showDialog(){
+        boolean status = dlg.isShowing();
         if(dlg!=null&&!dlg.isShowing()){
             dlg.show();
             dlg.setContentView(R.layout.custom_progress_layout);
+            LogUtil.createLog("Dialog","showing");
         }
     }
 

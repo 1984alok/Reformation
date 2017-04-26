@@ -310,4 +310,23 @@ public class Utils {
         }
 
     }
+
+    public static String getHrFormat() {
+        if(Constant.SELECTED_LANG.equals(Constant.LANG_GERMAN)){
+            return " Uhr";
+        }else{
+            return " h";
+        }
+    }
+
+    /*public static String getHrFormatForEvent(EventModel eventModel) {
+        String returnString ="00";
+        if(eventModel!=null&&eventModel.getStart()!=null)){
+            String[] hourFormat = eventModel.getStart().split(":");
+            if(){}
+            return eventModel.getStart().split(":")[0]+Utils.getHrFormat();
+        }else{
+            return "h";
+        }
+    }*/
 }
