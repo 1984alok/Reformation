@@ -97,6 +97,10 @@ public class GateFragment extends Fragment {
 
         gateRecyclerView.setHasFixedSize(true);
         gateRecyclerView.setLayoutManager(layoutManagaer);
+        progressBar.setVisibility(View.GONE);
+        gateImgview.setVisibility(View.VISIBLE);
+        gateImgview.setImageResource(R.drawable.gate);
+        FontUtls.loadFont(context, "fonts/RobotoCondensed-Bold.ttf", gateTitle);
         getGateList();
     }
 
@@ -129,24 +133,12 @@ public class GateFragment extends Fragment {
 
         if (model != null) {
 
-            GateModel gateModel = model.getResponseData().get(0);
-            if (gateModel.getHeaderImage() != null) {
-                progressBar.setVisibility(View.VISIBLE);
-                gateImgview.setVisibility(View.GONE);
-                LoadInPicasso.getInstance(context).loadPic(gateImgview, progressBar, gateModel.getHeaderImage());
-
-            }
             gateList = model.getResponseData();
             if(gateList!=null){
                 gateAdapter = new GateAdapter(context,gateList);
                 gateAdapter.setOnItemClickListener(onItemClickListener);
                 gateRecyclerView.setAdapter(gateAdapter);
             }
-
-            gateTitle.setText(gateModel.getTitle());
-            gateDesc.setText(gateModel.getDescription() != null ? gateModel.getDescription() : getResources().getString(R.string.topic_desc));
-
-            FontUtls.loadFont(context, "fonts/RobotoCondensed-Bold.ttf", gateTitle);
            // FontUtls.loadFont(context, "fonts/RobotoCondensed-Bold.ttf", gateDesc);
         }
     }

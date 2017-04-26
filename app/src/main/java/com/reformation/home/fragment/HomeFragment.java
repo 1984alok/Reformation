@@ -149,6 +149,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Swipe
         Drawable drawable = context.getResources().getDrawable(R.drawable.line_devider);
         eventRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.HORIZONTAL_LIST,drawable));
         eventRecyclerView.setHasFixedSize(true);
+        eventRecyclerView.setFocusable(false);
+        eventRecyclerView.setNestedScrollingEnabled(true);
         eventRecyclerView.setLayoutManager(horizontalLayoutManagaer);
         settingImg.setOnClickListener(this);
         topic_of_weekDetail.setOnClickListener(this);

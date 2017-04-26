@@ -29,7 +29,8 @@
                     android:layout_marginTop="@dimen/dp10"
                     android:layout_marginLeft="@dimen/dp10"
                     android:layout_gravity="left"
-                    android:gravity="center"/>
+                    android:gravity="center"
+                    android:text="@string/gateTitel"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -39,7 +40,8 @@
                     android:textColor="@color/text_color_six"
                     android:textSize="@dimen/sp15"
                     android:id="@+id/textViewTopicDesc"
-                    android:gravity="top"/>
+                    android:gravity="top"
+                    android:text="@string/gateDesc"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/horizontal_recycler_eventView"

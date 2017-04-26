@@ -39,6 +39,7 @@ import utils.Constant;
 import utils.CustomProgresDialog;
 import utils.LoadInPicasso;
 import utils.LogUtil;
+import utils.TransitionAdapter;
 import utils.Utils;
 
 import static utils.Utils.isAndroid5;
@@ -63,10 +64,18 @@ public class GateDetail extends AppCompatActivity implements View.OnClickListene
     private HomeEventAdapter homeEventAdapter;
     private AudioAdapter audioAdapter;
     private LinearLayoutManager layoutManager,audiLayoutManager,galleryManager;
+    String id = "";
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void windowTransition() {
         getWindow().setEnterTransition(makeEnterTransition());
+        getWindow().getEnterTransition().addListener(new TransitionAdapter() {
+            @Override
+            public void onTransitionEnd(Transition transition) {
+                getWindow().getEnterTransition().removeListener(this);
+                getGatDetails(id);
+            }
+        });
 
     }
 
@@ -125,7 +134,7 @@ public class GateDetail extends AppCompatActivity implements View.OnClickListene
         gateHeader.setText(getResources().getString(R.string.gate));
         gateModel = (GateModel)getIntent().getSerializableExtra("DATA");
         if(gateModel!=null){
-            String id = gateModel.getId();
+            id = gateModel.getId();
             gateTitle.setText(gateModel.getTitle());
             gateDesc.setText(gateModel.getDescription());
             if (gateModel.getHeaderImage() != null) {
@@ -134,7 +143,7 @@ public class GateDetail extends AppCompatActivity implements View.OnClickListene
                 LoadInPicasso.getInstance(this).loadPic(gateImgview, progressBar, gateModel.getHeaderImage());
 
             }
-            getGatDetails(id);
+
         }
 
 

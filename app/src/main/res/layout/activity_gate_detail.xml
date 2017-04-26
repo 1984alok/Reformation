@@ -32,7 +32,7 @@
                 android:layout_marginLeft="@dimen/dp10"
                 android:layout_gravity="left"
                 android:gravity="left"
-                android:text="title"/>
+                android:text="@string/gateTitel"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -46,7 +46,7 @@
                 android:textSize="@dimen/sp15"
                 android:id="@+id/textViewTopicDesc"
                 android:gravity="top|left"
-                android:text="desc"/>
+                android:text="@string/gateDesc"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp1"

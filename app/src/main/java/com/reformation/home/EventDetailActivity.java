@@ -49,6 +49,7 @@ import retrofit2.Response;
 import utils.Constant;
 import utils.CustomProgresDialog;
 import utils.LogUtil;
+import utils.TransitionAdapter;
 import utils.Utils;
 
 import static utils.Utils.isAndroid5;
@@ -75,6 +76,7 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
     private Exhibitor exhibitor;
     private GateModel gateModel;
     LatLng location;
+    String id = "";
 
 
     @Override
@@ -135,14 +137,14 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
 
         event = (EventModel) getIntent().getSerializableExtra("DATA");
         if(event!=null){
-            String id = event.getId();
+            id = event.getId();
             topicTitle.setText(event.getTitle());
             String sdate = Utils.formatDate(event.getDate());
             String dtTxt =  Utils.getWeekNameFromDay(event.getDate())+", "+Utils.getDaywithTHFormatFromDate(sdate)+" "+Utils.getMonthFromDate(sdate)+" | "+ event.getStart().split(":")[0]+"h -";
             topic_date.setText(dtTxt);
             createEventCatgList(this,catgList,event.getCategory());
             textViewTicket.setText(getResources().getString(R.string.ticket_info));
-            getEventDetails(id);
+           // getEventDetails(id);
         }
 
 
@@ -180,11 +182,11 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
                                 exhibitor = eventDetailPlaceData.getData();
 
                                 ArrayList<Audio> audioArrayList = eventDetailPlaceData.getGateData().getAudio();
-                                if (audioArrayList != null && audioArrayList.size() > 0)
+                                if (audios!=null&&audioArrayList != null && audioArrayList.size() > 0)
                                     audios.addAll(audioArrayList);
 
                                 ArrayList<Gallery> galleryArrayList = eventDetailPlaceData.getGateData().getGallery();
-                                if (galleryArrayList != null && galleryArrayList.size() > 0)
+                                if (galleries!=null&&galleryArrayList != null && galleryArrayList.size() > 0)
                                     galleries.addAll(galleryArrayList);
                             }
 
@@ -212,7 +214,7 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
 
         try {
         if(event!=null){
-            topicTitle.setText(event.getTitle());
+            topicTitle.setText(Constant.SELECTED_LANG.equals(Constant.LANG_ENG)?event.getTitle():event.getTitle_de());
             textViewTopicSubTitle1.setText(event.getSubtitle());
             artist.setText(event.getSpeaker());
 
@@ -249,6 +251,13 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void windowTransition() {
         getWindow().setEnterTransition(makeEnterTransition());
+        getWindow().getEnterTransition().addListener(new TransitionAdapter() {
+            @Override
+            public void onTransitionEnd(Transition transition) {
+                getWindow().getEnterTransition().removeListener(this);
+                getEventDetails(id);
+            }
+        });
 
     }
 
