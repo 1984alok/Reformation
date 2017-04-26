@@ -11,6 +11,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Point;
 import android.os.Build;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
@@ -38,6 +39,7 @@ import java.util.Date;
 import java.util.ListIterator;
 import java.util.Locale;
 
+import apihandler.NetworkStatus;
 import model.EventModel;
 
 /**
@@ -89,6 +91,10 @@ public class Utils {
         v.setBackgroundColor(ctx.getResources().getColor(R.color.colorPrimary));
         t.setGravity(Gravity.CENTER,0,0);
         t.show();
+    }
+
+    public static void showSnackBar(String msg, View anchor){
+        Snackbar.make(anchor,msg,Snackbar.LENGTH_LONG).show();
     }
 
     public static void showAlert(Context ctx, String title, String msg, DialogInterface.OnClickListener clickListener){
@@ -291,6 +297,17 @@ public class Utils {
         System.out.println("Time in 24-hour format :"
                 + obDateFormat.format(time.getTime()));
         return obDateFormat.format(time.getTime());
+
+    }
+
+
+    public static boolean isNetworkAvailable(Context ctx,View view){
+        if(!NetworkStatus.getInstance().isConnected(ctx)){
+            showSnackBar(ctx.getResources().getString(R.string.network_error_txt),view);
+            return false;
+        }else{
+            return true;
+        }
 
     }
 }

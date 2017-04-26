@@ -1,11 +1,7 @@
 package apihandler;
 
-import com.google.gson.JsonObject;
-
-import org.json.JSONObject;
-
 import model.AnniversaryModelResponse;
-import model.EventDetailGateData;
+import model.AudioResponse;
 import model.EventResponse;
 import model.EventdetailResponse;
 import model.ExhibitorResponse;
@@ -35,7 +31,7 @@ public interface ApiInterface {
 
     @POST("webservices/audioguide.php?")
     @FormUrlEncoded
-    Call<String> getAudio(@Field("lang") String lang);
+    Call<AudioResponse> getAudio(@Field("lang") String lang);
 
 
 
