@@ -10,11 +10,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.util.Pair;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -319,6 +319,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Swipe
                 @Override
                 public void onClick(View v) {
                     startAudioPage(v,0, FaqActivity.class);
+                }
+            });
+            menuLayout.getChildAt(2).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                   // startAudioPage(v,0, FaqActivity.class);
+                    WebviewFragment fragment = new WebviewFragment();
+                    FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                            android.R.anim.fade_out);
+                    fragmentTransaction.add(R.id.frame, fragment, "web");
+                    fragmentTransaction.addToBackStack("web");
+                    fragmentTransaction.commitAllowingStateLoss();
                 }
             });
         }
