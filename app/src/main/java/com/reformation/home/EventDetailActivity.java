@@ -257,7 +257,7 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onTransitionEnd(Transition transition) {
                 getWindow().getEnterTransition().removeListener(this);
-                getEventDetails(id);
+              getEventDetails(id);
             }
         });
 
