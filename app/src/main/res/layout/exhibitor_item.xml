@@ -40,9 +40,10 @@
             android:ellipsize="end"
             android:id="@+id/title"
             android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginRight="@dimen/dp10"
             android:layout_alignTop="@+id/imageViewExhibitorFrame"
             android:layout_toRightOf="@+id/imageViewExhibitorFrame"
-            android:layout_toLeftOf="@+id/imageViewLink"
+            android:layout_toLeftOf="@+id/status"
             android:gravity="left">
         </TextView>
         <TextView

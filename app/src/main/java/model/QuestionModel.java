@@ -12,4 +12,6 @@ public class QuestionModel extends ExpandableGroup<FaqModel> {
     public QuestionModel(String title, ArrayList<FaqModel> items) {
         super(title, items);
     }
+
+
 }

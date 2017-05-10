@@ -46,4 +46,12 @@
     <string name="gateTitel">Gate Areas</string>
     <string name="gateDesc"><![CDATA[The open-air exhibition is called “Gates of Freedom” – to symbolise the way the Reformation pushed open various doors and brought new freedoms. Just as Martin Luther, in 1517, questioned the circumstances of his life and times, in 2017 we are discussing current issues: youth; spirituality; globalisation; ecumenism & religion; art & culture; justice, peace and integrity of creation. The topics are allocated to seven Gate areas. That is a guide not only to the themes but also to the layout on the ground. Installations have been designed for each gate by students from different universities in Germany and Austria. They invite us to make discoveries and reflect on them.]]></string>
     <string name="network_error_txt">Please check your network connection.</string>
+    <string name="rshop">r2017 - Shop</string>
+    <string name="gotit">Got It</string>
+    <string name="cancel">cancel</string>
+    <string name="catogory">category</string>
+    <string name="period">period</string>
+    <string name="filter">filter</string>
+    <string name="resetfilter">Reset Filter</string>
+    <string name="selectall">Select All</string>
 </resources>

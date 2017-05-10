@@ -6,7 +6,7 @@
     android:paddingRight="@dimen/dp10"
     android:paddingTop="@dimen/dp5"
     android:paddingBottom="@dimen/dp5"
-    android:background="@color/white">
+    android:background="@color/light_white">
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,7 +15,7 @@
         android:scaleType="fitXY"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:padding="@dimen/dp5"
+        android:padding="@dimen/dp10"
         android:background="@drawable/press_bag2"/>
 
     <TextView

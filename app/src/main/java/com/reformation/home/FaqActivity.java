@@ -1,5 +1,6 @@
 package com.reformation.home;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,7 +9,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.reformation.home.fragment.DividerItemDecoration;
+import com.viethoa.RecyclerViewFastScroller;
+import com.viethoa.models.AlphabetItem;
+
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import adapter.FaqAdapter;
 import apihandler.ApiClient;
@@ -34,7 +43,39 @@ public class FaqActivity extends AppCompatActivity implements View.OnClickListen
     private FaqAdapter adapter;
     ApiInterface apiInterface;
     private CustomProgresDialog dlg;
+    RecyclerViewFastScroller fastScroller;
+    private List<AlphabetItem> mAlphabetItems;
+    ArrayList<FaqModel> ansList;
 
+
+    protected void initialiseData() {
+
+        //Alphabet fast scroller data
+        mAlphabetItems = new ArrayList<>();
+        List<String> strAlphabets = new ArrayList<>();
+        for (int i = 0; i < faqModelArrayList.size(); i++) {
+            String name = faqModelArrayList.get(i).getTitle();
+            if (name == null || name.trim().isEmpty())
+                continue;
+
+            String word = name.substring(0, 1);
+            if (!strAlphabets.contains(word)) {
+                strAlphabets.add(word);
+                mAlphabetItems.add(new AlphabetItem(i, word, false));
+            }
+        }
+    }
+
+    protected void initialiseUI() {
+        faq_recycler.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new FaqAdapter(this,faqModelArrayList);
+        faq_recycler.setAdapter(adapter);
+        Drawable drawable = getResources().getDrawable(R.drawable.line_devider3);
+        faq_recycler.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST,drawable));
+
+        fastScroller.setRecyclerView(faq_recycler);
+        fastScroller.setUpAlphabet(mAlphabetItems);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +88,12 @@ public class FaqActivity extends AppCompatActivity implements View.OnClickListen
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
         back.setOnClickListener(this);
         faq_recycler = (RecyclerView) findViewById(R.id.faq_recycler);
+        fastScroller = (com.viethoa.RecyclerViewFastScroller) findViewById(R.id.fast_scroller);
         faqModelArrayList = new ArrayList<>();
 
         //setData();
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        faq_recycler.setLayoutManager(layoutManager);
+       // LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+       // faq_recycler.setLayoutManager(layoutManager);
 
         if(Utils.isNetworkAvailable(this,topicHeader)){
             getFaq();
@@ -141,11 +183,25 @@ public class FaqActivity extends AppCompatActivity implements View.OnClickListen
                 }else  if(question.startsWith("Z")){
                     question = "Z - Info ";
                 }*/
-                QuestionModel model = new QuestionModel(answerList.get(i).getQues(),answerList);
+                ansList = new ArrayList<>();
+                ansList.add(answerList.get(i));
+                QuestionModel model = new QuestionModel(answerList.get(i).getQues(),ansList);
                 faqModelArrayList.add(model);
             }
-            adapter = new FaqAdapter(this,faqModelArrayList);
-            faq_recycler.setAdapter(adapter);
+            Collections.sort(faqModelArrayList, new Comparator<QuestionModel>(){
+                public int compare(QuestionModel obj1, QuestionModel obj2) {
+                    // ## Ascending order
+                    return obj1.getTitle().compareToIgnoreCase(obj2.getTitle()); // To compare string values
+                    // return Integer.valueOf(obj1.empId).compareTo(obj2.empId); // To compare integer values
+
+                    // ## Descending order
+                    // return obj2.firstName.compareToIgnoreCase(obj1.firstName); // To compare string values
+                    // return Integer.valueOf(obj2.empId).compareTo(obj1.empId); // To compare integer values
+                }
+            });
+            initialiseData();
+            initialiseUI();
+
         }
     }
 

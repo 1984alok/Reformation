@@ -34,7 +34,7 @@
     <string name="chapter_audio">Kapitel</string>
     <string name="near_by_audio">In der Nähe</string>
     <string name="exhibitors">Aussteller</string>
-    <string name="other_location">Weitere Sehenswürdigkeiten</string>
+    <string name="other_location">Attraktionen</string>
     <string name="maps_api_key">AIzaSyBaJDivZ2OP4UT9AjTq2DjYhaNoF5ffe88</string>
     <string name="no_record_found">Kein Eintrag gefunden</string>
     <string name="unable_to_map_create">Entschuldigung! Keine Verknüpfung zur Karte möglich</string>
@@ -43,4 +43,11 @@
     <string name="ticket_info">Ticket erforderlich</string>
     <string name="gateTitel">Torräume</string>
     <string name="gateDesc"><![CDATA[Die Open-Air-Ausstellung steht unter dem Titel „Tore der Freiheit“ – sinnbildlich für die Tore, die mit der Reformation aufgestoßen wurden und neue Freiheiten brachten. Wie Martin Luther im Jahr 1517 die Lebensumstände seiner Zeit hinterfragte, so wird 2017 Gegenwärtiges diskutiert: Jugend, Spiritualität, Globalisierung, Ökumene & Religion, Kunst & Kultur, Gerechtigkeit, Frieden und Bewahrung der Schöpfung. Angeordnet sind die Themen in sieben „Torräumen“. Das schafft nicht nur inhaltliche Orientierung, sondern auch räumliche vor Ort. Installationen, von Studierenden verschiedener Universitäten aus Deutschland und Österreich entworfen, laden in jedem Torraum zum Entdecken und Nachdenken ein. ]]></string>
+    <string name="gotit">Got It</string>
+    <string name="cancel">cancel</string>
+    <string name="catogory">category</string>
+    <string name="period">period</string>
+    <string name="filter">filter</string>
+    <string name="resetfilter">reset filter</string>
+    <string name="selectall">Select All</string>
 </resources>

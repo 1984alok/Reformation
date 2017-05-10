@@ -1,5 +1,7 @@
 package apihandler;
 
+import com.google.gson.JsonObject;
+
 import model.AnniversaryModelResponse;
 import model.AudioResponse;
 import model.EventResponse;
@@ -22,56 +24,56 @@ import retrofit2.http.POST;
 public interface ApiInterface {
 
     //get all catagory
-    @POST("webservices/topicweek.php?")
+    @POST("webservices_mob_app/topicweek.php?")
     @FormUrlEncoded
     Call<TopicweekResponse> getTopicWeek(@Field("lang") String lang);
 
-    @POST("webservices/home-menu-web.php?")
+    @POST("webservices_mob_app/home-menu-web.php?")
     @FormUrlEncoded
     Call<HomeMenuModelResponse> getMenu(@Field("lang") String lang);
 
-    @POST("webservices/audioguide.php?")
+    @POST("webservices_mob_app/audioguide.php?")
     @FormUrlEncoded
     Call<AudioResponse> getAudio(@Field("lang") String lang);
 
-    @POST("webservices/faq.php?")
+    @POST("webservices_mob_app/faq.php?")
     @FormUrlEncoded
     Call<FaqResponse> getFaq(@Field("lang") String lang);
 
 
 
-    @POST("webservices/ann-partner.php?")
+    @POST("webservices_mob_app/ann-partner.php?")
     @FormUrlEncoded
     Call<AnniversaryModelResponse> getAnniversaryPartner(@Field("lang") String lang);
 
-    @POST("webservices/event_next.php?")
+    @POST("webservices_mob_app/event_next.php?")
     @FormUrlEncoded
     Call<EventResponse> get7EventList(@Field("lang") String lang);
 
 
-    @POST("webservices/event_gate_area.php?")
+    @POST("webservices_mob_app/event_gate_area.php?")
     @FormUrlEncoded
     Call<GateResponsModel> getGateList(@Field("lang") String lang);
 
-    @POST("webservices/today_event_list.php?")
+    @POST("webservices_mob_app/today_event_list.php?")
     @FormUrlEncoded
     Call<EventResponse> getTodayEventList(@Field("lang") String lang);
 
-    @POST("webservices/next_day_event_list.php?")
+    @POST("webservices_mob_app/next_day_event_list.php?")
     @FormUrlEncoded
     Call<EventResponse> getTomorrowEventList(@Field("lang") String lang);
 
-    @POST("webservices/topic_month.php?")
+    @POST("webservices_mob_app/topic_month.php?")
     @FormUrlEncoded
     Call<TopicweekResponse> getTopicInMonthWise(@Field("lang") String lang);
 
 
-    @POST("webservices/date_wise_topic_week.php?")
+    @POST("webservices_mob_app/date_wise_topic_week.php?")
     @FormUrlEncoded
     Call<TopicweekResponse> getTopicInDateWise(@Field("lang") String lang);
 
 
-    @POST("webservices/exhibitors_details.php?")
+    @POST("webservices_mob_app/exhibitors_details.php?")
     @FormUrlEncoded
     Call<ExhibitorResponse> getExhibitorList(@Field("lang") String lang,
                                              @Field("date") String date,
@@ -79,24 +81,29 @@ public interface ApiInterface {
                                              @Field("tags") String tags);
 
 
-    @POST("webservices/map_location_details.php")
+    @POST("webservices_mob_app/map_location_details.php")
     @FormUrlEncoded
     Call<MapResponse> getMapDetail(@Field("lang") String lang);
 
 
 
-    @POST("webservices/event_details_via_id.php")
+    @POST("webservices_mob_app/event_details_via_id.php")
     @FormUrlEncoded
     Call<EventdetailResponse> getEventDetailById(@Field("lang") String lang,
                                                  @Field("event_id") String event_id );
 
 
-    @POST("webservices/gate_details_via_id.php")
+    @POST("webservices_mob_app/gate_details_via_id.php")
     @FormUrlEncoded
     Call<GateDetailResponse> getGateDetaillById(@Field("lang") String lang,
                                                 @Field("gatearea_id") String gatearea_id );
 
 
+
+    @POST("webservices_mob_app/event_details_via_id.php")
+    @FormUrlEncoded
+    Call<JsonObject> chekResponse(@Field("lang") String lang,
+                                        @Field("event_id") String event_id );
 
 
 

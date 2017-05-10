@@ -15,6 +15,7 @@ import android.support.v4.util.Pair;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ import com.reformation.home.SettingScreen;
 import com.reformation.home.TopicWeekDetailActivity;
 import com.squareup.picasso.Picasso;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
@@ -78,6 +80,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Swipe
     private static final int ANIM_DURATION_TOOLBAR = 300;
     private boolean pendingIntroAnimation;
     TopicweekResponse.TopicWeekModel topicWeekModel;
+    String shopUrl = null;
 
 
     private void startIntroAnimation() {
@@ -177,7 +180,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Swipe
 
             @Override
             public void onFailure(Call<EventResponse> call, Throwable t) {
-          //      Log.d("onFailure ::",t.getMessage());
+                //      Log.d("onFailure ::",t.getMessage());
                 if(dlg!=null)
                     dlg.hideDialog();
 
@@ -205,7 +208,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Swipe
             public void onResponse(Call<TopicweekResponse> call, Response<TopicweekResponse> response) {
                 dlg.hideDialog();
                 if(response.isSuccessful()){
-                     model = response.body();
+                    model = response.body();
                     loadView(model);
                 }
 
@@ -244,7 +247,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Swipe
             topicDesc.setText(topicWeekModel.getToWeekDes()!=null?topicWeekModel.getToWeekDes():getResources().getString(R.string.topic_desc));
 
             FontUtls.loadFont(context,"fonts/RobotoCondensed-Bold.ttf",topicTitle);
-           // FontUtls.loadFont(context,"fonts/RobotoCondensed-Bold.ttf",topicDesc);
+            // FontUtls.loadFont(context,"fonts/RobotoCondensed-Bold.ttf",topicDesc);
 
 
         }
@@ -287,45 +290,49 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Swipe
         for (HomeMenuModelResponse.MenuModel model : modelList) {
             View itemView = LayoutInflater.from(getActivity()).inflate(R.layout.home_menu_list, null);
             if (itemView != null) {
-            txtViewTitle = (TextView) itemView.findViewById(R.id.textViewHeaderTitle);
-            imgPic = (ImageView) itemView.findViewById(R.id.homeMenuImg);
-            progressBar = (ProgressBar) itemView.findViewById(R.id.dlg);
-            txtViewTitle.setText(model.getTitle());
-            FontUtls.loadFont(getActivity(), "fonts/Roboto-Bold.ttf", txtViewTitle);
-            progressBar.setVisibility(View.VISIBLE);
-            imgPic.setVisibility(View.GONE);
-            if (model.getImage() != null) {
-                LoadInPicasso.getInstance(context).loadPic(imgPic, progressBar, model.getImage());
-            }
+                txtViewTitle = (TextView) itemView.findViewById(R.id.textViewHeaderTitle);
+                imgPic = (ImageView) itemView.findViewById(R.id.homeMenuImg);
+                progressBar = (ProgressBar) itemView.findViewById(R.id.dlg);
+                txtViewTitle.setText(model.getTitle());
+                FontUtls.loadFont(getActivity(), "fonts/Roboto-Bold.ttf", txtViewTitle);
+                progressBar.setVisibility(View.VISIBLE);
+                imgPic.setVisibility(View.GONE);
+                if (model.getImage() != null) {
+                    LoadInPicasso.getInstance(context).loadPic(imgPic, progressBar, model.getImage());
+                }
+                shopUrl= model.getExternalLink();
 
-            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) menuLayout.getLayoutParams();
-            if (params != null) {
-                params.setMargins(10, 20, 10, 20);
-                itemView.setLayoutParams(params);
-            }
+                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) menuLayout.getLayoutParams();
+                if (params != null) {
+                    params.setMargins(10, 20, 10, 20);
+                    itemView.setLayoutParams(params);
+                }
 
-            menuLayout.addView(itemView);
+                menuLayout.addView(itemView);
+            }
         }
-    }
         if(menuLayout.getChildCount()>0){
             menuLayout.getChildAt(0).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startAudioPage(v,0,AudioGuideActivity.class);
-                   // startActivity(new Intent(getActivity(),AudioGuideActivity.class));
+                    //startAudioPage(v,0,AudioGuideActivity.class);
+                     startActivity(new Intent(getActivity(),AudioGuideActivity.class));
+                    getActivity().overridePendingTransition(R.anim.from_middle,R.anim.to_middle);
                 }
             });
             menuLayout.getChildAt(1).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startAudioPage(v,0, FaqActivity.class);
+                  //  startAudioPage(v,0, FaqActivity.class);
+                    startActivity(new Intent(getActivity(),FaqActivity.class));
+                    getActivity().overridePendingTransition(R.anim.from_middle,R.anim.to_middle);
                 }
             });
             menuLayout.getChildAt(2).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                   // startAudioPage(v,0, FaqActivity.class);
-                    WebviewFragment fragment = new WebviewFragment();
+                    // startAudioPage(v,0, FaqActivity.class);
+                    rShopFragment fragment = rShopFragment.newInstance(shopUrl);
                     FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
                             android.R.anim.fade_out);
@@ -401,7 +408,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Swipe
         getHomeMenu();
         getEventList();
         mSwipeRefreshLayout.setRefreshing(false);
-        }
+    }
 
     HomeEventAdapter.OnItemClickListener mItemClickListener = new HomeEventAdapter.OnItemClickListener(){
         @Override

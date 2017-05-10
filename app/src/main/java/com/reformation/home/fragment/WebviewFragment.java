@@ -2,6 +2,7 @@ package com.reformation.home.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,8 +44,10 @@ public class WebviewFragment extends Fragment{
         leftImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                //fragmentTransaction.
+                final FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                while (fragmentManager.getBackStackEntryCount() != 0) {
+                    fragmentManager.popBackStackImmediate();
+                }
             }
         });
 

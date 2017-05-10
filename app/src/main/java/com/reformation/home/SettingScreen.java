@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -38,7 +39,7 @@ public class SettingScreen extends AppCompatActivity implements View.OnClickList
     ApiInterface  apiInterface;
     ProgressBar dlg;
     RecyclerView anRecyclerView;
-    private LinearLayoutManager horizontalLayoutManagaer;
+    private GridLayoutManager horizontalLayoutManagaer;
     AniversaryAdapter aniversaryAdapter;
     ImageView leftImg,rightImg;
     TextView headerTxt;
@@ -64,9 +65,9 @@ public class SettingScreen extends AppCompatActivity implements View.OnClickList
         headerTxt.setText(getResources().getString(R.string.setting));
         dlg = (ProgressBar) findViewById(R.id.dlg);
         horizontalLayoutManagaer
-                = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        Drawable drawable = getResources().getDrawable(R.drawable.anniversary_devider);
-        anRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL_LIST,drawable));
+                = new GridLayoutManager(this,2);
+        Drawable drawable = getResources().getDrawable(R.drawable.line_devider_two);
+        anRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST,drawable));
         anRecyclerView.setHasFixedSize(true);
         anRecyclerView.setLayoutManager(horizontalLayoutManagaer);
         leftImg.setOnClickListener(this);

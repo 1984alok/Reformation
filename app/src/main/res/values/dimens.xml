@@ -27,4 +27,5 @@
     <dimen name="dp250">250dp</dimen>
     <dimen name="topic_width">320dp</dimen>
     <dimen name="sp10">10sp</dimen>
+    <dimen name="fast_scroll_overlay_text_size">100dp</dimen>
 </resources>

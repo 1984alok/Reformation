@@ -8,11 +8,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class ApiClient {
 
-    // Test QA
-    // public static final String BASE_URL = "http://www.inoasoft.info/projects/eventmanagement/";
+    // Test Prod
+     public static final String BASE_URL = "http://eventmanager.r2017.org/";
 
-    //Production
-    public static final String BASE_URL = "http://www.inoasoft.info/projects/event2017/";
+    //Test
+   // public static final String BASE_URL = "http://www.inoasoft.info/projects/event2017/";
 
 
     private static Retrofit retrofit = null;
