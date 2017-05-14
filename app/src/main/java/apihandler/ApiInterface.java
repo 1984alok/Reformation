@@ -6,6 +6,7 @@ import model.AnniversaryModelResponse;
 import model.AudioResponse;
 import model.EventResponse;
 import model.EventdetailResponse;
+import model.ExhibitorDetailResponseById;
 import model.ExhibitorResponse;
 import model.FaqResponse;
 import model.GateDetailResponse;
@@ -105,6 +106,10 @@ public interface ApiInterface {
     Call<JsonObject> chekResponse(@Field("lang") String lang,
                                         @Field("event_id") String event_id );
 
+    @POST("webservices_mob_app/place_details_via_id.php")
+    @FormUrlEncoded
+    Call<ExhibitorDetailResponseById> getPlaceDetailById(@Field("lang") String lang,
+                                                         @Field("place_id") String gatearea_id );
 
 
 

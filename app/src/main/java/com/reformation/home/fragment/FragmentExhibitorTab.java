@@ -1,6 +1,7 @@
 package com.reformation.home.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.reformation.home.ExhibitorDetailActivity;
 import com.reformation.home.R;
 
 import java.util.ArrayList;
@@ -135,7 +137,10 @@ public class FragmentExhibitorTab extends Fragment implements OnLoadListener{
     ExhibitorTabAdapter.OnItemClickListener onItemClickListener = new ExhibitorTabAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(View clickView, View view, int position) {
-            Utils.showToast(getActivity(),"On Progress");
+            //Utils.showToast(getActivity(),"On Progress");
+            Exhibitor exhibitor = exhibitorArrayList.get(position);
+
+            startActivity(new Intent(getActivity(), ExhibitorDetailActivity.class).putExtra("DATA",exhibitor));
         }
     };
 

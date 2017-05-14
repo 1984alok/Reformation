@@ -115,14 +115,25 @@
                     android:textColor="@color/black"
                     android:text="@string/contact"
                     android:id="@+id/settingTextViewContact"
-                    android:gravity="left" />
+                    android:gravity="left"
+                   />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceListItem"
+                    android:textColor="@color/black"
+                    android:text="0049-3491-6434-700"
+                    android:id="@+id/settingTextViewMobNo"
+                    android:gravity="left"
+                    android:autoLink="phone"
+                    />
                 <View
                     android:layout_marginTop="@dimen/dp10"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp1"
                     android:background="@color/light_grey"/>
                 <TextView
-                    android:layout_marginTop="@dimen/dp20"
+                    android:layout_marginTop="@dimen/dp10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceListItem"

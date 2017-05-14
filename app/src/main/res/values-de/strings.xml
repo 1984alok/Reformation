@@ -10,7 +10,7 @@
     <string name="lang_german">Deutsch</string>
     <string name="visitor_info">Besucherinformationen A bis Z</string>
     <string name="audio_video_guide">Audioguide</string>
-    <string name="contact">Kontakt\nReformationsjubiläum 2017 e.V.\nNeustr. 10 b\n06886 Lutherstadt Wittenberg\ninfo@r2017.org\n03491-6434-700</string>
+    <string name="contact">Kontakt\nReformationsjubiläum 2017 e.V.\nNeustr. 10 b\n06886 Lutherstadt Wittenberg</string>
     <string name="email_contact">E-Mail-Kontakt</string>
     <string name="imprintTxt">Impressum</string>
     <string name="aniversary_partner">Jubiläumspartner</string>
@@ -46,8 +46,35 @@
     <string name="gotit">Got It</string>
     <string name="cancel">cancel</string>
     <string name="catogory">category</string>
-    <string name="period">period</string>
+    <string name="period">Period</string>
     <string name="filter">filter</string>
     <string name="resetfilter">reset filter</string>
     <string name="selectall">Select All</string>
+    <string name="policy">Geschäftsstelle: Reformationsjubiläum 2017 e.V.
+Neustraße 10b
+06886 Lutherstadt Wittenberg
+
+Büro Berlin: Lehrter Straße 68
+10557 Berlin
+
+Büro Leipzig: Ritterstraße 30-36
+04109 Leipzig
+
+Geschäftsführer: Hartwig Bodmann, Ulrich Schneider (V.i.S.d.P.)
+
+Amtsgericht Stendal
+Vereinsregister VR 3400
+
+</string>
+    <string name="event">Events</string>
+    <string name="favourites">Favorites</string>
+
+    <string name="opening">Opening</string>
+    <string name="sunday">Sun</string>
+    <string name="monday">Mon </string>
+    <string name="tuesday">Tue </string>
+    <string name="wednesday">Wed </string>
+    <string name="thursday">Thru </string>
+    <string name="friday">Fri </string>
+    <string name="saterday">Sat </string>
 </resources>

@@ -33,6 +33,8 @@ import adapter.AudioAdapter;
 import adapter.GalleryAdapter;
 import apihandler.ApiClient;
 import apihandler.ApiInterface;
+import database.DBAdapter;
+import database.FavDB;
 import model.Audio;
 import model.EventDetailGateData;
 import model.EventDetailPlaceData;
@@ -40,6 +42,7 @@ import model.EventModel;
 import model.EventResponseData;
 import model.EventdetailResponse;
 import model.Exhibitor;
+import model.FavModel;
 import model.Gallery;
 import model.GateModel;
 import model.TopicweekResponse;
@@ -77,6 +80,8 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
     private GateModel gateModel;
     LatLng location;
     String id = "";
+    DBAdapter dbAdapter;
+    FavDB favDB;
 
 
     @Override
@@ -84,6 +89,10 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_detail);
         dlg = CustomProgresDialog.getInstance(this);
+        dbAdapter = new DBAdapter(this);
+        dbAdapter.open();
+        favDB = new FavDB(this);
+        favDB.open();
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
         if(isAndroid5()){
             windowTransition();
@@ -127,13 +136,13 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
 
         eventGalleryView.setLayoutManager(layoutManager);
         recyclerview_audioguide.setLayoutManager(audiLayoutManager);
-
+        rightFilterImg.setImageResource(R.drawable.heart);
 
         topicHeader.setText(getResources().getString(R.string.program_text));
-        rightFilterImg.setImageResource(R.drawable.heart);
         leftImg.setOnClickListener(this);
         mapFrame.setOnClickListener(this);
         imageViewShare.setOnClickListener(this);
+        rightFilterImg.setOnClickListener(this);
 
         event = (EventModel) getIntent().getSerializableExtra("DATA");
         if(event!=null){
@@ -146,6 +155,7 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
             createEventCatgList(this,catgList,event.getCategory());
             textViewTicket.setText(getResources().getString(R.string.ticket_info));
            // getEventDetails(id);
+            rightFilterImg.setImageResource(favDB.isFav(id,"event")?R.drawable.heart_filled:R.drawable.heart);
         }
 
 
@@ -282,9 +292,20 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
                 super.onBackPressed();
                 break;
 
+            case R.id.imageViewRight:
+                favDB.createFavinfo(new FavModel(event.getTitle(),event.getTitle_de(),
+                        event.getStart(),event.getEnd(),event.getId(),"","","event",true));
+                break;
         }
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        favDB.close();
+        dbAdapter.close();
+    }
 
     public static void createEventCatgList(Context ctx, LinearLayout linearLayout, String catg){
         if(catg!=null){

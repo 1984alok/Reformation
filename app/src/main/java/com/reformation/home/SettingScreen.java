@@ -5,7 +5,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.v4.widget.ContentLoadingProgressBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -42,7 +44,7 @@ public class SettingScreen extends AppCompatActivity implements View.OnClickList
     private GridLayoutManager horizontalLayoutManagaer;
     AniversaryAdapter aniversaryAdapter;
     ImageView leftImg,rightImg;
-    TextView headerTxt;
+    TextView headerTxt,settingTextViewEmailCont,settingTextViewImprint,settingTextViewMobNo;
     Button langEng,langGerman;
 
     @Override
@@ -62,6 +64,9 @@ public class SettingScreen extends AppCompatActivity implements View.OnClickList
         langGerman = (Button) findViewById(R.id.langDeBtn);
         rightImg.setVisibility(View.INVISIBLE);
         headerTxt = (TextView) findViewById(R.id.textViewHeaderTitle);
+        settingTextViewEmailCont = (TextView) findViewById(R.id.settingTextViewEmailCont);
+        settingTextViewMobNo= (TextView) findViewById(R.id.settingTextViewMobNo);
+        settingTextViewImprint = (TextView) findViewById(R.id.settingTextViewImprint);
         headerTxt.setText(getResources().getString(R.string.setting));
         dlg = (ProgressBar) findViewById(R.id.dlg);
         horizontalLayoutManagaer
@@ -73,6 +78,9 @@ public class SettingScreen extends AppCompatActivity implements View.OnClickList
         leftImg.setOnClickListener(this);
         langGerman.setOnClickListener(this);
         langEng.setOnClickListener(this);
+        settingTextViewEmailCont.setOnClickListener(this);
+        settingTextViewMobNo.setOnClickListener(this);
+        settingTextViewImprint.setOnClickListener(this);
         LogUtil.createLog("lang ",Constant.SELECTED_LANG);
         if(Constant.SELECTED_LANG.equals(Constant.LANG_ENG)){
             callEngBtn();
@@ -127,6 +135,25 @@ public class SettingScreen extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.settingTextViewMobNo:
+                contactClick();
+                break;
+            case R.id.settingTextViewImprint:
+                showImprintAlert();
+                break;
+            case R.id.settingTextViewEmailCont:
+                /* Create the Intent */
+                final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+
+/* Fill it with Data */
+                emailIntent.setType("plain/text");
+                emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"info@r2017.org "});
+               // emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject");
+               // emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Text");
+
+/* Send it off to the Activity-Chooser */
+                startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+                break;
             case R.id.imageViewLeft:
                 super.onBackPressed();
                 break;
@@ -145,6 +172,25 @@ public class SettingScreen extends AppCompatActivity implements View.OnClickList
                 sendBroadcast(new Intent("LANG_CHANGE"));
                 break;
         }
+    }
+
+    private void showImprintAlert() {
+        new AlertDialog.Builder(this)
+                .setMessage(getResources().getString(R.string.policy))
+                .setTitle("")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                })
+        .create().show();
+    }
+
+
+    public void contactClick(){
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "004934916434700"));
+        startActivity(intent);
     }
 
     private void callEngBtn() {

@@ -32,6 +32,18 @@ public class GateModel implements Serializable{
     @Expose
     private ArrayList<Gallery> gallary = null;
 
+    @SerializedName("audio")
+    @Expose
+    private ArrayList<Audio> audio = null;
+
+    public ArrayList<Audio> getAudio() {
+        return audio;
+    }
+
+    public void setAudio(ArrayList<Audio> audio) {
+        this.audio = audio;
+    }
+
     public String getId() {
         return id;
     }

@@ -25,7 +25,7 @@ public class ExhibitorTabAdapter extends RecyclerView.Adapter<ExhibitorTabAdapte
 
     private ArrayList<Exhibitor> dataList;
     public Context ctx;
-    ExhibitorTabAdapter.OnItemClickListener mItemClickListener;
+    OnItemClickListener mItemClickListener;
     View itemView;
 
     public int getHeightOfView() {
@@ -67,14 +67,14 @@ public class ExhibitorTabAdapter extends RecyclerView.Adapter<ExhibitorTabAdapte
     }
 
     @Override
-    public ExhibitorTabAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.exhibitor_item, parent, false);
-        return new ExhibitorTabAdapter.MyViewHolder(itemView);
+        return new MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(ExhibitorTabAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, int position) {
         Exhibitor model = dataList.get(position);
         holder.txtViewTitle.setText(model.getPlaceName());
         holder.address.setText(model.getAddress());
@@ -106,7 +106,7 @@ public class ExhibitorTabAdapter extends RecyclerView.Adapter<ExhibitorTabAdapte
         void onItemClick(View clickView, View view, int position);
     }
 
-    public void setOnItemClickListener(final ExhibitorTabAdapter.OnItemClickListener mItemClickListener) {
+    public void setOnItemClickListener(final OnItemClickListener mItemClickListener) {
         this.mItemClickListener = mItemClickListener;
     }
 

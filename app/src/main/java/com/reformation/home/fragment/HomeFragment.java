@@ -29,6 +29,7 @@ import android.widget.TextView;
 import com.reformation.home.AudioGuideActivity;
 import com.reformation.home.EventDetailActivity;
 import com.reformation.home.FaqActivity;
+import com.reformation.home.FavActivity;
 import com.reformation.home.R;
 import com.reformation.home.SettingScreen;
 import com.reformation.home.TopicWeekDetailActivity;
@@ -156,6 +157,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Swipe
         eventRecyclerView.setNestedScrollingEnabled(true);
         eventRecyclerView.setLayoutManager(horizontalLayoutManagaer);
         settingImg.setOnClickListener(this);
+        favImg.setOnClickListener(this);
         topic_of_weekDetail.setOnClickListener(this);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         dlg = CustomProgresDialog.getInstance(getActivity());
@@ -382,6 +384,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Swipe
                 startActivity(new Intent(getActivity(),SettingScreen.class));
                 break;
             case R.id.imageViewFavourite:
+                startActivity(new Intent(getActivity(), FavActivity.class));
+                getActivity().overridePendingTransition(R.anim.from_middle,R.anim.to_middle);
                 break;
             case R.id.topic_of_weekDetail:
                 final Intent intent = new Intent(getActivity(),TopicWeekDetailActivity.class).putExtra("Data",topicWeekModel);
