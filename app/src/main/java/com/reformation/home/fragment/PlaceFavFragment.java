@@ -15,8 +15,8 @@ import android.view.ViewGroup;
 import com.reformation.home.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
+import adapter.FavPlaceRecyclerViewAdapter;
 import database.DBAdapter;
 import database.FavDB;
 import model.EventModel;
@@ -24,15 +24,12 @@ import model.FavModel;
 import utils.CustomProgresDialog;
 
 /**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
+ * Created by muvi on 15/5/17.
  */
-public class EventFavFragment extends Fragment{
+
+public class PlaceFavFragment extends Fragment {
 
 
-    ArrayList<EventModel> eventModelArrayList;
     DBAdapter dbAdapter;
     FavDB favDB;
     CustomProgresDialog customProgresDialog;
@@ -42,24 +39,24 @@ public class EventFavFragment extends Fragment{
     private static final String CATG = "catg";
     // TODO: Customize parameters
     private int mColumnCount = 1;
-    private OnListFragmentInteractionListener mListener;
+    private PlaceFavFragment.OnListPlaceFragmentInteractionListener mListener;
     RecyclerView recyclerView;
-    String catg ="";
+    String catg = "";
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public EventFavFragment() {
+    public PlaceFavFragment() {
     }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static EventFavFragment newInstance(String catg,int columnCount) {
-        EventFavFragment fragment = new EventFavFragment();
+    public static PlaceFavFragment newInstance(String catg, int columnCount) {
+        PlaceFavFragment fragment = new PlaceFavFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
-        args.putString(CATG,catg);
+        args.putString(CATG, catg);
         fragment.setArguments(args);
         return fragment;
     }
@@ -113,8 +110,8 @@ public class EventFavFragment extends Fragment{
             @Override
             protected void onPostExecute(ArrayList<FavModel> favModels) {
                 super.onPostExecute(favModels);
-                if(favModels!=null && favModels.size()>0){
-                    recyclerView.setAdapter(new FavEventRecyclerViewAdapter(favModels, mListener));
+                if (favModels != null && favModels.size() > 0) {
+                    recyclerView.setAdapter(new FavPlaceRecyclerViewAdapter(favModels, mListener));
                 }
                 customProgresDialog.hideDialog();
                 favDB.close();
@@ -134,8 +131,8 @@ public class EventFavFragment extends Fragment{
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-       if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
+       if (context instanceof OnListPlaceFragmentInteractionListener) {
+            mListener = (OnListPlaceFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
@@ -148,8 +145,6 @@ public class EventFavFragment extends Fragment{
         mListener = null;
     }
 
-
-
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -160,8 +155,8 @@ public class EventFavFragment extends Fragment{
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnListFragmentInteractionListener {
+    public interface OnListPlaceFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(FavModel item);
+        void onListPlaceFragmentInteraction(FavModel item);
     }
 }

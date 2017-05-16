@@ -98,7 +98,7 @@ public class ProgramFragment extends Fragment implements View.OnClickListener{
         topicMnthRecyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL_LIST,drawable));
         topicMnthRecyclerView.setHasFixedSize(true);
         topicMnthRecyclerView.setLayoutManager(horizontalLayoutManagaer);
-        imageViewFilter.setImageResource(R.drawable.filter_blue);
+        imageViewFilter.setImageResource(R.drawable.filter);
         imageViewSearch.setImageResource(R.drawable.search);
         imageViewFilter.setOnClickListener(this);
         topicHeader.setText(getResources().getString(R.string.program_text));

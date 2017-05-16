@@ -289,28 +289,30 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Swipe
         if (menuLayout.getChildCount() > 0) {
             menuLayout.removeAllViews();
         }
-        for (HomeMenuModelResponse.MenuModel model : modelList) {
-            View itemView = LayoutInflater.from(getActivity()).inflate(R.layout.home_menu_list, null);
-            if (itemView != null) {
-                txtViewTitle = (TextView) itemView.findViewById(R.id.textViewHeaderTitle);
-                imgPic = (ImageView) itemView.findViewById(R.id.homeMenuImg);
-                progressBar = (ProgressBar) itemView.findViewById(R.id.dlg);
-                txtViewTitle.setText(model.getTitle());
-                FontUtls.loadFont(getActivity(), "fonts/Roboto-Bold.ttf", txtViewTitle);
-                progressBar.setVisibility(View.VISIBLE);
-                imgPic.setVisibility(View.GONE);
-                if (model.getImage() != null) {
-                    LoadInPicasso.getInstance(context).loadPic(imgPic, progressBar, model.getImage());
-                }
-                shopUrl= model.getExternalLink();
+        if(modelList!=null) {
+            for (HomeMenuModelResponse.MenuModel model : modelList) {
+                View itemView = LayoutInflater.from(getActivity()).inflate(R.layout.home_menu_list, null);
+                if (itemView != null) {
+                    txtViewTitle = (TextView) itemView.findViewById(R.id.textViewHeaderTitle);
+                    imgPic = (ImageView) itemView.findViewById(R.id.homeMenuImg);
+                    progressBar = (ProgressBar) itemView.findViewById(R.id.dlg);
+                    txtViewTitle.setText(model.getTitle());
+                    FontUtls.loadFont(getActivity(), "fonts/Roboto-Bold.ttf", txtViewTitle);
+                    progressBar.setVisibility(View.VISIBLE);
+                    imgPic.setVisibility(View.GONE);
+                    if (model.getImage() != null) {
+                        LoadInPicasso.getInstance(context).loadPic(imgPic, progressBar, model.getImage());
+                    }
+                    shopUrl = model.getExternalLink();
 
-                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) menuLayout.getLayoutParams();
-                if (params != null) {
-                    params.setMargins(10, 20, 10, 20);
-                    itemView.setLayoutParams(params);
-                }
+                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) menuLayout.getLayoutParams();
+                    if (params != null) {
+                        params.setMargins(10, 20, 10, 20);
+                        itemView.setLayoutParams(params);
+                    }
 
-                menuLayout.addView(itemView);
+                    menuLayout.addView(itemView);
+                }
             }
         }
         if(menuLayout.getChildCount()>0){

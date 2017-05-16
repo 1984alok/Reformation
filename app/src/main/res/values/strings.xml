@@ -82,5 +82,11 @@ Tax number 115 / 143 / 11694</string>
     <string name="wednesday">Wed </string>
     <string name="thursday">Thru </string>
     <string name="friday">Fri </string>
-    <string name="saterday">Sat </string>R
+    <string name="saterday">Sat </string>
+    <string name="favourite_added">Favorite added</string>
+    <string name="favourite_removed">Favorite removed</string>
+    <string name="takeover">Take Over</string>
+
+
+
 </resources>

@@ -81,8 +81,9 @@ public class TopicWeekDetailActivity extends AppCompatActivity implements View.O
        // eventRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL_LIST,drawable));
         eventRecyclerView.setHasFixedSize(true);
         eventRecyclerView.setLayoutManager(layoutManager);
-        rightFilterImg.setImageResource(R.drawable.filter_blue);
+        rightFilterImg.setImageResource(R.drawable.filter);
         leftImg.setOnClickListener(this);
+        rightFilterImg.setOnClickListener(this);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         dlg = CustomProgresDialog.getInstance(this);
         topicHeader.setText(getResources().getString(R.string.topic_week_title));

@@ -27,7 +27,7 @@
     <string name="free">Kostenfrei</string>
     <string name="overview">Überblick</string>
     <string name="gallery">Galerie</string>
-    <string name="more_event">Weitere Veranstaltungen</string>
+    <string name="more_event">Mehr Informationen</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -46,7 +46,7 @@
     <string name="gotit">Got It</string>
     <string name="cancel">cancel</string>
     <string name="catogory">category</string>
-    <string name="period">Period</string>
+    <string name="period">Zeitraum</string>
     <string name="filter">filter</string>
     <string name="resetfilter">reset filter</string>
     <string name="selectall">Select All</string>
@@ -69,7 +69,7 @@ Vereinsregister VR 3400
     <string name="event">Events</string>
     <string name="favourites">Favorites</string>
 
-    <string name="opening">Opening</string>
+    <string name="opening">Öffnungszeiten</string>
     <string name="sunday">Sun</string>
     <string name="monday">Mon </string>
     <string name="tuesday">Tue </string>
@@ -77,4 +77,7 @@ Vereinsregister VR 3400
     <string name="thursday">Thru </string>
     <string name="friday">Fri </string>
     <string name="saterday">Sat </string>
+    <string name="favourite_added">Favorite added</string>
+    <string name="favourite_removed">Favorite removed</string>
+    <string name="takeover">Take Over</string>
 </resources>

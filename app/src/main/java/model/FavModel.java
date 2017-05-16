@@ -10,11 +10,11 @@ public class FavModel {
 
     }
 
-    public FavModel(String name, String name_de, String start, String end, String id, String addrss, String addrss_de, String catg, boolean isFav) {
+    public FavModel(String name, String name_de, String start, String date, String id, String addrss, String addrss_de, String catg, boolean isFav) {
         this.name = name;
         this.name_de = name_de;
         this.start = start;
-        this.end = end;
+        this.date = date;
         this.id = id;
         this.addrss = addrss;
         this.addrss_de = addrss_de;
@@ -32,7 +32,7 @@ public class FavModel {
 
     private String name_de;
     private String start;
-    private String end;
+    private String date;
 
 
 
@@ -72,12 +72,12 @@ public class FavModel {
         this.start = start;
     }
 
-    public String getEnd() {
-        return end;
+    public String getDate() {
+        return date;
     }
 
-    public void setEnd(String end) {
-        this.end = end;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getAddrss() {

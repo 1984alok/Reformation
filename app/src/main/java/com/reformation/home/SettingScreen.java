@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -44,8 +45,13 @@ public class SettingScreen extends AppCompatActivity implements View.OnClickList
     private GridLayoutManager horizontalLayoutManagaer;
     AniversaryAdapter aniversaryAdapter;
     ImageView leftImg,rightImg;
-    TextView headerTxt,settingTextViewEmailCont,settingTextViewImprint,settingTextViewMobNo;
+    TextView headerTxt,settingTextViewEmailCont,settingTextViewImprint,settingTextViewMobNo,settingTextViewJublle,
+            settingTextViewVisitorInfo,settingTextViewAudioGuide;
     Button langEng,langGerman;
+
+    String logOneLink  = "https://www.deutschebahn.com/de/nachhaltigkeit/verantwortung_gesellschaft/Sponsoring/12632278/partnerschaft_reformationsjahr.html?hl=Luther";
+    String logoTwoLink = "https://r2017.org/partner/volkswagen";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +71,11 @@ public class SettingScreen extends AppCompatActivity implements View.OnClickList
         rightImg.setVisibility(View.INVISIBLE);
         headerTxt = (TextView) findViewById(R.id.textViewHeaderTitle);
         settingTextViewEmailCont = (TextView) findViewById(R.id.settingTextViewEmailCont);
+        settingTextViewVisitorInfo = (TextView) findViewById(R.id.settingTextViewVisitorInfo);
+        settingTextViewAudioGuide = (TextView) findViewById(R.id.settingTextViewAudioGuide);
         settingTextViewMobNo= (TextView) findViewById(R.id.settingTextViewMobNo);
         settingTextViewImprint = (TextView) findViewById(R.id.settingTextViewImprint);
+        settingTextViewJublle= (TextView) findViewById(R.id.settingTextViewJublle);
         headerTxt.setText(getResources().getString(R.string.setting));
         dlg = (ProgressBar) findViewById(R.id.dlg);
         horizontalLayoutManagaer
@@ -78,9 +87,12 @@ public class SettingScreen extends AppCompatActivity implements View.OnClickList
         leftImg.setOnClickListener(this);
         langGerman.setOnClickListener(this);
         langEng.setOnClickListener(this);
+        settingTextViewAudioGuide.setOnClickListener(this);
+        settingTextViewVisitorInfo.setOnClickListener(this);
         settingTextViewEmailCont.setOnClickListener(this);
         settingTextViewMobNo.setOnClickListener(this);
         settingTextViewImprint.setOnClickListener(this);
+        settingTextViewJublle.setOnClickListener(this);
         LogUtil.createLog("lang ",Constant.SELECTED_LANG);
         if(Constant.SELECTED_LANG.equals(Constant.LANG_ENG)){
             callEngBtn();
@@ -135,11 +147,22 @@ public class SettingScreen extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.settingTextViewVisitorInfo:
+                startActivity(new Intent(SettingScreen.this,FaqActivity.class));
+                overridePendingTransition(R.anim.from_middle,R.anim.to_middle);
+            break;
+            case R.id.settingTextViewAudioGuide:
+                startActivity(new Intent(SettingScreen.this,AudioGuideActivity.class));
+                overridePendingTransition(R.anim.from_middle,R.anim.to_middle);
+            break;
             case R.id.settingTextViewMobNo:
                 contactClick();
                 break;
             case R.id.settingTextViewImprint:
                 showImprintAlert();
+                break;
+            case R.id.settingTextViewJublle:
+                showAnniversaryAlert();
                 break;
             case R.id.settingTextViewEmailCont:
                 /* Create the Intent */
@@ -185,6 +208,41 @@ public class SettingScreen extends AppCompatActivity implements View.OnClickList
                     }
                 })
         .create().show();
+    }
+
+
+    private void showAnniversaryAlert() {
+
+        View view = LayoutInflater.from(this).inflate(R.layout.anniversary_popup,null);
+        view.findViewById(R.id.imageView1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(logOneLink));
+                startActivity(i);
+
+            }
+        });
+        view.findViewById(R.id.imageView2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(logoTwoLink));
+                startActivity(i);
+
+
+            }
+        });
+        new AlertDialog.Builder(this)
+                .setView(view)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                })
+                .create().show();
     }
 
 

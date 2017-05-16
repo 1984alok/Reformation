@@ -474,17 +474,17 @@ public class Exhibitor implements Serializable{
     }
 
 
-    public Boolean getPlace_name_de() {
+    public String getPlace_name_de() {
         return place_name_de;
     }
 
-    public void setPlace_name_de(Boolean place_name_de) {
+    public void setPlace_name_de(String place_name_de) {
         this.place_name_de = place_name_de;
     }
 
     @SerializedName("place_name_de")
     @Expose
-    private Boolean place_name_de;
+    private String place_name_de;
 
    /* @SerializedName("userid")
     @Expose

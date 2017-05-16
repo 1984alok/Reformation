@@ -9,7 +9,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
-import model.FaqModel;
 import model.FavModel;
 
 /**
@@ -23,7 +22,7 @@ public class FavDB {
     public static final String FAV_NAME = "favName";
     public static final String FAV_NAME_DE = "favNameDe";
     public static final String FAV_START = "favStart";
-    public static final String FAV_END = "favEnd";
+    public static final String FAV_DATE = "favDate";
     public static final String FAV_ADDRSS = "favAdd";
     public static final String FAV_ADDRSS_DE = "favAddDe";
     public static final String FAV_CATG = "favCatg";
@@ -100,7 +99,7 @@ public class FavDB {
         initialValues.put(FAV_NAME, info.getName());
         initialValues.put(FAV_NAME_DE, info.getName_de());
         initialValues.put(FAV_START, info.getStart());
-        initialValues.put(FAV_END, info.getEnd());
+        initialValues.put(FAV_DATE, info.getDate());
         initialValues.put(FAV_ADDRSS, info.getAddrss());
         initialValues.put(FAV_ADDRSS_DE, info.getAddrss_de());
         initialValues.put(FAV_CATG, info.getCatg());
@@ -124,7 +123,7 @@ public class FavDB {
                 info.setName(cur.getString(2));
                 info.setName_de(cur.getString(3));
                 info.setStart(cur.getString(4));
-                info.setEnd(cur.getString(5));
+                info.setDate(cur.getString(5));
                 info.setAddrss(cur.getString(6));
                 info.setAddrss_de(cur.getString(7));
                 info.setCatg(cur.getString(8));
@@ -159,7 +158,7 @@ public class FavDB {
 
     public void deleteFav(String id){
 
-        String deletequery ="DELETE from "+ FAV_TABLE+" WHERE "+FAV_CATG+" = '"+id+"'";;
+        String deletequery ="DELETE from "+ FAV_TABLE+" WHERE "+FAV_ID+" = '"+id+"'";;
         this.mDb.execSQL(deletequery);
     }
 

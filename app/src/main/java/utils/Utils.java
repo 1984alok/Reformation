@@ -2,6 +2,8 @@ package utils;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -18,11 +20,16 @@ import android.support.v4.util.Pair;
 import android.support.v7.app.AlertDialog;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.OvershootInterpolator;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,7 +53,9 @@ import model.EventModel;
  * Created by Alok on 01-04-2017.
  */
 public class Utils {
-
+    private static final DecelerateInterpolator DECCELERATE_INTERPOLATOR = new DecelerateInterpolator();
+    private static final AccelerateInterpolator ACCELERATE_INTERPOLATOR = new AccelerateInterpolator();
+    private static final OvershootInterpolator OVERSHOOT_INTERPOLATOR = new OvershootInterpolator(4);
 
     private static int screenWidth = 0;
     private static int screenHeight = 0;
@@ -90,6 +99,24 @@ public class Utils {
         View v = t.getView();
         v.setBackgroundColor(ctx.getResources().getColor(R.color.colorPrimary));
         t.setGravity(Gravity.CENTER,0,0);
+        t.show();
+    }
+
+    public static void showLikeToast(Context ctx){
+        Toast t = new Toast(ctx);
+        View v = LayoutInflater.from(ctx).inflate(R.layout.fav_added,null);
+        t.setView(v);
+        t.setGravity(Gravity.CENTER,0,0);
+        t.setDuration(Toast.LENGTH_LONG);
+        t.show();
+    }
+
+    public static void showDisLikeToast(Context ctx){
+        Toast t = new Toast(ctx);
+        View v = LayoutInflater.from(ctx).inflate(R.layout.fav_delete,null);
+        t.setView(v);
+        t.setGravity(Gravity.CENTER,0,0);
+        t.setDuration(Toast.LENGTH_LONG);
         t.show();
     }
 
@@ -172,15 +199,23 @@ public class Utils {
             LogUtil.createLog("illegal day of month: ","" + n);
             return "";
         }*/
-        if (n >= 11 && n <= 13) {
-            return "th";
-        }
-        switch (n % 10) {
-            case 1:  return "st";
-            case 2:  return "nd";
-            case 3:  return "rd";
-            default: return "th";
-        }
+       if(Constant.SELECTED_LANG==Constant.LANG_ENG) {
+           if (n >= 11 && n <= 13) {
+               return "th";
+           }
+           switch (n % 10) {
+               case 1:
+                   return "st";
+               case 2:
+                   return "nd";
+               case 3:
+                   return "rd";
+               default:
+                   return "th";
+           }
+       }else{
+           return ".";
+       }
     }
 
     public static String formatDate( String inputDateStr){
@@ -329,4 +364,37 @@ public class Utils {
             return "h";
         }
     }*/
+
+    public void animateHeartButton(final ImageView view, final boolean status) {
+
+        AnimatorSet animatorSet = new AnimatorSet();
+
+        ObjectAnimator rotationAnim = ObjectAnimator.ofFloat(view, "rotation", 0f, 360f);
+        rotationAnim.setDuration(300);
+        rotationAnim.setInterpolator(ACCELERATE_INTERPOLATOR);
+
+        ObjectAnimator bounceAnimX = ObjectAnimator.ofFloat(view, "scaleX", 0.2f, 1f);
+        bounceAnimX.setDuration(300);
+        bounceAnimX.setInterpolator(OVERSHOOT_INTERPOLATOR);
+
+        ObjectAnimator bounceAnimY = ObjectAnimator.ofFloat(view, "scaleY", 0.2f, 1f);
+        bounceAnimY.setDuration(300);
+        bounceAnimY.setInterpolator(OVERSHOOT_INTERPOLATOR);
+        bounceAnimY.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                //  holder.btnLike.setImageResource(R.drawable.ic_heart_red);
+               // view.setImageResource(status ? R.drawable.heart_filled : R.drawable.heart);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                view.setImageResource(status ? R.drawable.heart_filled : R.drawable.heart);
+            }
+        });
+
+        animatorSet.play(bounceAnimX).with(bounceAnimY).after(rotationAnim);
+        animatorSet.start();
+
+    }
 }

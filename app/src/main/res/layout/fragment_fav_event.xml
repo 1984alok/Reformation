@@ -1,18 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    app:cardCornerRadius="3dp"
+    app:cardElevation="8dp"
+    app:cardBackgroundColor="@color/white">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/dp10">
 
     <TextView
         android:id="@+id/id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        android:layout_toRightOf="@+id/delete"
+        android:text="tttt"
+        android:layout_toLeftOf="@+id/arrow"
+        android:layout_alignWithParentIfMissing="true"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:singleLine="true"
+        android:ellipsize="end"/>
 
     <TextView
+        android:ellipsize="end"
+        android:layout_below="@+id/id"
+        android:layout_marginTop="@dimen/dp1"
         android:id="@+id/content"
+        android:layout_toRightOf="@+id/delete"
+        android:layout_toLeftOf="@+id/arrow"
+        android:layout_alignWithParentIfMissing="true"
         android:layout_width="wrap_content"
+        android:text="desc"
+        android:singleLine="true"
+        android:textColor="@color/dark_grey"
         android:layout_height="wrap_content"
         android:textAppearance="?attr/textAppearanceListItem" />
-</LinearLayout>
+    <ImageView
+        android:id="@+id/delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/delete"
+        android:layout_marginRight="@dimen/dp10"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"/>
+    <ImageView
+        android:id="@+id/arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/list_arrow"
+        android:layout_margin="@dimen/dp10"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:visibility="visible"/>
+</RelativeLayout>
+</android.support.v7.widget.CardView>

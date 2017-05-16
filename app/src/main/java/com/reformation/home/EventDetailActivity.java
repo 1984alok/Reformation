@@ -14,6 +14,7 @@ import android.transition.Transition;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -82,6 +83,7 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
     String id = "";
     DBAdapter dbAdapter;
     FavDB favDB;
+    boolean favStatus = false;
 
 
     @Override
@@ -155,7 +157,8 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
             createEventCatgList(this,catgList,event.getCategory());
             textViewTicket.setText(getResources().getString(R.string.ticket_info));
            // getEventDetails(id);
-            rightFilterImg.setImageResource(favDB.isFav(id,"event")?R.drawable.heart_filled:R.drawable.heart);
+            favStatus = favDB.isFav(id,"event");
+            rightFilterImg.setImageResource(favStatus?R.drawable.heart_filled:R.drawable.heart);
         }
 
 
@@ -213,7 +216,7 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
 
             @Override
             public void onFailure(Call<EventdetailResponse> call, Throwable t) {
-                Log.d("onFailure ::", t.getMessage());
+          //      Log.d("onFailure ::", t.getMessage());
                 if (dlg != null)
                     dlg.hideDialog();
 
@@ -293,11 +296,29 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
                 break;
 
             case R.id.imageViewRight:
-                favDB.createFavinfo(new FavModel(event.getTitle(),event.getTitle_de(),
-                        event.getStart(),event.getEnd(),event.getId(),"","","event",true));
+                toggleHeart();
+
                 break;
         }
     }
+
+    private void toggleHeart() {
+
+        if(favStatus){
+            favDB.deleteFav(event.getId());
+            Utils.showDisLikeToast(this);
+        }else{
+            favDB.createFavinfo(new FavModel(event.getTitle(),event.getTitle_de(),
+                    event.getStart(),event.getDate(),event.getId(),"","","event",true));
+            Utils.showLikeToast(this);
+        }
+
+        favStatus = favDB.isFav(id,"event");
+        new Utils().animateHeartButton(rightFilterImg,favStatus);
+
+    }
+
+
 
 
     @Override

@@ -18,10 +18,22 @@ public class DBAdapter {
 					+ FavDB.FAV_NAME + " TEXT," //$NON-NLS-1$
 					+ FavDB.FAV_NAME_DE + " TEXT,"
 					+ FavDB.FAV_START + " TEXT," //$NON-NLS-1$
-					+ FavDB.FAV_END + " TEXT,"
+					+ FavDB.FAV_DATE + " TEXT,"
 					+ FavDB.FAV_ADDRSS + " TEXT," //$NON-NLS-1$
 					+ FavDB.FAV_ADDRSS_DE + " TEXT,"
 					+ FavDB.FAV_CATG + " TEXT" + ");"; //$NON-NLS-1$ //$NON-NLS-2$
+
+
+	private static final String CREATE_TABLE_AUDIO =
+			"create table AudioTable (_id integer primary key autoincrement, " //$NON-NLS-1$
+					+ AudioDB.AUDIOID + " TEXT," //$NON-NLS-1$
+					+ AudioDB.AUDIODOWNLOADID + " integer," //$NON-NLS-1$
+					+ AudioDB.AUDIODOWNLOADSTATUS + " integer,"
+					+ AudioDB.AUDIOGATEID + " TEXT," //$NON-NLS-1$
+					+ AudioDB.AUDIOSDCARDPATH_EN + " TEXT,"
+					+ AudioDB.AUDIOSDCARDPATH_DE + " TEXT," //$NON-NLS-1$
+					+ AudioDB.AUDIODOWNLOADPATH_EN + " TEXT,"
+					+ AudioDB.AUDIODOWNLOADPATH_DE + " TEXT" + ");"; //$NON-NLS-1$ //$NON-NLS-2$
 
 
 
@@ -52,7 +64,9 @@ public class DBAdapter {
 		{
 
 			db.execSQL(CREATE_TABLE_FAV);
+			db.execSQL(CREATE_TABLE_AUDIO);
 		}
+
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion,

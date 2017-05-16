@@ -23,6 +23,8 @@ import adapter.GalleryAdapter;
 import adapter.HomeEventAdapter;
 import apihandler.ApiClient;
 import apihandler.ApiInterface;
+import database.DBAdapter;
+import database.FavDB;
 import model.Audio;
 import model.EventDetailGateData;
 import model.EventDetailPlaceData;
@@ -31,6 +33,7 @@ import model.EventResponseData;
 import model.EventdetailResponse;
 import model.Exhibitor;
 import model.ExhibitorDetailResponseById;
+import model.FavModel;
 import model.Gallery;
 import model.GateModel;
 import model.PlaceDetailData;
@@ -70,6 +73,9 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
 
     LatLng location;
     String id = "";
+    DBAdapter dbAdapter;
+    FavDB favDB;
+    boolean favStatus = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +84,10 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
 
         dlg = CustomProgresDialog.getInstance(this);
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
-
+        dbAdapter = new DBAdapter(this);
+        dbAdapter.open();
+        favDB = new FavDB(this);
+        favDB.open();
         topicHeader =(TextView)findViewById(R.id.textViewHeaderTitle);
         leftImg=(ImageView)findViewById(R.id.imageViewLeft);
         favouriteImage=(ImageView)findViewById(R.id.imageViewRight);
@@ -123,6 +132,7 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
         topicHeader.setText(getResources().getString(R.string.exhibitors));
         favouriteImage.setImageResource(R.drawable.heart);
         leftImg.setOnClickListener(this);
+        favouriteImage.setOnClickListener(this);
         mapFrame.setOnClickListener(this);
 //        imageViewShare.setOnClickListener(this);
 
@@ -132,6 +142,8 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
             topicTitle.setText(exhibitor.getPlaceName());
             topicDesc.setText(exhibitor.getDescp());
             textViewaddrss.setText(exhibitor.getAddress());
+            favStatus = favDB.isFav(id,"place");
+            favouriteImage.setImageResource(favStatus?R.drawable.heart_filled:R.drawable.heart);
 
             getPlaceDetails(id);
         }
@@ -146,8 +158,35 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
             case R.id.imageViewLeft:
                 super.onBackPressed();
                 break;
+            case R.id.imageViewRight:
+                toggleHeart();
 
+                break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        favDB.close();
+        dbAdapter.close();
+    }
+
+
+    private void toggleHeart() {
+
+        if(favStatus){
+            favDB.deleteFav(exhibitor.getId());
+            Utils.showDisLikeToast(this);
+        }else{
+            favDB.createFavinfo(new FavModel(placeData.getPlaceName(),placeData.getPlaceNameDe(),
+                    "","",placeData.getId(),exhibitor.getAddress(),exhibitor.getAddress(),"place",true));
+            Utils.showLikeToast(this);
+        }
+
+        favStatus = favDB.isFav(id,"place");
+        new Utils().animateHeartButton(favouriteImage,favStatus);
+
     }
 
 

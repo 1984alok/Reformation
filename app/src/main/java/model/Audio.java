@@ -7,12 +7,64 @@ import com.google.gson.annotations.SerializedName;
  * Created by Alok on 15-04-2017.
  */
 public class Audio {
+    @SerializedName("downloadStatus")
+    @Expose
+    private int downloadStatus;
+
+    @SerializedName("downloadProgress")
+    @Expose
+    private int downloadProgress;
+
+    public int getDownloadStatus() {
+        return downloadStatus;
+    }
+
+    public void setDownloadStatus(int downloadStatus) {
+        this.downloadStatus = downloadStatus;
+    }
+
+    public int getDownloadId() {
+        return downloadId;
+    }
+
+    public void setDownloadId(int downloadId) {
+        this.downloadId = downloadId;
+    }
+
+    public String getSdcardPath() {
+        return sdcardPath;
+    }
+
+    public void setSdcardPath(String sdcardPath) {
+        this.sdcardPath = sdcardPath;
+    }
+
+    @SerializedName("downloadId")
+    @Expose
+    private int downloadId;
+
+    @SerializedName("sdcardPath")
+    @Expose
+    private String sdcardPath;
+
+    public String getSdcardPathDe() {
+        return sdcardPathDe;
+    }
+
+    public void setSdcardPathDe(String sdcardPathDe) {
+        this.sdcardPathDe = sdcardPathDe;
+    }
+
+    @SerializedName("sdcardPathDe")
+    @Expose
+    private String sdcardPathDe;
+
     @SerializedName("id")
     @Expose
     private String id;
     @SerializedName("title_en")
     @Expose
-    private Object titleEn;
+    private String titleEn;
     @SerializedName("speaker_en")
     @Expose
     private String speakerEn;
@@ -82,11 +134,11 @@ public class Audio {
         this.id = id;
     }
 
-    public Object getTitleEn() {
+    public String getTitleEn() {
         return titleEn;
     }
 
-    public void setTitleEn(Object titleEn) {
+    public void setTitleEn(String titleEn) {
         this.titleEn = titleEn;
     }
 
