@@ -24,7 +24,10 @@ import com.reformation.home.fragment.ProgramFragment;
 import bottombar.BottomBar;
 import bottombar.OnTabReselectListener;
 import bottombar.OnTabSelectListener;
+import services.LocationFetchingService;
 import utils.CustomProgresDialog;
+import utils.LogUtil;
+import utils.Utils;
 
 public class HomeScreen extends AppCompatActivity {
     // tags used to attach the fragments
@@ -41,6 +44,7 @@ public class HomeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
+        Utils.createCLAPPDirectory();
         mHandler = new Handler();
         /*if (savedInstanceState == null) {
             navItemIndex = R.id.tab_home;
@@ -152,6 +156,10 @@ public class HomeScreen extends AppCompatActivity {
         startActivity(mIntent);
         overridePendingTransition(R.anim.slide_up,R.anim.stay);
     }
+
+
+
+
 
 
 }

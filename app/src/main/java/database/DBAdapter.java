@@ -5,6 +5,10 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.io.File;
+
+import utils.Constant;
+
 public class DBAdapter {
 
 	public static final String DATABASE_NAME = "ReformationDB"; //$NON-NLS-1$
@@ -56,7 +60,10 @@ public class DBAdapter {
 	{
 		DatabaseHelper(Context context)
 		{
-			super(context, DATABASE_NAME, null, DATABASE_VERSION);
+			//super(context, DATABASE_NAME, null, DATABASE_VERSION);
+			super(context, Constant.DATABASE_FILE_PATH
+					+ File.separator + "RF_DB"
+					+ File.separator + DATABASE_NAME, null, DATABASE_VERSION);
 		}
 
 		@Override

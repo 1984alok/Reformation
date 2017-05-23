@@ -221,6 +221,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Swipe
 //                Log.d("onFailure ::",t.getMessage());
                 if(dlg!=null)
                     dlg.hideDialog();
+                if(getActivity()!=null)
                 Utils.showSnackBar(getActivity().getResources().getString(R.string.network_error_txt),view);
 
             }

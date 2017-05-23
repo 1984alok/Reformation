@@ -17,12 +17,12 @@
         >
         <FrameLayout
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp170"
+            android:layout_height="wrap_content"
             android:layout_gravity="center">
             <ImageView
                 android:id="@+id/homeMenuImg"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp170"
+                android:layout_height="wrap_content"
                 android:scaleType="fitXY"
                 android:maxHeight="@dimen/home_imageHeight"/>
             <ProgressBar

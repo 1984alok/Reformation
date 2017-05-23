@@ -7,10 +7,12 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import model.Audio;
 import model.FavModel;
+import utils.Constant;
 
 /**
  * Created by muvi on 16/5/17.
@@ -44,7 +46,10 @@ public class AudioDB {
     private static class DatabaseHelper extends SQLiteOpenHelper {
 
         DatabaseHelper(Context context) {
-            super(context, DBAdapter.DATABASE_NAME, null, DBAdapter.DATABASE_VERSION);
+            //super(context, DBAdapter.DATABASE_NAME, null, DBAdapter.DATABASE_VERSION);
+            super(context, Constant.DATABASE_FILE_PATH
+                    + File.separator + "RF_DB"
+                    + File.separator + DBAdapter.DATABASE_NAME, null, DBAdapter.DATABASE_VERSION);
         }
 
         @Override
@@ -97,13 +102,14 @@ public class AudioDB {
         System.out.println("inserting data into  data base...");
         ContentValues initialValues = new ContentValues();
         initialValues.put(AUDIOID, info.getId());
-        initialValues.put(AUDIOGATEID, info.getGateareaId());
         initialValues.put(AUDIODOWNLOADID, info.getDownloadId());
+        initialValues.put(AUDIOGATEID, info.getGateareaId());
+        initialValues.put(AUDIODOWNLOADSTATUS, info.getDownloadStatus());
         initialValues.put(AUDIOSDCARDPATH_EN, info.getSdcardPath());
         initialValues.put(AUDIOSDCARDPATH_DE, info.getSdcardPathDe());
         initialValues.put(AUDIODOWNLOADPATH_EN, info.getAudioEn());
         initialValues.put(AUDIODOWNLOADPATH_DE, info.getAudio());
-        initialValues.put(AUDIODOWNLOADSTATUS, info.getDownloadStatus());
+
         return this.mDb.insert(AUDIO_TABLE, null, initialValues);
     }
 
@@ -112,20 +118,21 @@ public class AudioDB {
 
     public Audio getAudiinfo(String gateId) {
 
-        String selectQuery = "SELECT * FROM " + AUDIO_TABLE +" WHERE "+AUDIOGATEID+" = '"+gateId+"'";
+        String selectQuery = "SELECT * FROM " + AUDIO_TABLE +" WHERE "+AUDIOID+" = '"+gateId+"'";
         Audio info = null;
         Cursor cur = this.mDb.rawQuery(selectQuery, null);
         if(cur.moveToFirst()){
 
-                info = new Audio();
-                info.setId(cur.getString(1));
-                info.setGateareaId(cur.getString(2));
-                info.setDownloadId(cur.getInt(3));
-                info.setSdcardPath(cur.getString(4));
-                info.setSdcardPathDe(cur.getString(5));
-                info.setAudioEn(cur.getString(6));
-                info.setAudio(cur.getString(7));
-                info.setDownloadStatus(cur.getInt(8));
+            info = new Audio();
+            info.setId(cur.getString(1));
+            info.setDownloadId(cur.getInt(2));
+            info.setDownloadStatus(cur.getInt(3));
+            info.setGateareaId(cur.getString(4));
+            info.setSdcardPath(cur.getString(5));
+            info.setSdcardPathDe(cur.getString(6));
+            info.setAudioEn(cur.getString(7));
+            info.setAudio(cur.getString(8));
+
 
         }
         return info;
@@ -133,21 +140,21 @@ public class AudioDB {
 
     }
 
-    public boolean updateAppDownLoadInfo(int id,int downloadStatus){
+    public boolean updateAppDownLoadInfo(String id,int downloadStatus){
 
         System.out.println("updating downloadStatus data into  data base...");
         ContentValues initialValues = new ContentValues();
         initialValues.put(AUDIODOWNLOADSTATUS, ""+downloadStatus);
-        return this.mDb.update(AUDIO_TABLE, initialValues, AUDIOID + " = " + id, null) >0;
+        return this.mDb.update(AUDIO_TABLE, initialValues, AUDIOID + " = '" + id+"'", null) >0;
     }
 
 
-    public boolean updateAppDownLoadID(int id,int downLoadId){
+    public boolean updateAppDownLoadID(String id,int downLoadId){
 
         System.out.println("updating downLoadId data into  data base...");
         ContentValues initialValues = new ContentValues();
         initialValues.put(AUDIODOWNLOADID, ""+downLoadId);
-        return this.mDb.update(AUDIO_TABLE, initialValues, AUDIOID + " = " + id, null) >0;
+        return this.mDb.update(AUDIO_TABLE, initialValues, AUDIOID + " = '" + id+"'", null) >0;
     }
 
 

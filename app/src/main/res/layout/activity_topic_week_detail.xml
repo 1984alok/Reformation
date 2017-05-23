@@ -58,6 +58,7 @@
                     android:gravity="center"
                     android:drawablePadding="@dimen/dp10"
                     android:text="Period: 24th-29th May"
+                    android:background="@drawable/press_bag2"
                     android:drawableLeft="@drawable/calendar"/>
 
 

@@ -43,13 +43,13 @@
     <string name="ticket_info">Ticket erforderlich</string>
     <string name="gateTitel">Torräume</string>
     <string name="gateDesc"><![CDATA[Die Open-Air-Ausstellung steht unter dem Titel „Tore der Freiheit“ – sinnbildlich für die Tore, die mit der Reformation aufgestoßen wurden und neue Freiheiten brachten. Wie Martin Luther im Jahr 1517 die Lebensumstände seiner Zeit hinterfragte, so wird 2017 Gegenwärtiges diskutiert: Jugend, Spiritualität, Globalisierung, Ökumene & Religion, Kunst & Kultur, Gerechtigkeit, Frieden und Bewahrung der Schöpfung. Angeordnet sind die Themen in sieben „Torräumen“. Das schafft nicht nur inhaltliche Orientierung, sondern auch räumliche vor Ort. Installationen, von Studierenden verschiedener Universitäten aus Deutschland und Österreich entworfen, laden in jedem Torraum zum Entdecken und Nachdenken ein. ]]></string>
-    <string name="gotit">Got It</string>
-    <string name="cancel">cancel</string>
-    <string name="catogory">category</string>
+    <string name="gotit">got It</string>
+    <string name="cancel">stornieren</string>
+    <string name="catogory">Kategorie</string>
     <string name="period">Zeitraum</string>
-    <string name="filter">filter</string>
-    <string name="resetfilter">reset filter</string>
-    <string name="selectall">Select All</string>
+    <string name="filter">Filter</string>
+    <string name="resetfilter">Filter zurücksetzen</string>
+    <string name="selectall">Alle auswählen</string>
     <string name="policy">Geschäftsstelle: Reformationsjubiläum 2017 e.V.
 Neustraße 10b
 06886 Lutherstadt Wittenberg
@@ -66,18 +66,21 @@ Amtsgericht Stendal
 Vereinsregister VR 3400
 
 </string>
-    <string name="event">Events</string>
-    <string name="favourites">Favorites</string>
+    <string name="event">Geschehen</string>
+    <string name="favourites">Favoriten</string>
 
     <string name="opening">Öffnungszeiten</string>
-    <string name="sunday">Sun</string>
+    <string name="sunday">Son</string>
     <string name="monday">Mon </string>
-    <string name="tuesday">Tue </string>
-    <string name="wednesday">Wed </string>
+    <string name="tuesday">Die </string>
+    <string name="wednesday">Mit </string>
     <string name="thursday">Thru </string>
-    <string name="friday">Fri </string>
+    <string name="friday">Fre </string>
     <string name="saterday">Sat </string>
-    <string name="favourite_added">Favorite added</string>
-    <string name="favourite_removed">Favorite removed</string>
-    <string name="takeover">Take Over</string>
+    <string name="favourite_added">Favorit hinzugefügt.</string>
+    <string name="favourite_removed">Favorit entfernt.</string>
+    <string name="takeover">Übernehmen</string>
+    <string name="already_added">Schon hinzugefügt.</string>
+    <string name="succesfully_added">Erfolgreich zum Kalender hinzugefügt.</string>
+    <string name="spker">Redner :</string>
 </resources>

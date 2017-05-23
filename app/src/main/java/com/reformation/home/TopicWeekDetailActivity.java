@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ListIterator;
 
 import adapter.HomeEventAdapter;
@@ -53,6 +54,7 @@ public class TopicWeekDetailActivity extends AppCompatActivity implements View.O
     private LinearLayoutManager layoutManager;
     SwipeRefreshLayout mSwipeRefreshLayout;
     private TopicweekResponse.TopicWeekModel topicweekResponse;
+    TopicweekResponse.TopicWeekModel topicWeekModel;
     ProgressBar progressBar;
     TopicMonthWiseAdapter topicMonthWiseAdapter;
 
@@ -77,19 +79,20 @@ public class TopicWeekDetailActivity extends AppCompatActivity implements View.O
         layoutManager
                 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
-       // Drawable drawable = getResources().getDrawable(R.drawable.anniversary_devider);
-       // eventRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL_LIST,drawable));
+        // Drawable drawable = getResources().getDrawable(R.drawable.anniversary_devider);
+        // eventRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL_LIST,drawable));
         eventRecyclerView.setHasFixedSize(true);
         eventRecyclerView.setLayoutManager(layoutManager);
         rightFilterImg.setImageResource(R.drawable.filter);
         leftImg.setOnClickListener(this);
+        topic_date.setOnClickListener(this);
         rightFilterImg.setOnClickListener(this);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         dlg = CustomProgresDialog.getInstance(this);
         topicHeader.setText(getResources().getString(R.string.topic_week_title));
         topicweekResponse = (TopicweekResponse.TopicWeekModel) getIntent().getSerializableExtra("Data");
         if(topicweekResponse!=null)
-        loadTopicWeek(topicweekResponse);
+            loadTopicWeek(topicweekResponse);
     }
 
 
@@ -97,7 +100,8 @@ public class TopicWeekDetailActivity extends AppCompatActivity implements View.O
     private void loadTopicWeek(TopicweekResponse.TopicWeekModel topicWeekModel) {
 
         if(topicWeekModel!=null){
-                eventList = topicWeekModel.getEvent();
+            this.topicWeekModel= topicWeekModel;
+            eventList = topicWeekModel.getEvent();
             if(eventList!=null) {
                 homeEventAdapter = new HomeEventAdapter(this, eventList, Constant.EVENT_TOPIC_DETAIL_TYPE);
                 homeEventAdapter.setOnItemClickListener(mItemClickListener);
@@ -116,12 +120,12 @@ public class TopicWeekDetailActivity extends AppCompatActivity implements View.O
 
             topic_date.setText(getResources().getString(R.string.topic_date)+" "+
                     Utils.getDaywithTHFormatFromDate(sdate)+"-"+Utils.getDaywithTHFormatFromDate(edate)+" "+
-            Utils.getMonthFromDate(edate));
+                    Utils.getMonthFromDate(edate));
             topicTitle.setText(topicWeekModel.getToWeekTitle());
             topicDesc.setText(topicWeekModel.getToWeekDes()!=null?topicWeekModel.getToWeekDes():getResources().getString(R.string.topic_desc));
 
             FontUtls.loadFont(this,"fonts/RobotoCondensed-Bold.ttf",topicTitle);
-          //  FontUtls.loadFont(this,"fonts/RobotoCondensed-Bold.ttf",topicDesc);
+            //  FontUtls.loadFont(this,"fonts/RobotoCondensed-Bold.ttf",topicDesc);
 
 
         }
@@ -140,7 +144,7 @@ public class TopicWeekDetailActivity extends AppCompatActivity implements View.O
                 dlg.hideDialog();
                 if(response.isSuccessful()){
                     TopicweekResponse model = response.body();
-                   // loadTopicWeek(model);
+                    // loadTopicWeek(model);
                 }
 
             }
@@ -161,9 +165,37 @@ public class TopicWeekDetailActivity extends AppCompatActivity implements View.O
             case R.id.imageViewLeft:
                 super.onBackPressed();
                 break;
+            case R.id.textViewTopicDate:
+                HashMap<String,Long> calanderMap = null;
+                try{
+                    calanderMap  = Utils.getHashMapfromSharedPref(this);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }finally {
+
+                    if (calanderMap == null) {
+                        calanderMap = new HashMap<>();
+                    }
+                    if (calanderMap != null) {
+                        if (calanderMap.get(topicWeekModel.getId()) == null) {
+                           long status = Utils.addEventToCalenderForTopicWeek(this, Utils.getMillisecFromDate(topicWeekModel.getPerStart()),
+                                    Utils.getMillisecFromDate(topicWeekModel.getPerEnd()), topicWeekModel.getToWeekTitle());
+                            if (status != -1) {
+                                calanderMap.put(topicWeekModel.getId(), status);
+                                Utils.putHashMapIntoSharedPref(TopicWeekDetailActivity.this, calanderMap);
+                                Utils.showToast(TopicWeekDetailActivity.this, getResources().getString(R.string.succesfully_added));
+                            }
+                        } else {
+                            Utils.showToast(TopicWeekDetailActivity.this, getResources().getString(R.string.already_added));
+                        }
+
+                    }
+                }
+
+                break;
 
         }
-        
+
     }
 
     @Override
@@ -180,7 +212,7 @@ public class TopicWeekDetailActivity extends AppCompatActivity implements View.O
 
 
     private void refreshContent(){
-       // getTopicWeek();
+        // getTopicWeek();
         mSwipeRefreshLayout.setRefreshing(false);
     }
 

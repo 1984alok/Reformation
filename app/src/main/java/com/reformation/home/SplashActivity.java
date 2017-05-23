@@ -23,6 +23,7 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 
 import java.util.Locale;
 
+import services.LocationFetchingService;
 import utils.Constant;
 import utils.LogUtil;
 import utils.Utils;
@@ -213,6 +214,7 @@ public class SplashActivity extends AppCompatActivity implements
         switch (status.getStatusCode()) {
             case LocationSettingsStatusCodes.SUCCESS:
                 Log.i(TAG, "All location settings are satisfied.");
+                startLocationService();
                 checkLangSetting();
 
                 break;
@@ -286,7 +288,7 @@ public class SplashActivity extends AppCompatActivity implements
                 switch (resultCode) {
                     case Activity.RESULT_OK:
                         LogUtil.createLog("RESULT_OK", "User agreed to make required location settings changes.");
-                       // startLocationService();
+                        startLocationService();
                         checkLangSetting();
                         break;
                     case Activity.RESULT_CANCELED:
@@ -309,4 +311,18 @@ public class SplashActivity extends AppCompatActivity implements
         public void onClick(DialogInterface dialog, int which) {
         }
     };
+
+
+
+
+    private void startLocationService(){
+        LogUtil.createLog("Launcher","call start service");
+        startService(new Intent(SplashActivity.this, LocationFetchingService.class)
+        );
+    }
+
+
+    private void stopLocationService(){
+        stopService(new Intent(SplashActivity.this, LocationFetchingService.class));
+    }
 }

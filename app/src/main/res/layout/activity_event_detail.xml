@@ -290,7 +290,7 @@
                         android:id="@+id/textViewOverview"
                         android:textStyle="bold"
                         android:textSize="@dimen/sp15"
-                        android:textColor="@color/blue"
+                        android:textColor="@color/colorPrimary"
                         android:layout_marginRight="@dimen/dp10"
                         android:layout_gravity="left"
                         android:gravity="center"

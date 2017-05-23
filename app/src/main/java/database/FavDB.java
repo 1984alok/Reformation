@@ -7,9 +7,11 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import model.FavModel;
+import utils.Constant;
 
 /**
  * Created by Alok on 08-10-2016.
@@ -43,7 +45,10 @@ public class FavDB {
     private static class DatabaseHelper extends SQLiteOpenHelper {
 
         DatabaseHelper(Context context) {
-            super(context, DBAdapter.DATABASE_NAME, null, DBAdapter.DATABASE_VERSION);
+           // super(context, DBAdapter.DATABASE_NAME, null, DBAdapter.DATABASE_VERSION);
+            super(context, Constant.DATABASE_FILE_PATH
+                    + File.separator + "RF_DB"
+                    + File.separator + DBAdapter.DATABASE_NAME, null, DBAdapter.DATABASE_VERSION);
         }
 
         @Override

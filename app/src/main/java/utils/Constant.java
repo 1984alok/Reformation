@@ -1,9 +1,18 @@
 package utils;
 
+import android.location.Location;
+import android.os.Environment;
+
 /**
  * Created by Alok on 26-03-2017.
  */
 public class Constant {
+
+    public static final String  DATABASE_FILE_PATH =
+            Environment.getExternalStorageDirectory().getAbsolutePath()+"/Android/data/com.reformation.home/DB";
+
+    public static final String AUDIO_DOWNLOAD_PATH =
+            Environment.getExternalStorageDirectory().getAbsolutePath()+"/Android/data/com.reformation.home/Audio";
 
     public static final String LANG_ENG = "en";
     public static final String LANG_GERMAN = "de";
@@ -23,4 +32,6 @@ public class Constant {
     public static final int ACTION_DOWNLOAD_FAILED = 2;
     public static final int ACTION_DOWNLOAD_COMPLETED = 3;
     public static final int ACTION_DOWNLOAD_RUNNING = 4;
+
+    public static Location appLoc = null;
 }

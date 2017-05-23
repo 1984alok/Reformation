@@ -66,8 +66,8 @@ public class FragmentExhibitorTab extends Fragment implements OnLoadListener{
             dlg = CustomProgresDialog.getInstance(context);
             mApiInterface = ApiClient.getClient().create(ApiInterface.class);
             recyclerView = (RecyclerView) view.findViewById(R.id.recyClerViewPlace);
-            recyclerView.setFocusable(false);
-            recyclerView.setNestedScrollingEnabled(false);
+           // recyclerView.setFocusable(false);
+           // recyclerView.setNestedScrollingEnabled(false);
             layoutManagaer
                     = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
 

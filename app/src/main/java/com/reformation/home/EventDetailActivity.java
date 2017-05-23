@@ -29,6 +29,7 @@ import com.google.gson.JsonObject;
 import com.reformation.home.fragment.DividerItemDecoration;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import adapter.AudioAdapter;
 import adapter.GalleryAdapter;
@@ -145,6 +146,7 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
         mapFrame.setOnClickListener(this);
         imageViewShare.setOnClickListener(this);
         rightFilterImg.setOnClickListener(this);
+        imageCalandar.setOnClickListener(this);
 
         event = (EventModel) getIntent().getSerializableExtra("DATA");
         if(event!=null){
@@ -232,12 +234,14 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
             textViewTopicSubTitle1.setText(event.getSubtitle());
             artist.setText(event.getSpeaker());
 
-            String sdate = Utils.formatDate(event.getDate());
-            String dtTxt =  Utils.getWeekNameFromDay(event.getDate())+", "+
-                    Utils.getDaywithTHFormatFromDate(sdate)+" "+
-                    Utils.getMonthFromDate(sdate)+" | "+ event.getStart().split(":")[0]+Utils.getHrFormat()+"-"
-                    +event.getEnd().split(":")[0]+Utils.getHrFormat();
-            topic_date.setText(dtTxt);
+            if(event.getDate()!=null && event.getStart()!=null && event.getEnd()!=null) {
+                String sdate = Utils.formatDate(event.getDate());
+                String dtTxt = Utils.getWeekNameFromDay(event.getDate()) + ", " +
+                        Utils.getDaywithTHFormatFromDate(sdate) + " " +
+                        Utils.getMonthFromDate(sdate) + " | " + event.getStart().split(":")[0] + Utils.getHrFormat() + "-"
+                        + event.getEnd().split(":")[0] + Utils.getHrFormat();
+                topic_date.setText(dtTxt);
+            }
             createEventCatgList(this,catgList,event.getCategory());
             textViewTicket.setText(getResources().getString(R.string.ticket_info)+":"+event.getTicket());
             topicDesc.setText(event.getDescp());
@@ -297,6 +301,35 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
 
             case R.id.imageViewRight:
                 toggleHeart();
+
+                break;
+            case R.id.imageCalandar:
+                HashMap<String,Long> calanderMap = null;
+                try{
+                    calanderMap  = Utils.getHashMapfromSharedPref(this);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }finally {
+
+                    if (calanderMap == null) {
+                        calanderMap = new HashMap<>();
+                    }
+                    if (calanderMap != null) {
+                        if (calanderMap.get(event.getId()) == null) {
+                            String titl = Constant.SELECTED_LANG==Constant.LANG_ENG?event.getTitle():event.getTitle_de();
+                            long status = Utils.addEventToCalenderForTopicWeek(this, Utils.getMillisecFromDate(event.getDate()),
+                                    Utils.getMillisecFromDate(event.getDate()),titl );
+                            if (status != -1) {
+                                calanderMap.put(event.getId(), status);
+                                Utils.putHashMapIntoSharedPref(EventDetailActivity.this, calanderMap);
+                            }
+                            Utils.showToast(EventDetailActivity.this, getResources().getString(R.string.succesfully_added));
+                        } else {
+                            Utils.showToast(EventDetailActivity.this, getResources().getString(R.string.already_added));
+                        }
+
+                    }
+                }
 
                 break;
         }

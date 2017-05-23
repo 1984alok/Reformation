@@ -1,10 +1,13 @@
 package com.reformation.home;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v4.text.TextUtilsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +22,7 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.ArrayList;
 
 import adapter.AudioAdapter;
+import adapter.AudioDetailAdapter;
 import adapter.GalleryAdapter;
 import adapter.HomeEventAdapter;
 import apihandler.ApiClient;
@@ -249,10 +253,15 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
             if(placeData!=null){
                 topicTitle.setText(Constant.SELECTED_LANG.equals(Constant.LANG_ENG)?placeData.getPlaceName():placeData.getPlaceNameDe());
 
-                String sdate = Utils.formatEvenrtDate(placeData.getPerSelectionStart());
-                String edate = Utils.formatEvenrtDate(placeData.getPerSelectionEnd());
-
-                topic_period.setText(getResources().getString(R.string.period)+":"+sdate+"-"+edate);
+                if(placeData.getPerSelectionStart()!=null&&placeData.getPerSelectionEnd()!=null
+                        && !TextUtils.isEmpty(placeData.getPerSelectionStart())
+                        && !TextUtils.isEmpty(placeData.getPerSelectionEnd())) {
+                    String sdate = Utils.formatEvenrtDate(placeData.getPerSelectionStart());
+                    String edate = Utils.formatEvenrtDate(placeData.getPerSelectionEnd());
+                    topic_period.setText(getResources().getString(R.string.period) + ":" + sdate + "-" + edate);
+                }else{
+                    topic_period.setText("");
+                }
                 topic_OpeningInfo.setText(getResources().getString(R.string.opening)+":"+getOpeningTime());
                 createEventCatgList(this,catgList,placeData.getCategory());
                // topic_ticketInfo.setText(getResources().getString(R.string.ticket_info)+":"+placeData.getTi);
@@ -328,4 +337,51 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
             new Utils().startEventDetailPage(view,position,ExhibitorDetailActivity.this,EventDetailActivity.class,eventModels.get(position));
         }
     };
+
+
+    /*AudioAdapter.OnItemClickListener mItemClickListener2 = new AudioAdapter.OnItemClickListener(){
+        @Override
+        public void onItemClick(View clickView, View view, int position) {
+            switch (clickView.getId()){
+                case R.id.imageViewDownLoad:
+                    onButtonPressed(position,clickView.getTag().toString());
+                    break;
+                case R.id.spkr:
+
+                    startActivity(new Intent(ExhibitorDetailActivity.this, AudioPlayerActivity.class).putExtra("data",audios.get(position)));
+
+                    break;
+            }
+
+        }
+    };*/
+
+   /* private void onButtonPressed(int position, String s) {
+        if(tag.equals("start")) {
+            initDownLoad(audios.get(pos));
+        }else  if(tag.equals("delete")) {
+            deleteAudio(audios.get(pos),pos);
+        }
+    }
+
+    private void deleteAudio(final Audio audio, final int pos) {
+        if(audioDB!=null){
+            ///  audioDB.deleteAudio(audio.getId());
+            if( audioDB.updateAppDownLoadInfo(audio.getId(),Constant.ACTION_NOT_DOWNLOAD_YET)) {
+                audio.setDownloadStatus(Constant.ACTION_NOT_DOWNLOAD_YET);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (chapter_audioFragment != null) {
+                            chapter_audioFragment.refresh(pos);
+
+                        }
+                        if (nearBy_audioFragment != null) {
+                            nearBy_audioFragment.refresh(pos);
+                        }
+                    }
+                });
+            }
+        }
+    }*/
 }

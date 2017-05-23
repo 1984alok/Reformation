@@ -86,7 +86,9 @@ Tax number 115 / 143 / 11694</string>
     <string name="favourite_added">Favorite added</string>
     <string name="favourite_removed">Favorite removed</string>
     <string name="takeover">Take Over</string>
-
+    <string name="already_added">Alredy added.</string>
+    <string name="succesfully_added">Successfully Added to calendar.</string>
+    <string name="spker">Speaker :</string>
 
 
 </resources>

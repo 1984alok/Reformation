@@ -25,6 +25,9 @@ public class PermissionHandler {
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_NETWORK_STATE,
+            Manifest.permission.READ_CALENDAR,
+            Manifest.permission.WRITE_CALENDAR,
+
             };
 
 
@@ -40,12 +43,17 @@ public class PermissionHandler {
         int LOCATION_ACCESS_Fine = ContextCompat.checkSelfPermission(_context, Manifest.permission.ACCESS_FINE_LOCATION);
         int LOCATION_ACCESS_Coarse = ContextCompat.checkSelfPermission(_context, Manifest.permission.ACCESS_COARSE_LOCATION);
         int WIFI_state = ContextCompat.checkSelfPermission(_context, Manifest.permission.ACCESS_NETWORK_STATE);
+        int READ_CAL = ContextCompat.checkSelfPermission(_context, Manifest.permission.READ_CALENDAR);
+        int WRITE_CAL = ContextCompat.checkSelfPermission(_context, Manifest.permission.WRITE_CALENDAR);
+
 
         if (READ_EXTERNAL_STORAGE == PackageManager.PERMISSION_GRANTED
                 && WRITE_EXTERNAL_STORAGE == PackageManager.PERMISSION_GRANTED
                 && LOCATION_ACCESS_Fine == PackageManager.PERMISSION_GRANTED
                 && LOCATION_ACCESS_Coarse == PackageManager.PERMISSION_GRANTED
-                && WIFI_state == PackageManager.PERMISSION_GRANTED) {
+                && WIFI_state == PackageManager.PERMISSION_GRANTED
+                && READ_CAL == PackageManager.PERMISSION_GRANTED
+                && WRITE_CAL == PackageManager.PERMISSION_GRANTED) {
             return true;
         } else {
             return false;

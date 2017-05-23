@@ -6,13 +6,20 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.graphics.Point;
+import android.location.Location;
+import android.net.Uri;
 import android.os.Build;
+import android.provider.CalendarContract;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -34,20 +41,28 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.reformation.home.EventDetailActivity;
 import com.reformation.home.R;
 
+import java.io.File;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.ListIterator;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import apihandler.NetworkStatus;
 import model.EventModel;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by Alok on 01-04-2017.
@@ -97,6 +112,7 @@ public class Utils {
     public static void showToast(Context ctx, String msg){
         Toast t = Toast.makeText(ctx,msg,Toast.LENGTH_SHORT);
         View v = t.getView();
+        v.setPadding(20,10,20,10);
         v.setBackgroundColor(ctx.getResources().getColor(R.color.colorPrimary));
         t.setGravity(Gravity.CENTER,0,0);
         t.show();
@@ -132,7 +148,7 @@ public class Utils {
         bldr.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-              dialog.cancel();
+                dialog.cancel();
             }
         });
         bldr.create().show();
@@ -199,23 +215,23 @@ public class Utils {
             LogUtil.createLog("illegal day of month: ","" + n);
             return "";
         }*/
-       if(Constant.SELECTED_LANG==Constant.LANG_ENG) {
-           if (n >= 11 && n <= 13) {
-               return "th";
-           }
-           switch (n % 10) {
-               case 1:
-                   return "st";
-               case 2:
-                   return "nd";
-               case 3:
-                   return "rd";
-               default:
-                   return "th";
-           }
-       }else{
-           return ".";
-       }
+        if(Constant.SELECTED_LANG==Constant.LANG_ENG) {
+            if (n >= 11 && n <= 13) {
+                return "th";
+            }
+            switch (n % 10) {
+                case 1:
+                    return "st";
+                case 2:
+                    return "nd";
+                case 3:
+                    return "rd";
+                default:
+                    return "th";
+            }
+        }else{
+            return ".";
+        }
     }
 
     public static String formatDate( String inputDateStr){
@@ -384,7 +400,7 @@ public class Utils {
             @Override
             public void onAnimationStart(Animator animation) {
                 //  holder.btnLike.setImageResource(R.drawable.ic_heart_red);
-               // view.setImageResource(status ? R.drawable.heart_filled : R.drawable.heart);
+                // view.setImageResource(status ? R.drawable.heart_filled : R.drawable.heart);
             }
 
             @Override
@@ -396,5 +412,190 @@ public class Utils {
         animatorSet.play(bounceAnimX).with(bounceAnimY).after(rotationAnim);
         animatorSet.start();
 
+    }
+
+
+    public static long addEventToCalenderForTopicWeek(Context ctx,long startTime,long endTime,String tittel){
+        /*Calendar cal = Calendar.getInstance();
+        Intent intent = new Intent(Intent.ACTION_EDIT);
+        intent.setType("vnd.android.cursor.item/event");
+        intent.putExtra("beginTime", startTime);
+       // intent.putExtra("allDay", true);
+       // intent.putExtra("rrule", "FREQ=YEARLY");
+        intent.putExtra("endTime", endTime);
+        intent.putExtra("title", tittel);
+        ctx.startActivity(intent);*/
+        Cursor cur = null;
+        try
+        {
+            // provide CalendarContract.Calendars.CONTENT_URI to
+            // ContentResolver to query calendars
+            cur = ctx.getContentResolver().query(CalendarContract.Calendars.CONTENT_URI,null, null, null, null);
+            if (cur.moveToFirst())
+            {
+                long calendarID=cur.getLong(cur.getColumnIndex(CalendarContract.Calendars._ID));
+                ContentValues eventValues = new ContentValues();
+                // provide the required fields for creating an event to
+                // ContentValues instance and insert event using
+                // ContentResolver
+                eventValues.put (CalendarContract.Events.CALENDAR_ID, calendarID);
+                eventValues.put(CalendarContract.Events.TITLE, tittel);
+                // eventValues.put(CalendarContract.Events.DESCRIPTION," Calendar API"+desc);
+                //  eventValues.put(CalendarContract.Events.ALL_DAY,true);
+                eventValues.put(CalendarContract.Events.DTSTART, startTime);
+                eventValues.put(CalendarContract.Events.DTEND, endTime);
+                eventValues.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().toString());
+                Uri eventUri = ctx.getContentResolver().insert(CalendarContract.Events.CONTENT_URI, eventValues);
+                long eventID = ContentUris.parseId(eventUri);
+                LogUtil.createLog("eventID","-----------"+eventID);
+                return eventID;
+
+
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            if (cur != null)
+            {
+                cur.close();
+            }
+        }
+        return -1;
+    }
+
+    public static long  getMillisecFromDate(  String givenDateString){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date mDate = sdf.parse(givenDateString);
+            long timeInMilliseconds = mDate.getTime();
+            System.out.println("Date in milli :: " + timeInMilliseconds);
+            return timeInMilliseconds;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+
+    public static void putHashMapIntoSharedPref(Context ctx,HashMap<String, Long> testHashMap){
+        //create test hashmap
+        //convert to string using gson
+        Gson gson = new Gson();
+        String hashMapString = gson.toJson(testHashMap);
+
+        //save in shared prefs
+        SharedPreferences prefs = ctx.getSharedPreferences("test", MODE_PRIVATE);
+        prefs.edit().putString("hashString", hashMapString).apply();
+
+    }
+
+    public static HashMap<String,Long> getHashMapfromSharedPref(Context ctx){
+        SharedPreferences prefs = ctx.getSharedPreferences("test", MODE_PRIVATE);
+        Gson gson = new Gson();
+        //get from shared prefs
+        String storedHashMapString =prefs.getString("hashString", "oopsDintWork");
+        java.lang.reflect.Type type = new TypeToken<HashMap<String, Long>>(){}.getType();
+        HashMap<String, Long> testHashMap2 = gson.fromJson(storedHashMapString, type);
+        return testHashMap2;
+    }
+
+
+
+    public static void createCLAPPDirectory(){
+        File folder = new File(Constant.DATABASE_FILE_PATH);
+        boolean success = true;
+        if (!folder.exists()) {
+            success = folder.mkdirs();
+        }
+        if (success) {
+            // Do something on success
+        } else {
+            // Do something else on failure
+        }
+
+       /* File folder = new File(Constants.DATABASE_FILE_PATH);
+        boolean success = true;
+        if(folder.exists()){
+            folder.delete();
+        }
+        folder.mkdirs();*/
+    }
+
+
+    /**
+     * Function to convert milliseconds time to
+     * Timer Format
+     * Hours:Minutes:Seconds
+     * */
+    public String milliSecondsToTimer(long milliseconds){
+        String finalTimerString = "";
+        String secondsString = "";
+
+        // Convert total duration into time
+        int hours = (int)( milliseconds / (1000*60*60));
+        int minutes = (int)(milliseconds % (1000*60*60)) / (1000*60);
+        int seconds = (int) ((milliseconds % (1000*60*60)) % (1000*60) / 1000);
+        // Add hours if there
+        if(hours > 0){
+            finalTimerString = hours + ":";
+        }
+
+        // Prepending 0 to seconds if it is one digit
+        if(seconds < 10){
+            secondsString = "0" + seconds;
+        }else{
+            secondsString = "" + seconds;}
+
+        finalTimerString = finalTimerString + minutes + ":" + secondsString;
+
+        // return timer string
+        return finalTimerString;
+    }
+
+
+    /**
+     * Function to get Progress percentage
+     * @param currentDuration
+     * @param totalDuration
+     * */
+    public int getProgressPercentage(long currentDuration, long totalDuration){
+        Double percentage = (double) 0;
+
+        long currentSeconds = (int) (currentDuration / 1000);
+        long totalSeconds = (int) (totalDuration / 1000);
+
+        // calculating percentage
+        percentage =(((double)currentSeconds)/totalSeconds)*100;
+
+        // return percentage
+        return percentage.intValue();
+    }
+
+    /**
+     * Function to change progress to timer
+     * @param progress -
+     * @param totalDuration
+     * returns current duration in milliseconds
+     * */
+    public int progressToTimer(int progress, int totalDuration) {
+        int currentDuration = 0;
+        totalDuration = (int) (totalDuration / 1000);
+        currentDuration = (int) ((((double)progress) / 100) * totalDuration);
+
+        // return current duration in milliseconds
+        return currentDuration * 1000;
+    }
+
+    public static String getDistance( Location loc1, Location loc2) {
+        if (loc1 != null){
+            int distanceInMeters = (int)loc1.distanceTo(loc2) / 1000;
+            return String.valueOf(distanceInMeters);
+        }else{
+            return "0";
+        }
     }
 }

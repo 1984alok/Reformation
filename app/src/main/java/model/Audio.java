@@ -3,13 +3,35 @@ package model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by Alok on 15-04-2017.
  */
-public class Audio {
+public class Audio  implements Serializable{
     @SerializedName("downloadStatus")
     @Expose
     private int downloadStatus;
+
+    public float getDist() {
+        return dist;
+    }
+
+    public void setDist(float dist) {
+        this.dist = dist;
+    }
+
+    @SerializedName("dist")
+    @Expose
+    private float dist;
+
+    public int getDownloadProgress() {
+        return downloadProgress;
+    }
+
+    public void setDownloadProgress(int downloadProgress) {
+        this.downloadProgress = downloadProgress;
+    }
 
     @SerializedName("downloadProgress")
     @Expose

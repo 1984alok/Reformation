@@ -48,6 +48,20 @@ public class TopicweekResponse implements Serializable{
 
     public class TopicWeekModel implements Serializable{
 
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        @SerializedName("id")
+
+        @Expose
+        private String id;
+
         @SerializedName("header_pic")
         @Expose
         private String headerPic;

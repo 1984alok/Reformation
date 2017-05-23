@@ -134,11 +134,12 @@
                     android:background="@color/light_grey"/>
                 <TextView
                     android:layout_marginTop="@dimen/dp10"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceListItem"
                     android:textColor="@color/black"
                     android:text="@string/email_contact"
+                    android:drawableRight="@drawable/list_arrow"
                     android:id="@+id/settingTextViewEmailCont"
                     android:gravity="left" />
             </LinearLayout>
@@ -205,7 +206,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/dp20"
-                    android:paddingBottom="@dimen/dp20">
+                    android:paddingBottom="@dimen/dp20"
+                    android:background="@color/white">
                     <android.support.v7.widget.RecyclerView
                         android:layout_gravity="center_horizontal"
                         android:id="@+id/anniversaryRecycleview"
