@@ -2,6 +2,8 @@ package com.reformation.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.os.AsyncTask;
 import android.support.v4.text.TextUtilsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +22,9 @@ import android.widget.TextView;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import adapter.AudioAdapter;
 import adapter.AudioDetailAdapter;
@@ -27,6 +32,7 @@ import adapter.GalleryAdapter;
 import adapter.HomeEventAdapter;
 import apihandler.ApiClient;
 import apihandler.ApiInterface;
+import database.AudioDB;
 import database.DBAdapter;
 import database.FavDB;
 import model.Audio;
@@ -44,6 +50,7 @@ import model.PlaceDetailData;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import services.AudioDownLoadManager;
 import utils.Constant;
 import utils.CustomProgresDialog;
 import utils.LogUtil;
@@ -73,6 +80,9 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
 
     private Exhibitor exhibitor;
     private PlaceDetailData placeData;
+    HashMap<String,Audio> downLoadMap = new HashMap<>();
+    public AudioDB audioDB;
+    AudioDownLoadManager audioDownLoadManager;
 
 
     LatLng location;
@@ -80,16 +90,21 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
     DBAdapter dbAdapter;
     FavDB favDB;
     boolean favStatus = false;
+    private Timer timerTask = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exhibitor_detail);
 
-        dlg = CustomProgresDialog.getInstance(this);
-        mApiInterface = ApiClient.getClient().create(ApiInterface.class);
         dbAdapter = new DBAdapter(this);
         dbAdapter.open();
+        audioDB = new AudioDB(this);
+        audioDB.open();
+        audioDownLoadManager = AudioDownLoadManager.getInstance(this);
+
+        dlg = CustomProgresDialog.getInstance(this);
+        mApiInterface = ApiClient.getClient().create(ApiInterface.class);
         favDB = new FavDB(this);
         favDB.open();
         topicHeader =(TextView)findViewById(R.id.textViewHeaderTitle);
@@ -111,7 +126,7 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
         eventGalleryView = (RecyclerView)findViewById(R.id.horizontal_recycler_eventView);
         recyclerview_audioguide = (RecyclerView)findViewById(R.id.recyclerview_audioguide);
         recyclerview_eventList = (RecyclerView)findViewById(R.id.recyclerview_more_events);
-
+        recyclerview_audioguide.setItemAnimator(null);
         recyclerview_audioguide.setFocusable(false);
         recyclerview_audioguide.setNestedScrollingEnabled(false);
         gallerylayoutManager
@@ -173,6 +188,7 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
     protected void onDestroy() {
         super.onDestroy();
         favDB.close();
+        audioDB.close();
         dbAdapter.close();
     }
 
@@ -207,7 +223,7 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
                 if (response.isSuccessful()) {
                     ExhibitorDetailResponseById placedetailResponse = response.body();
                     if(placedetailResponse!=null&&placedetailResponse.getStatus()){
-                       placeData = placedetailResponse.getResponseData();
+                        placeData = placedetailResponse.getResponseData();
                         if(placeData!=null) {
 
                             GateModel gateModel = placeData.getGateData();
@@ -227,7 +243,8 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
 
                             eventModels = placeData.getEventsList();
 
-                            loadDataInView();
+                            if(audios!=null&&audios.size()>0)
+                            fillterAudio(audios);
 
                         }
 
@@ -264,16 +281,17 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
                 }
                 topic_OpeningInfo.setText(getResources().getString(R.string.opening)+":"+getOpeningTime());
                 createEventCatgList(this,catgList,placeData.getCategory());
-               // topic_ticketInfo.setText(getResources().getString(R.string.ticket_info)+":"+placeData.getTi);
+                // topic_ticketInfo.setText(getResources().getString(R.string.ticket_info)+":"+placeData.getTi);
             }
 
             if(placeData!=null){
-             //   textViewaddrss.setText(placeData.getStreet()+""+placeData.getCity()+placeData.getZip()+placeData.getCountry());
+                //   textViewaddrss.setText(placeData.getStreet()+""+placeData.getCity()+placeData.getZip()+placeData.getCountry());
                 location = new LatLng(Double.parseDouble(placeData.getLatitude()!=null?placeData.getLatitude():"0.0"), Double.parseDouble(placeData.getLongitude()!=null?placeData.getLongitude():"0.0"));
             }
 
             if(audios!=null&&audios.size()>0){
                 audioAdapter = new AudioAdapter(this,audios);
+                audioAdapter.setOnItemClickListener(mItemClickListener2);
                 recyclerview_audioguide.setAdapter(audioAdapter);
             }
             if(galleries!=null&&galleries.size()>0){
@@ -339,7 +357,7 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
     };
 
 
-    /*AudioAdapter.OnItemClickListener mItemClickListener2 = new AudioAdapter.OnItemClickListener(){
+    AudioAdapter.OnItemClickListener mItemClickListener2 = new AudioAdapter.OnItemClickListener(){
         @Override
         public void onItemClick(View clickView, View view, int position) {
             switch (clickView.getId()){
@@ -354,9 +372,9 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
             }
 
         }
-    };*/
+    };
 
-   /* private void onButtonPressed(int position, String s) {
+    private void onButtonPressed(int pos, String tag) {
         if(tag.equals("start")) {
             initDownLoad(audios.get(pos));
         }else  if(tag.equals("delete")) {
@@ -372,16 +390,162 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (chapter_audioFragment != null) {
-                            chapter_audioFragment.refresh(pos);
-
-                        }
-                        if (nearBy_audioFragment != null) {
-                            nearBy_audioFragment.refresh(pos);
-                        }
+                        audioAdapter.notifyItemChanged(pos);
                     }
                 });
             }
         }
-    }*/
+    }
+
+
+    private void fillterAudio(final ArrayList<Audio> audios) {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                for (Audio audio : audios) {
+                    Audio tempAudio = audioDB.getAudiinfo(audio.getId());
+                    if (tempAudio != null) {
+                        audio.setDownloadProgress(tempAudio.getDownloadProgress());
+                        audio.setDownloadId(tempAudio.getDownloadId());
+                        audio.setDownloadStatus(tempAudio.getDownloadStatus());
+                        audio.setSdcardPath(tempAudio.getSdcardPath());
+                        audio.setSdcardPathDe(tempAudio.getSdcardPathDe());
+                        audio = AudioDownLoadManager.getInstance(ExhibitorDetailActivity.this).checkDownLoadStatusFromDownloadManager(audio);
+
+
+                    } else {
+                        audio.setDownloadProgress(0);
+                        audio.setDownloadId(-1);
+                        audio.setDownloadStatus(Constant.ACTION_NOT_DOWNLOAD_YET);
+                        audio.setSdcardPath("");
+                        audio.setSdcardPathDe("");
+                    }
+                    Location loc = new Location("GPS");
+                    loc.setLatitude(audio.getLatitude() != null ? Double.parseDouble(audio.getLatitude()) : 0.0);
+                    loc.setLongitude(audio.getLongitude() != null ? Double.parseDouble(audio.getLongitude()) : 0.0);
+                    audio.setDist(Float.parseFloat(Utils.getDistance(Constant.appLoc, loc)));
+                    checkAudioDownloadInfoAndUpdate(audio);
+
+                }
+
+                LogUtil.createLog("Fillter map", audios.get(0).getTitle() + "" + audios.get(0).getId() + "" + audios.get(0).getDownloadStatus());
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                loadDataInView();
+                if (downLoadMap.size() > 0) {
+                    startTimer();
+                }
+            }
+        }.execute();
+    }
+
+    public void checkAudioDownloadInfoAndUpdate(Audio audio){
+        int status = audio.getDownloadStatus();
+        if (status == Constant.ACTION_DOWNLOAD_COMPLETED) {
+            LogUtil.createLog("Download ::","ACTION_DOWNLOAD_COMPLETED");
+            audio.setDownloadStatus(Constant.ACTION_DOWNLOAD_COMPLETED);
+            downLoadMap.remove(audio.getId());
+            boolean status1 =  audioDB.updateAppDownLoadID(audio.getId(),audio.getDownloadId());
+            boolean status2 =  audioDB.updateAppDownLoadInfo(audio.getId(),audio.getDownloadStatus());
+        } else if (status == Constant.ACTION_DOWNLOAD_FAILED) {
+            // 1. process for download fail.
+            audio.setDownloadStatus(Constant.ACTION_NOT_DOWNLOAD_YET);
+            downLoadMap.remove(audio.getId());
+            boolean status1 =  audioDB.updateAppDownLoadID(audio.getId(),audio.getDownloadId());
+            boolean status2 =  audioDB.updateAppDownLoadInfo(audio.getId(),audio.getDownloadStatus());
+            LogUtil.createLog("Download ::","ACTION_DOWNLOAD_COMPLETED");
+        }else if (audio.getDownloadStatus() == Constant.ACTION_DOWNLOAD_RUNNING) {
+            downLoadMap.put(audio.getId(), audio);
+        }
+
+        if(downLoadMap.size()==0){
+            stopTimer();
+        }
+
+    }
+
+
+
+    private void startTimer() {
+        Log.i("Timer ","start Timer Called.");
+        if (timerTask == null) {
+            timerTask = new Timer();
+            timerTask.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    Log.i("Timer ","Timer running.");
+                    for (int i = 0; i < audios.size(); i++) {
+                        final int pos = i;
+                        final Audio audio = audios.get(pos);
+                        if(audio.getDownloadStatus()==Constant.ACTION_DOWNLOAD_RUNNING) {
+                            AudioDownLoadManager.getInstance(ExhibitorDetailActivity.this).checkDownLoadStatusFromDownloadManager(audio);
+                            checkAudioDownloadInfoAndUpdate(audio);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (audioAdapter != null) {
+                                        refreshProgress(audio, pos);
+                                    }
+                                }
+                            });
+
+
+
+                        }
+                    }
+
+                }
+            }, 0, 200);
+        }
+    }
+
+
+    public void refreshProgress(Audio audio,int pos) {
+        LogUtil.createLog("Download prgrss",""+audio.getDownloadProgress());
+        audios.get(pos).setDownloadProgress(audio.getDownloadProgress());
+        audioAdapter.notifyItemChanged(pos);
+
+
+    }
+
+    private void stopTimer() {
+        if (timerTask != null) {
+            timerTask.cancel();
+            timerTask = null;
+            Log.i("Timer Cancel","Stop Timer Called.");
+        }
+    }
+
+
+    public void initDownLoad(Audio audio){
+        if(audio.getDownloadStatus()==Constant.ACTION_NOT_DOWNLOAD_YET) {
+            String titel = (Constant.SELECTED_LANG != Constant.LANG_ENG ? audio.getTitle() : audio.getTitleEn());
+            String audioPath = ApiClient.BASE_URL + (Constant.SELECTED_LANG != Constant.LANG_ENG ? audio.getAudio() : audio.getAudioSize());
+            long downId = audioDownLoadManager.startDownloadManager(audioPath, titel);
+            if (downId != -1) {
+                audio.setDownloadId((int) downId);
+                audio.setDownloadStatus(Constant.ACTION_DOWNLOAD_RUNNING);
+                audio.setSdcardPath(audioDownLoadManager.getSdCardPath());
+                downLoadMap.put(audio.getId(), audio);
+                if(audioDB.getAudiinfo(audio.getId())==null){
+                    audioDB.createAudioinfo(audio);
+                }else {
+                    boolean status = audioDB.updateAppDownLoadID(audio.getId(), audio.getDownloadId());
+                    boolean status2 = audioDB.updateAppDownLoadInfo(audio.getId(), audio.getDownloadStatus());
+                }
+
+                startTimer();
+            }
+        }
+
+    }
+
+
+
+
 }

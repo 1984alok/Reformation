@@ -2,6 +2,7 @@ package com.reformation.home.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -19,6 +21,7 @@ import model.Exhibitor;
 import model.ExhibitorResponse;
 import utils.FontUtls;
 import utils.LoadInPicasso;
+import utils.LogUtil;
 import utils.OnLoadListener;
 
 import static com.reformation.home.R.id.dlg;
@@ -33,16 +36,20 @@ public class ExhibitorFragment extends Fragment implements OnLoadListener{
     FragAdapter adapter;
     ViewPager viewPager;
     TabLayout tabLayout;
+    LinearLayout frame;
     private TextView topicHeader,gateTitle, gateDesc;
     private ImageView gateImgview,leftImg;
     ProgressBar progressBar;
     public   ExhibitorResponse model;
     FragmentExhibitorTab fragmentExhibitorTab;
+    FragmentOtherLocationTab fragmentOtherLocationTab;
+    int count = 0;
     private void setupViewPager(ViewPager viewPager) {
         adapter = new FragAdapter(getChildFragmentManager());
         fragmentExhibitorTab = new FragmentExhibitorTab();
+        fragmentOtherLocationTab= new FragmentOtherLocationTab();
         adapter.addFragment(fragmentExhibitorTab,getResources().getString(R.string.exhibitors));
-        adapter.addFragment(new FragmentOtherLocationTab(),getResources().getString(R.string.other_location));
+        adapter.addFragment(fragmentOtherLocationTab,getResources().getString(R.string.other_location));
         viewPager.setAdapter(adapter);
     }
 
@@ -62,8 +69,10 @@ public class ExhibitorFragment extends Fragment implements OnLoadListener{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         viewPager = (ViewPager) view.findViewById(R.id.viewpager);
+        frame = (LinearLayout) view.findViewById(R.id.frame);
         setupViewPager(viewPager);
         fragmentExhibitorTab.setOnLoadListener(this);
+        fragmentOtherLocationTab.setOnLoadListener(this);
         tabLayout = (TabLayout) view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         topicHeader = (TextView) view.findViewById(R.id.textViewHeaderTitle);
@@ -80,10 +89,11 @@ public class ExhibitorFragment extends Fragment implements OnLoadListener{
 
 
 
-    public void loadExhibitor(ExhibitorResponse model) {
+    public void loadExhibitor(ExhibitorResponse model,int height) {
         if (model != null&&model.getResponseData()!=null) {
-
-            Exhibitor gateModel = model.getResponseData().get(0);
+            int count = model.getResponseData().size();
+            increaseSizeofFrame(count,height);
+            /*Exhibitor gateModel = model.getResponseData().get(0);
             if (gateModel!=null
                     ) {
                 if (gateModel.getHeaderPic() != null) {
@@ -98,14 +108,29 @@ public class ExhibitorFragment extends Fragment implements OnLoadListener{
 
                 FontUtls.loadFont(getActivity(), "fonts/RobotoCondensed-Bold.ttf", gateTitle);
                 // FontUtls.loadFont(context, "fonts/RobotoCondensed-Bold.ttf", gateDesc);
-            }
+            }*/
         }
     }
 
-        @Override
-        public void onLoad(ExhibitorResponse model) {
-            loadExhibitor(model);
+    private void increaseSizeofFrame(int count,int height) {
+        LogUtil.createLog("exh size", "" + height);
+
+        if(this.count<count) {
+            this.count=count;
+            int size = height * count;
+
+            LinearLayout.LayoutParams prms = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, size);
+            frame.setLayoutParams(prms);
+
+            LogUtil.createLog("exh size frame", "" + frame.getHeight());
         }
+    }
+
+    @Override
+        public void onLoad(ExhibitorResponse model,int height) {
+            loadExhibitor(model,height);
+        }
+
 
 
 }

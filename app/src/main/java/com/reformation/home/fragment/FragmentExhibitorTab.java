@@ -66,8 +66,8 @@ public class FragmentExhibitorTab extends Fragment implements OnLoadListener{
             dlg = CustomProgresDialog.getInstance(context);
             mApiInterface = ApiClient.getClient().create(ApiInterface.class);
             recyclerView = (RecyclerView) view.findViewById(R.id.recyClerViewPlace);
-           // recyclerView.setFocusable(false);
-           // recyclerView.setNestedScrollingEnabled(false);
+           recyclerView.setFocusable(false);
+           recyclerView.setNestedScrollingEnabled(false);
             layoutManagaer
                     = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
 
@@ -107,13 +107,13 @@ public class FragmentExhibitorTab extends Fragment implements OnLoadListener{
 
     private void loadExhibitor(ExhibitorResponse model) {
         if (model != null) {
-            onLoad(model);
             exhibitorArrayList = model.getResponseData();
             if(exhibitorArrayList!=null&&exhibitorArrayList.size()>0){
                 exhibitorTabAdapter = new ExhibitorTabAdapter(getActivity(),exhibitorArrayList);
                // setHeightOfRecyclerView();
                 exhibitorTabAdapter.setOnItemClickListener(onItemClickListener);
                 recyclerView.setAdapter(exhibitorTabAdapter);
+                onLoad(model,exhibitorTabAdapter.getHeightOfView());
 
 
             }
@@ -151,9 +151,9 @@ public class FragmentExhibitorTab extends Fragment implements OnLoadListener{
     }
 
     @Override
-    public void onLoad(ExhibitorResponse model) {
+    public void onLoad(ExhibitorResponse model,int height) {
         if(mOnLoadListener!=null){
-            mOnLoadListener.onLoad(model);
+            mOnLoadListener.onLoad(model,height);
         }
     }
 }

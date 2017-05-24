@@ -34,7 +34,7 @@
     <string name="chapter_audio">Kapitel</string>
     <string name="near_by_audio">In der Nähe</string>
     <string name="exhibitors">Aussteller</string>
-    <string name="other_location">Attraktionen</string>
+    <string name="other_location">Andere Orte</string>
     <string name="maps_api_key">AIzaSyBaJDivZ2OP4UT9AjTq2DjYhaNoF5ffe88</string>
     <string name="no_record_found">Kein Eintrag gefunden</string>
     <string name="unable_to_map_create">Entschuldigung! Keine Verknüpfung zur Karte möglich</string>
@@ -83,4 +83,6 @@ Vereinsregister VR 3400
     <string name="already_added">Schon hinzugefügt.</string>
     <string name="succesfully_added">Erfolgreich zum Kalender hinzugefügt.</string>
     <string name="spker">Redner :</string>
+    <string name="exhibitor_txt"><![CDATA[Aussteller & Sehenswürdigkeiten]]></string>
+    <string name="exhibitor_desc">In der Weltausstellung Reformation sind internationale Institutionen, Organisationen, Kirchen aus aller Welt, Initiativen und viele Kulturschaffende vertreten. Auf großen und kleinen Bühnen in der Stadt, in Pavillons, Zelten, auf Podien, in Cafés oder Bars bieten sie ihre Perspektiven auf wichtige Themen der Zeit. Die Aussteller laden zu Podiumsdiskussionen, Lesungen, Gottesdiensten, Workshops, Konzerten, Theaterstücken und vielem mehr ein. Jede der 16 Themenwochen bringt inspirierende Persönlichkeiten, unbekannte Newcomer und bekannte Köpfe nach Lutherstadt Wittenberg. Neben den Ausstellern, die temporär nach Wittenberg kommen, zählen Museen, dauerhafte Ausstellungen und historische Orte wie die Schloss- und Stadtkirche zu den Veranstaltungsorten der Weltausstellung Reformation.</string>
 </resources>

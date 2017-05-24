@@ -90,13 +90,15 @@ public class GateFragment extends Fragment {
         dlg = CustomProgresDialog.getInstance(context);
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
         gateRecyclerView = (RecyclerView) view.findViewById(R.id.horizontal_recycler_eventView);
-        gateRecyclerView.setFocusable(false);
-        gateRecyclerView.setNestedScrollingEnabled(false);
+
         layoutManagaer
                 = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
 
+        gateRecyclerView.setFocusable(false);
+        gateRecyclerView.setNestedScrollingEnabled(false);
         gateRecyclerView.setHasFixedSize(true);
         gateRecyclerView.setLayoutManager(layoutManagaer);
+
         progressBar.setVisibility(View.GONE);
         gateImgview.setVisibility(View.VISIBLE);
         gateImgview.setImageResource(R.drawable.gate);

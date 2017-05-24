@@ -161,12 +161,7 @@ public class AudioGuideActivity extends AppCompatActivity implements
                     loc.setLatitude(audio.getLatitude()!=null?Double.parseDouble(audio.getLatitude()):0.0);
                     loc.setLongitude(audio.getLongitude()!=null?Double.parseDouble(audio.getLongitude()):0.0);
                     audio.setDist(Float.parseFloat(Utils.getDistance(Constant.appLoc,loc)));
-
-                    if(audio.getDownloadStatus()==Constant.ACTION_DOWNLOAD_COMPLETED) {
-                        checkAudioDownloadInfoAndUpdate(audio);
-                    }else if(audio.getDownloadStatus()==Constant.ACTION_DOWNLOAD_RUNNING){
-                        downLoadMap.put(audio.getId(),audio);
-                    }
+                    checkAudioDownloadInfoAndUpdate(audio);
 
                 }
 
@@ -236,6 +231,8 @@ public class AudioGuideActivity extends AppCompatActivity implements
             boolean status1 =  audioDB.updateAppDownLoadID(audio.getId(),audio.getDownloadId());
             boolean status2 =  audioDB.updateAppDownLoadInfo(audio.getId(),audio.getDownloadStatus());
             LogUtil.createLog("Download ::","ACTION_DOWNLOAD_COMPLETED");
+        }else if(audio.getDownloadStatus()==Constant.ACTION_DOWNLOAD_RUNNING){
+            downLoadMap.put(audio.getId(),audio);
         }
 
         if(downLoadMap.size()==0){
@@ -351,5 +348,13 @@ public class AudioGuideActivity extends AppCompatActivity implements
         }else  if(tag.equals("delete")) {
             deleteAudio(audios.get(pos),pos);
         }
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        audioDB.close();
+        dbAdapter.close();
     }
 }

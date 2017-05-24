@@ -27,9 +27,10 @@ public class ExhibitorTabAdapter extends RecyclerView.Adapter<ExhibitorTabAdapte
     public Context ctx;
     OnItemClickListener mItemClickListener;
     View itemView;
+   public  static int  height = 0;
 
     public int getHeightOfView() {
-        int height = 90;
+        int height = 270;
         if(itemView!=null){
             height = itemView.getHeight();
         }
@@ -59,6 +60,7 @@ public class ExhibitorTabAdapter extends RecyclerView.Adapter<ExhibitorTabAdapte
             }
         }
     }
+
 
 
     public ExhibitorTabAdapter(Context ctx, ArrayList<Exhibitor> dataList) {

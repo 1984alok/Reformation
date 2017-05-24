@@ -25,12 +25,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import utils.Constant;
 import utils.CustomProgresDialog;
+import utils.OnLoadListener;
 import utils.Utils;
 
 /**
  * Created by IMFCORP\alok.acharya on 17/4/17.
  */
-public class FragmentOtherLocationTab extends Fragment {
+public class FragmentOtherLocationTab extends Fragment implements OnLoadListener {
     ApiInterface mApiInterface;
     private CustomProgresDialog dlg;
     private Context context;
@@ -42,6 +43,7 @@ public class FragmentOtherLocationTab extends Fragment {
     public ExhibitorResponse exhibitorResponse;
     private ExhibitorTabAdapter exhibitorTabAdapter;
 
+    OnLoadListener mOnLoadListener;
     public FragmentOtherLocationTab(){}
 
     @Override
@@ -53,8 +55,8 @@ public class FragmentOtherLocationTab extends Fragment {
         dlg = CustomProgresDialog.getInstance(context);
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyClerViewPlace);
-       // recyclerView.setFocusable(false);
-       // recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setFocusable(false);
+        recyclerView.setNestedScrollingEnabled(false);
         layoutManagaer
                 = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
 
@@ -99,6 +101,7 @@ public class FragmentOtherLocationTab extends Fragment {
                 exhibitorTabAdapter = new ExhibitorTabAdapter(getActivity(),exhibitorArrayList);
                 exhibitorTabAdapter.setOnItemClickListener(onItemClickListener);
                 recyclerView.setAdapter(exhibitorTabAdapter);
+                onLoad(model,exhibitorTabAdapter.getHeightOfView());
 
             }
 
@@ -113,4 +116,18 @@ public class FragmentOtherLocationTab extends Fragment {
             startActivity(new Intent(getActivity(), ExhibitorDetailActivity.class).putExtra("DATA",exhibitor));
         }
     };
+
+
+    public void setOnLoadListener(final OnLoadListener mOnLoadListener) {
+        this.mOnLoadListener = mOnLoadListener;
+    }
+
+
+
+    @Override
+    public void onLoad(ExhibitorResponse model,int height) {
+        if(mOnLoadListener!=null){
+            mOnLoadListener.onLoad(model,height);
+        }
+    }
 }

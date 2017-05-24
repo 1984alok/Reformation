@@ -16,10 +16,11 @@
             android:background="@color/white"
             android:orientation="vertical"
             android:paddingBottom="@dimen/dp40">
-            <include
+            <ImageView
                 android:layout_height="@dimen/home_imageHeight"
                 android:layout_width="match_parent"
-                layout="@layout/image_layout"/>
+                android:src="@drawable/exhibitor"
+                android:scaleType="fitXY"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -30,7 +31,8 @@
                 android:layout_marginTop="@dimen/dp10"
                 android:layout_marginLeft="@dimen/dp10"
                 android:layout_gravity="left"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:text="@string/exhibitor_txt"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -40,12 +42,14 @@
                 android:textColor="@color/text_color_six"
                 android:textSize="@dimen/sp15"
                 android:id="@+id/textViewTopicDesc"
-                android:gravity="top"/>
+                android:gravity="top"
+                android:text="@string/exhibitor_desc"/>
 
             <LinearLayout
+                android:id="@+id/frame"
                 android:layout_width="match_parent"
                 android:background="@color/white"
-                android:layout_height="500dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dp10"
                 android:orientation="vertical">
 
