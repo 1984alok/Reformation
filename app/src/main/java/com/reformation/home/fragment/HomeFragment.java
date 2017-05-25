@@ -308,7 +308,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Swipe
 
                     LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) menuLayout.getLayoutParams();
                     if (params != null) {
-                        params.setMargins(10, 20, 10, 20);
+                        params.setMargins(10, 20, 10, 40);
                         itemView.setLayoutParams(params);
                     }
 

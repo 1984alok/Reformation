@@ -9,7 +9,7 @@
     android:visibility="visible">
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
         android:fillViewport="true">
         <LinearLayout
             android:layout_width="match_parent"
@@ -242,11 +242,11 @@
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/horizontal_recycler_eventView"
-                android:background="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/horizontal_recycler_eventView"
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -258,7 +258,8 @@
                 android:background="@color/white">
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent"
+                    android:paddingBottom="@dimen/dp20">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -296,12 +297,17 @@
                         android:gravity="center"
                         android:text="@string/overview"
                         android:layout_alignParentRight="true"/>
-                    <android.support.v7.widget.RecyclerView
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_below="@+id/textViewOverview"
+                        android:paddingBottom="20dp">
+                    <android.support.v7.widget.RecyclerView
                         android:layout_marginTop="@dimen/dp10"
                         android:id="@+id/recyclerview_audioguide"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="wrap_content"/>
+                    </RelativeLayout>
                 </RelativeLayout>
 
 

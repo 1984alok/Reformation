@@ -14,15 +14,15 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@color/white"
-        >
+       >
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center">
             <ImageView
                 android:id="@+id/homeMenuImg"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/home_imageHeight"
                 android:scaleType="fitXY"
                 android:maxHeight="@dimen/home_imageHeight"
                 />

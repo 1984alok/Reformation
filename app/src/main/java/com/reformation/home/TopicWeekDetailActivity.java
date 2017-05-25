@@ -73,16 +73,19 @@ public class TopicWeekDetailActivity extends AppCompatActivity implements View.O
         topic_date =(TextView)findViewById(R.id.textViewTopicDate);
         topicHeader =(TextView)findViewById(R.id.textViewHeaderTitle);
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
+
         eventRecyclerView = (RecyclerView)findViewById(R.id.horizontal_recycler_eventView);
-        eventRecyclerView.setFocusable(false);
-        eventRecyclerView.setNestedScrollingEnabled(false);
+
         layoutManager
                 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
+        eventRecyclerView.setFocusable(false);
+        eventRecyclerView.setNestedScrollingEnabled(false);
         // Drawable drawable = getResources().getDrawable(R.drawable.anniversary_devider);
         // eventRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL_LIST,drawable));
         eventRecyclerView.setHasFixedSize(true);
         eventRecyclerView.setLayoutManager(layoutManager);
+
         rightFilterImg.setImageResource(R.drawable.filter);
         leftImg.setOnClickListener(this);
         topic_date.setOnClickListener(this);

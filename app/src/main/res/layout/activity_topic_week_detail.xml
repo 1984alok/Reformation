@@ -7,10 +7,10 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/activity_main_swipe_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
             android:fillViewport="true">
         <LinearLayout
             android:layout_width="match_parent"
@@ -88,6 +88,9 @@
                 android:layout_marginLeft="@dimen/dp10"
                 android:layout_gravity="left"
                 android:gravity="center"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/horizontal_recycler_eventView"
@@ -95,6 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_margin="@dimen/dp10"
                 android:layout_height="wrap_content"/>
+            </RelativeLayout>
 
 
         </LinearLayout>

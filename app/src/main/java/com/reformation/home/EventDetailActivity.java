@@ -86,7 +86,7 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
     private ArrayList<Audio> audios;
     private Exhibitor exhibitor;
     private GateModel gateModel;
-    LatLng location;
+    LatLng locationPlace;
     String id = "";
     FavDB favDB;
     boolean favStatus = false;
@@ -270,7 +270,7 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
 
         if(exhibitor!=null){
             textViewaddrss.setText(exhibitor.getStreet()+exhibitor.getCity()+exhibitor.getZip()+exhibitor.getCountry());
-            location = new LatLng(Double.parseDouble(exhibitor.getLatitude()), Double.parseDouble(exhibitor.getLongitude()));
+            locationPlace = new LatLng(Double.parseDouble(exhibitor.getLatitude()), Double.parseDouble(exhibitor.getLongitude()));
         }
 
         if(audios!=null&&audios.size()>0){
@@ -317,6 +317,15 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+
+            case R.id.mapFrame:
+
+                if(locationPlace!=null)
+             startActivity(new Intent(EventDetailActivity.this,MapsLoadActivity.class)
+                     .putExtra("lat",locationPlace.latitude)
+                     .putExtra("long",locationPlace.longitude)
+                     .putExtra("titel",Constant.SELECTED_LANG.equalsIgnoreCase(Constant.LANG_ENG) ?  exhibitor.getPlaceName():exhibitor.getPlace_name_de()));
+                break;
             case R.id.imageViewLeft:
                 super.onBackPressed();
                 break;

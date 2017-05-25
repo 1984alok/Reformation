@@ -62,7 +62,7 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
     private ImageView leftImg,
             favouriteImage,imageViewShare;
     private TextView topicTitle,topicDesc,topic_period,topic_ticketInfo,topic_OpeningInfo,topicHeader,textViewaddrss;
-
+    LatLng locationPlace;
     private LinearLayout catgList;
     private FrameLayout mainView;
     private RelativeLayout mapFrame;
@@ -181,6 +181,14 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
                 toggleHeart();
 
                 break;
+            case R.id.mapFrame:
+
+                if(locationPlace!=null)
+                    startActivity(new Intent(ExhibitorDetailActivity.this,MapsLoadActivity.class)
+                            .putExtra("lat",locationPlace.latitude)
+                            .putExtra("long",locationPlace.longitude)
+                            .putExtra("titel",Constant.SELECTED_LANG.equalsIgnoreCase(Constant.LANG_ENG) ?  placeData.getPlaceName():placeData.getPlaceNameDe()));
+                break;
         }
     }
 
@@ -224,6 +232,7 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
                     ExhibitorDetailResponseById placedetailResponse = response.body();
                     if(placedetailResponse!=null&&placedetailResponse.getStatus()){
                         placeData = placedetailResponse.getResponseData();
+                        locationPlace = new LatLng(Double.parseDouble(placeData.getLatitude()), Double.parseDouble(placeData.getLongitude()));
                         if(placeData!=null) {
 
                             GateModel gateModel = placeData.getGateData();

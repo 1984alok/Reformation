@@ -4,54 +4,56 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-        <ScrollView
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:paddingBottom="@dimen/dp40">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true"
+            android:background="@color/white"
+            android:orientation="vertical"
             android:paddingBottom="@dimen/dp40">
-            <LinearLayout
+            <include
+                android:layout_height="@dimen/home_imageHeight"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/dp40">
-                <include
-                    android:layout_height="@dimen/home_imageHeight"
-                    android:layout_width="match_parent"
-                    layout="@layout/image_layout"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textViewTopicTitle"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/sp17"
-                    android:textColor="@color/black"
-                    android:layout_marginTop="@dimen/dp10"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:layout_gravity="left"
-                    android:gravity="center"
-                    android:text="@string/gateTitel"/>
+                layout="@layout/image_layout"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewTopicTitle"
+                android:textStyle="bold"
+                android:textSize="@dimen/sp17"
+                android:textColor="@color/black"
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_gravity="left"
+                android:gravity="center"
+                android:text="@string/gateTitel"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dp10"
-                    style="@style/header_title_15px"
-                    android:textColor="@color/text_color_six"
-                    android:textSize="@dimen/sp15"
-                    android:id="@+id/textViewTopicDesc"
-                    android:gravity="top"
-                    android:text="@string/gateDesc"/>
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp10"
+                style="@style/header_title_15px"
+                android:textColor="@color/text_color_six"
+                android:textSize="@dimen/sp15"
+                android:id="@+id/textViewTopicDesc"
+                android:gravity="top"
+                android:text="@string/gateDesc"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/horizontal_recycler_eventView"
                     android:background="@color/white"
                     android:layout_width="match_parent"
                     android:layout_margin="@dimen/dp10"
-                    android:layout_height="700dp"/>
-
-            </LinearLayout>
-        </ScrollView>
+                    android:layout_height="match_parent"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
     <include
         android:id="@+id/header"
         android:layout_height="wrap_content"

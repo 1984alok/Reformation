@@ -56,8 +56,13 @@
         <activity android:name=".FaqActivity" />
         <activity android:name=".ExhibitorDetailActivity" />
         <activity android:name=".FavActivity" />
-        <activity android:name=".AudioPlayerActivity"></activity>
-        <service android:name="services.LocationFetchingService"/>
+        <activity android:name=".AudioPlayerActivity" />
+
+        <service android:name="services.LocationFetchingService" />
+
+        <activity
+            android:name=".MapsLoadActivity"
+            android:label="@string/title_activity_maps_load"></activity>
     </application>
 
 </manifest>
