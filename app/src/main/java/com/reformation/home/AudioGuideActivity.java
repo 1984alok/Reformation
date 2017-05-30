@@ -289,8 +289,8 @@ public class AudioGuideActivity extends AppCompatActivity implements
 
     public void initDownLoad(Audio audio){
         if(audio.getDownloadStatus()==Constant.ACTION_NOT_DOWNLOAD_YET) {
-            String titel = (Constant.SELECTED_LANG != Constant.LANG_ENG ? audio.getTitle() : audio.getTitleEn());
-            String audioPath = ApiClient.BASE_URL + (Constant.SELECTED_LANG != Constant.LANG_ENG ? audio.getAudio() : audio.getAudioSize());
+            String titel = (!Constant.SELECTED_LANG.equals(Constant.LANG_ENG) ? audio.getTitle() : audio.getTitleEn());
+            String audioPath = ApiClient.BASE_URL + (!Constant.SELECTED_LANG.equals(Constant.LANG_ENG) ? audio.getAudio() : audio.getAudioEn());
             long downId = audioDownLoadManager.startDownloadManager(audioPath, titel);
             if (downId != -1) {
                 audio.setDownloadId((int) downId);

@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import adapter.AniversaryAdapter;
+import adapter.HomeEventAdapter;
 import apihandler.ApiClient;
 import apihandler.ApiInterface;
 import model.AnniversaryModelResponse;
@@ -51,6 +52,7 @@ public class SettingScreen extends AppCompatActivity implements View.OnClickList
 
     String logOneLink  = "https://www.deutschebahn.com/de/nachhaltigkeit/verantwortung_gesellschaft/Sponsoring/12632278/partnerschaft_reformationsjahr.html?hl=Luther";
     String logoTwoLink = "https://r2017.org/partner/volkswagen";
+    ArrayList<AnniversaryModelResponse.ResponseModel> dataList;
 
 
     @Override
@@ -123,9 +125,10 @@ public class SettingScreen extends AppCompatActivity implements View.OnClickList
                 if(response.isSuccessful()){
                     AnniversaryModelResponse resp = response.body();
                     if(resp.getStatusCode().equalsIgnoreCase(Constant.SATUS_TRUE)){
-                        ArrayList<AnniversaryModelResponse.ResponseModel> dataList = resp.getResponseData();
+                        dataList = resp.getResponseData();
                         if(dataList!=null&&dataList.size()>0){
                             aniversaryAdapter = new AniversaryAdapter(SettingScreen.this,dataList);
+                            aniversaryAdapter.setOnItemClickListener(mItemClickListener);
                             anRecyclerView.setAdapter(aniversaryAdapter);
                             dlg.setVisibility(View.GONE);
                             anRecyclerView.setVisibility(View.VISIBLE);
@@ -273,4 +276,22 @@ public class SettingScreen extends AppCompatActivity implements View.OnClickList
         langGerman.setTextColor(getResources().getColor(R.color.white));
 
     }
+
+
+
+    AniversaryAdapter.OnItemClickListener mItemClickListener = new AniversaryAdapter.OnItemClickListener(){
+        @Override
+        public void onItemClick(View clickView, View view, int position) {
+            if(dataList!=null){
+                AnniversaryModelResponse.ResponseModel model = dataList.get(position);
+                String uri = model.getExternalLink();
+                LogUtil.createLog("External link",uri);
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(uri));
+                startActivity(i);
+
+            }
+
+        }
+    };
 }

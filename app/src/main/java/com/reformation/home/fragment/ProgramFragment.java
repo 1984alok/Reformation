@@ -2,6 +2,8 @@ package com.reformation.home.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -11,10 +13,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.reformation.home.R;
@@ -55,6 +60,10 @@ public class ProgramFragment extends Fragment implements View.OnClickListener{
     TopicOverviewAdapter topicOverviewAdapter;
     ArrayList<TopicweekResponse.TopicWeekModel> mnthDatalist,topicOvrvwList;
 
+    static TextView mDotsText[];
+    private int mDotsCount;
+    private LinearLayout mDotsLayout;
+
     private void setupViewPager(ViewPager viewPager) {
         adapter = new FragAdapter(getChildFragmentManager());
         adapter.addFragment(new FragmentTodayEvent(),getResources().getString(R.string.today));
@@ -75,7 +84,7 @@ public class ProgramFragment extends Fragment implements View.OnClickListener{
         setupViewPager(viewPager);
         tabLayout = (TabLayout) view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-
+        mDotsLayout = (LinearLayout)view.findViewById(R.id.image_count);
         imageViewFilter =(ImageView)view.findViewById(R.id.imageViewLeft);
         imageViewSearch =(ImageView)view.findViewById(R.id.imageViewRight);
         topicHeader =(TextView)view.findViewById(R.id.textViewHeaderTitle);
@@ -102,6 +111,9 @@ public class ProgramFragment extends Fragment implements View.OnClickListener{
         imageViewSearch.setImageResource(R.drawable.search);
         imageViewFilter.setOnClickListener(this);
         topicHeader.setText(getResources().getString(R.string.program_text));
+
+        imageViewFilter.setVisibility(View.GONE);
+        imageViewSearch.setVisibility(View.GONE);
 
         getTopicMonthWise();
         getTopicDateWise();
@@ -130,7 +142,7 @@ public class ProgramFragment extends Fragment implements View.OnClickListener{
 
             @Override
             public void onFailure(Call<TopicweekResponse> call, Throwable t) {
-                Log.d("onFailure ::",t.getMessage());
+               // Log.d("onFailure ::",t.getMessage());
                 if(dlg!=null)
                     dlg.hideDialog();
 
@@ -145,28 +157,77 @@ public class ProgramFragment extends Fragment implements View.OnClickListener{
         call.enqueue(new Callback<TopicweekResponse>() {
             @Override
             public void onResponse(Call<TopicweekResponse> call, Response<TopicweekResponse> response) {
-                dlg.hideDialog();
+
                 if(response.isSuccessful()){
                     TopicweekResponse model = response.body();
                     mnthDatalist = model.getResponseData();
                     if(mnthDatalist!=null&mnthDatalist.size()>0){
                         topicMonthWiseAdapter = new TopicMonthWiseAdapter(context,mnthDatalist);
+
+                        addDot();
                         topicMonthWiseAdapter.setOnItemClickListener(onItemMonthClickListener);
                         topicMnthRecyclerView.setAdapter(topicMonthWiseAdapter);
                     }
                 }
 
+                dlg.hideDialog();
+
             }
 
             @Override
             public void onFailure(Call<TopicweekResponse> call, Throwable t) {
-                Log.d("onFailure ::",t.getMessage());
+//                Log.d("onFailure ::",t.getMessage());
                 if(dlg!=null)
                     dlg.hideDialog();
 
             }
         });
     }
+
+    private void addDot() {
+
+
+        //here we count the number of images we have to know how many dots we need
+        mDotsCount = topicMonthWiseAdapter.getItemCount();
+
+        //here we create the dots
+        //as you can see the dots are nothing but "."  of large size
+        mDotsText = new TextView[mDotsCount];
+
+        //here we set the dots
+        for (int i = 0; i < mDotsCount; i++) {
+            mDotsText[i] = new TextView(getActivity());
+            mDotsText[i].setText(".");
+            mDotsText[i].setTextSize(45);
+            mDotsText[i].setTypeface(null, Typeface.BOLD);
+            mDotsText[i].setTextColor(Color.GRAY);
+            mDotsText[i].setGravity(Gravity.CENTER);
+            mDotsLayout.addView(mDotsText[i]);
+        }
+
+
+
+      /*  topicMnthRecyclerView.set(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView adapterView, View view, int pos, long l) {
+
+                for (int i = 0; i < mDotsCount; i++) {
+                    ProgramFragment.mDotsText[i]
+                            .setTextColor(Color.GRAY);
+                }
+
+                ProgramFragment.mDotsText[pos]
+                        .setTextColor(Color.WHITE);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView adapterView) {
+
+            }
+        });*/
+    }
+
+
 
     @Override
     public void onClick(View v) {

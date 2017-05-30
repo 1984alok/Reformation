@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 
+import com.reformation.home.FaqActivity;
 import com.reformation.home.R;
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter;
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
@@ -14,19 +17,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.FaqModel;
+import model.QuestionModel;
 
 /**
  * Created by Alok on 27-04-2017.
  */
 public class FaqAdapter extends ExpandableRecyclerViewAdapter<QuestionViewHolder, AnswerViewHolder>
-        implements RecyclerViewFastScroller.BubbleTextGetter{
+        implements RecyclerViewFastScroller.BubbleTextGetter,Filterable {
 
-    private Activity activity;
-    ArrayList<? extends ExpandableGroup> groups;
 
-    public FaqAdapter(Activity activity, ArrayList<? extends ExpandableGroup> groups) {
+    private FaqActivity activity;
+    ArrayList<QuestionModel> groups;
+    ArrayList<QuestionModel> groupsFilter;
+
+    public FaqAdapter(FaqActivity activity, ArrayList<QuestionModel> groups) {
         super(groups);
         this.groups = groups;
+        this.groupsFilter = activity.faqModelArrayList;
         this.activity = activity;
     }
 
@@ -68,4 +75,47 @@ public class FaqAdapter extends ExpandableRecyclerViewAdapter<QuestionViewHolder
 
         return groups.get(pos).getTitle().substring(0, 1);
     }
+
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+
+                String charString = charSequence.toString();
+
+                if (charString.isEmpty()) {
+
+                    groups = groupsFilter;
+                } else {
+
+                    ArrayList<QuestionModel> filteredList = new ArrayList<>();
+
+                    for (QuestionModel question : groupsFilter) {
+
+                        if (question.getTitle().toLowerCase().contains(charString.toLowerCase())) {
+
+                            filteredList.add(question);
+                        }
+                    }
+
+                    groups = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = groups;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                groups = (ArrayList<QuestionModel>) filterResults.values;
+               // notifyDataSetChanged();
+                activity.refresh(groups);
+            }
+        };
+    }
+
 }
+

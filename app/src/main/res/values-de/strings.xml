@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Reformation</string>
+    <string name="app_name">Weltausstellung Reformation</string>
     <string name="header_title">Weltausstellung Reformation</string>
     <string name="next_eventt">Nächste Veranstaltung</string>
     <string name="audio_guide">Audioguide</string>
@@ -28,6 +28,11 @@
     <string name="overview">Überblick</string>
     <string name="gallery">Galerie</string>
     <string name="more_event">Mehr Informationen</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="AtoZ">A-Z</string>
+    <string name="network_error_txt">Bitte überprüfen Sie Ihre Netzwerkverbindung.</string>
+    <string name="rshop">r2017 - Shop</string>
+    <string name="title_activity_maps_load">Map</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -38,7 +43,7 @@
     <string name="maps_api_key">AIzaSyBaJDivZ2OP4UT9AjTq2DjYhaNoF5ffe88</string>
     <string name="no_record_found">Kein Eintrag gefunden</string>
     <string name="unable_to_map_create">Entschuldigung! Keine Verknüpfung zur Karte möglich</string>
-    <string name="more_information">Weitere Informationen</string>
+    <string name="more_information">Mehr Informationen</string>
     <string name="direction">Richtungen</string>
     <string name="ticket_info">Ticket erforderlich</string>
     <string name="gateTitel">Torräume</string>

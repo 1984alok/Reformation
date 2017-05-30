@@ -38,9 +38,9 @@ public class FavPlaceRecyclerViewAdapter extends RecyclerView.Adapter<FavPlaceRe
     @Override
     public void onBindViewHolder(final FavPlaceRecyclerViewAdapter.ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(Constant.SELECTED_LANG==Constant.LANG_ENG?mValues.get(position).getName():
+        holder.mIdView.setText(Constant.SELECTED_LANG.equals(Constant.LANG_ENG)?mValues.get(position).getName():
                 mValues.get(position).getName_de());
-        holder.mContentView.setText(Constant.SELECTED_LANG==Constant.LANG_ENG?mValues.get(position).getAddrss():
+        holder.mContentView.setText(Constant.SELECTED_LANG.equals(Constant.LANG_ENG)?mValues.get(position).getAddrss():
                 mValues.get(position).getAddrss_de());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {

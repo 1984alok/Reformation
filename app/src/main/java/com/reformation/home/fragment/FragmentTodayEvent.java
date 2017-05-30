@@ -86,7 +86,7 @@ public class FragmentTodayEvent extends Fragment {
 
             @Override
             public void onFailure(Call<EventResponse> call, Throwable t) {
-                Log.d("onFailure ::",t.getMessage());
+               // Log.d("onFailure ::",t.getMessage());
                 if(dlg!=null)
                     dlg.hideDialog();
 

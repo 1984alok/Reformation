@@ -123,7 +123,7 @@ public class GateFragment extends Fragment {
 
             @Override
             public void onFailure(Call<GateResponsModel> call, Throwable t) {
-                Log.d("onFailure ::", t.getMessage());
+//                Log.d("onFailure ::", t.getMessage());
                 if (dlg != null)
                     dlg.hideDialog();
 

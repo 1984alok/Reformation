@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.transition.Fade;
@@ -16,6 +17,7 @@ import android.transition.Transition;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -70,7 +72,9 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
     private ImageView leftImg,
             rightFilterImg,imageCalandar,imageViewShare;
     private TextView topicTitle,topicDesc,topic_date,topicHeader,textViewaddrss,
-            textViewTopicSubTitle1,artist,textViewTicket;
+            textViewTopicSubTitle1,artist,textViewTicket,
+            galleryTxt;
+    private CardView audioCard;
     private LinearLayout catgList;
     private FrameLayout mainView;
     private EventModel event;
@@ -141,6 +145,10 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
 
         eventGalleryView = (RecyclerView)findViewById(R.id.horizontal_recycler_eventView);
         recyclerview_audioguide = (RecyclerView)findViewById(R.id.recyclerview_audioguide);
+
+        galleryTxt =(TextView)findViewById(R.id.galleryTxt);
+        audioCard =(CardView) findViewById(R.id.audioCard);
+
         recyclerview_audioguide.setItemAnimator(null);
         recyclerview_audioguide.setFocusable(false);
         recyclerview_audioguide.setNestedScrollingEnabled(false);
@@ -177,8 +185,7 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
             createEventCatgList(this,catgList,event.getCategory());
             textViewTicket.setText(getResources().getString(R.string.ticket_info));
            // getEventDetails(id);
-            favStatus = favDB.isFav(id,"event");
-            rightFilterImg.setImageResource(favStatus?R.drawable.heart_filled:R.drawable.heart);
+
         }
 
 
@@ -196,7 +203,7 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
         call.enqueue(new Callback<EventdetailResponse>() {
             @Override
             public void onResponse(Call<EventdetailResponse> call, Response<EventdetailResponse> response) {
-                dlg.hideDialog();
+
                 if (response.isSuccessful()) {
                     EventdetailResponse eventdetailResponse = response.body();
                     if(eventdetailResponse!=null&&eventdetailResponse.getStatus()){
@@ -224,9 +231,10 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
                                     galleries.addAll(galleryArrayList);
                             }
 
-                            if(audios!=null&&audios.size()>0)
+                            if(audios!=null&&audios.size()>0) {
+                                audios = Utils.removeDuplicateAudio(audios);
+                            }
                             fillterAudio(audios);
-
 
 
                         }
@@ -234,7 +242,7 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
                     }
 
                 }
-
+                dlg.hideDialog();
             }
 
             @Override
@@ -255,6 +263,8 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
             textViewTopicSubTitle1.setText(event.getSubtitle());
             artist.setText(event.getSpeaker());
 
+            favStatus = favDB.isFav(event.getId(),"event");
+            rightFilterImg.setImageResource(favStatus?R.drawable.heart_filled:R.drawable.heart);
             if(event.getDate()!=null && event.getStart()!=null && event.getEnd()!=null) {
                 String sdate = Utils.formatDate(event.getDate());
                 String dtTxt = Utils.getWeekNameFromDay(event.getDate()) + ", " +
@@ -277,10 +287,16 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
             audioAdapter = new AudioAdapter(this,audios);
             audioAdapter.setOnItemClickListener(mItemClickListener2);
             recyclerview_audioguide.setAdapter(audioAdapter);
+            audioCard.setVisibility(View.VISIBLE);
+        }else {
+            audioCard.setVisibility(View.GONE);
         }
         if(galleries!=null&&galleries.size()>0){
             galleryAdapter = new GalleryAdapter(this,galleries);
             eventGalleryView.setAdapter(galleryAdapter);
+            galleryTxt.setVisibility(View.VISIBLE);
+        }else{
+            galleryTxt.setVisibility(View.GONE);
         }
 
         }catch (NumberFormatException e){
@@ -347,7 +363,7 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
                     }
                     if (calanderMap != null) {
                         if (calanderMap.get(event.getId()) == null) {
-                            String titl = Constant.SELECTED_LANG==Constant.LANG_ENG?event.getTitle():event.getTitle_de();
+                            String titl = Constant.SELECTED_LANG.equals(Constant.LANG_ENG)?event.getTitle():event.getTitle_de();
                             long status = Utils.addEventToCalenderForTopicWeek(this, Utils.getMillisecFromDate(event.getDate()),
                                     Utils.getMillisecFromDate(event.getDate()),titl );
                             if (status != -1) {
@@ -377,7 +393,7 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
             Utils.showLikeToast(this);
         }
 
-        favStatus = favDB.isFav(id,"event");
+        favStatus = favDB.isFav(event.getId(),"event");
         new Utils().animateHeartButton(rightFilterImg,favStatus);
 
     }
@@ -402,8 +418,11 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
             for (int i = 0; i <catList.length ; i++) {
                 // if(holder.linearLayout.getChildCount()<catList.length) {
                 TextView viewTxt = (TextView) LayoutInflater.from(ctx).inflate(R.layout.event_catg_list, null);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.setMargins(5,0,5,0);
+                viewTxt.setLayoutParams(params);
                 viewTxt.setText(catList[i].toString());
-                viewTxt.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.catg_bg));
+                viewTxt.setBackgroundColor(ctx.getResources().getColor(R.color.text_color_five));
                 linearLayout.addView(viewTxt);
             }
         }
@@ -456,33 +475,35 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
-                for (Audio audio : audios) {
-                    Audio tempAudio = audioDB.getAudiinfo(audio.getId());
-                    if (tempAudio != null) {
-                        audio.setDownloadProgress(tempAudio.getDownloadProgress());
-                        audio.setDownloadId(tempAudio.getDownloadId());
-                        audio.setDownloadStatus(tempAudio.getDownloadStatus());
-                        audio.setSdcardPath(tempAudio.getSdcardPath());
-                        audio.setSdcardPathDe(tempAudio.getSdcardPathDe());
-                        audio = AudioDownLoadManager.getInstance(EventDetailActivity.this).checkDownLoadStatusFromDownloadManager(audio);
+                if(audios!=null&&audios.size()>0) {
+                    for (Audio audio : audios) {
+                        Audio tempAudio = audioDB.getAudiinfo(audio.getId());
+                        if (tempAudio != null) {
+                            audio.setDownloadProgress(tempAudio.getDownloadProgress());
+                            audio.setDownloadId(tempAudio.getDownloadId());
+                            audio.setDownloadStatus(tempAudio.getDownloadStatus());
+                            audio.setSdcardPath(tempAudio.getSdcardPath());
+                            audio.setSdcardPathDe(tempAudio.getSdcardPathDe());
+                            audio = AudioDownLoadManager.getInstance(EventDetailActivity.this).checkDownLoadStatusFromDownloadManager(audio);
 
 
-                    } else {
-                        audio.setDownloadProgress(0);
-                        audio.setDownloadId(-1);
-                        audio.setDownloadStatus(Constant.ACTION_NOT_DOWNLOAD_YET);
-                        audio.setSdcardPath("");
-                        audio.setSdcardPathDe("");
+                        } else {
+                            audio.setDownloadProgress(0);
+                            audio.setDownloadId(-1);
+                            audio.setDownloadStatus(Constant.ACTION_NOT_DOWNLOAD_YET);
+                            audio.setSdcardPath("");
+                            audio.setSdcardPathDe("");
+                        }
+                        Location loc = new Location("GPS");
+                        loc.setLatitude(audio.getLatitude() != null ? Double.parseDouble(audio.getLatitude()) : 0.0);
+                        loc.setLongitude(audio.getLongitude() != null ? Double.parseDouble(audio.getLongitude()) : 0.0);
+                        audio.setDist(Float.parseFloat(Utils.getDistance(Constant.appLoc, loc)));
+                        checkAudioDownloadInfoAndUpdate(audio);
+
                     }
-                    Location loc = new Location("GPS");
-                    loc.setLatitude(audio.getLatitude() != null ? Double.parseDouble(audio.getLatitude()) : 0.0);
-                    loc.setLongitude(audio.getLongitude() != null ? Double.parseDouble(audio.getLongitude()) : 0.0);
-                    audio.setDist(Float.parseFloat(Utils.getDistance(Constant.appLoc, loc)));
-                    checkAudioDownloadInfoAndUpdate(audio);
 
+                    LogUtil.createLog("Fillter map", audios.get(0).getTitle() + "" + audios.get(0).getId() + "" + audios.get(0).getDownloadStatus());
                 }
-
-                LogUtil.createLog("Fillter map", audios.get(0).getTitle() + "" + audios.get(0).getId() + "" + audios.get(0).getDownloadStatus());
 
                 return null;
             }
@@ -579,8 +600,8 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
 
     public void initDownLoad(Audio audio){
         if(audio.getDownloadStatus()==Constant.ACTION_NOT_DOWNLOAD_YET) {
-            String titel = (Constant.SELECTED_LANG != Constant.LANG_ENG ? audio.getTitle() : audio.getTitleEn());
-            String audioPath = ApiClient.BASE_URL + (Constant.SELECTED_LANG != Constant.LANG_ENG ? audio.getAudio() : audio.getAudioSize());
+            String titel = (!Constant.SELECTED_LANG.equals(Constant.LANG_ENG) ? audio.getTitle() : audio.getTitleEn());
+            String audioPath = ApiClient.BASE_URL + (!Constant.SELECTED_LANG.equals(Constant.LANG_ENG) ? audio.getAudio() : audio.getAudioEn());
             long downId = audioDownLoadManager.startDownloadManager(audioPath, titel);
             if (downId != -1) {
                 audio.setDownloadId((int) downId);

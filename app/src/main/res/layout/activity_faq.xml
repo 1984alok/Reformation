@@ -11,6 +11,14 @@
         android:layout_width="match_parent"
         layout="@layout/header_two"
         android:layout_gravity="top"/>
+
+    <SearchView
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:visibility="visible"
+       />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

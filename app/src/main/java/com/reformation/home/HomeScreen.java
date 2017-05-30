@@ -38,12 +38,13 @@ public class HomeScreen extends AppCompatActivity {
     private static final String TAG_MAP = "map";
     public static String CURRENT_TAG = TAG_HOME;
     private Handler mHandler;
+    BottomBar bottomBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
-        BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
+        bottomBar = (BottomBar) findViewById(R.id.bottomBar);
         Utils.createCLAPPDirectory();
         mHandler = new Handler();
         /*if (savedInstanceState == null) {
@@ -68,7 +69,7 @@ public class HomeScreen extends AppCompatActivity {
     }
 
 
-        private void loadHomeFragment(final int tabId) {
+        public void loadHomeFragment(final int tabId) {
             // Sometimes, when fragment has huge data, screen seems hanging
             // when switching between navigation menus
             // So using runnable, the fragment is loaded with cross fade effect
@@ -159,6 +160,9 @@ public class HomeScreen extends AppCompatActivity {
 
 
 
+    public void setBootombar(){
+        bottomBar.setDefaultTab(R.id.tab_prog);
+    }
 
 
 

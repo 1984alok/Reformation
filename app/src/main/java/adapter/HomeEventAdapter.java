@@ -1,10 +1,12 @@
 package adapter;
 
 import android.content.Context;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -31,7 +33,8 @@ public class HomeEventAdapter  extends RecyclerView.Adapter<HomeEventAdapter.MyV
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView txtViewTitle,time;
-        public LinearLayout linearLayout; RelativeLayout frame;
+        public LinearLayout linearLayout,catgList1; RelativeLayout frame,frameArrow;
+        ImageView next;
         public MyViewHolder(View view) {
             super(view);
             txtViewTitle = (TextView) view.findViewById(R.id.txtEventName);
@@ -39,6 +42,11 @@ public class HomeEventAdapter  extends RecyclerView.Adapter<HomeEventAdapter.MyV
             linearLayout = (LinearLayout) view.findViewById(R.id.catgList);
             frame = (RelativeLayout)view.findViewById(R.id.frame);
             frame.setOnClickListener(this);
+            frameArrow = (RelativeLayout)view.findViewById(R.id.frameArrow);
+            catgList1 = (LinearLayout) view.findViewById(R.id.catgList1);
+            next = (ImageView)view.findViewById(R.id.goto_img);
+            if(frameArrow!=null)
+                frameArrow.setOnClickListener(this);
 
         }
 
@@ -78,21 +86,46 @@ public class HomeEventAdapter  extends RecyclerView.Adapter<HomeEventAdapter.MyV
         EventModel event = eventList.get(position);
         holder.txtViewTitle.setText(event.getTitle());
         FontUtls.loadFont(ctx, "fonts/RobotoCondensed-Regular.ttf",  holder.txtViewTitle);
-        holder.time.setText(Utils.formatEvenrtDate(event.getDate())+" - "+event.getStart().split(":")[0]+Utils.getHrFormat());
-        if(event.getCategory()!=null){
-            String[] catList = event.getCategory().split(",");
-            if(holder.linearLayout.getChildCount()>0){
-                holder.linearLayout.removeAllViews();
-            }
-            for (int i = 0; i <catList.length ; i++) {
-                // if(holder.linearLayout.getChildCount()<catList.length) {
-                TextView viewTxt = (TextView) LayoutInflater.from(ctx).inflate(R.layout.event_catg_list, null);
-                viewTxt.setText(catList[i].toString());
-                viewTxt.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.catg_bg2));
-                holder.linearLayout.addView(viewTxt);
-                //  }
+        if(!event.getTitle().equalsIgnoreCase("moreEvent")) {
+            if (holder.frameArrow != null)
+                holder.frameArrow.setVisibility(View.GONE);
+            holder.frame.setVisibility(View.VISIBLE);
+            holder.txtViewTitle.setText(event.getTitle());
+            holder.time.setText(Utils.formatEvenrtDate(event.getDate()) + " - " + event.getStart().split(":")[0] + Utils.getHrFormat());
+            if (event.getCategory() != null) {
+                String[] catList = event.getCategory().split(",");
+                if (holder.linearLayout.getChildCount() > 0) {
+                    holder.linearLayout.removeAllViews();
+                }
+                for (int i = 0; i < catList.length; i++) {
+                    // if(holder.linearLayout.getChildCount()<catList.length) {
+                    TextView viewTxt = (TextView) LayoutInflater.from(ctx).inflate(R.layout.event_catg_list, null);
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    params.setMargins(5,0,5,0);
+                    viewTxt.setLayoutParams(params);
+                    viewTxt.setText(catList[i].toString());
+                    if (type== Constant.EVENT_TOPIC_HOME_TYPE)
+                        viewTxt.setBackgroundColor(ctx.getResources().getColor(R.color.white));
 
+                    else
+                        viewTxt.setBackgroundColor(ctx.getResources().getColor(R.color.text_color_five));
+
+                    holder.linearLayout.addView(viewTxt);
+                    //  }
+
+                }
             }
+        }else {
+            if(holder.frameArrow!=null)
+                holder.frameArrow.setVisibility(View.VISIBLE);
+            holder.frame.setVisibility(View.GONE);
+            if (holder.catgList1.getChildCount() > 0) {
+                holder.catgList1.removeAllViews();
+            }
+            TextView viewTxt = (TextView) LayoutInflater.from(ctx).inflate(R.layout.event_catg_list, null);
+            viewTxt.setText("dummy");
+            viewTxt.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.catg_bg2));
+            holder.catgList1.addView(viewTxt);
         }
 
        /* if(position==eventList.size()-1){

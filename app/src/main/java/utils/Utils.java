@@ -55,11 +55,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.ListIterator;
 import java.util.Locale;
+import java.util.Set;
 import java.util.TimeZone;
 
 import apihandler.NetworkStatus;
+import model.Audio;
 import model.EventModel;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -215,7 +218,7 @@ public class Utils {
             LogUtil.createLog("illegal day of month: ","" + n);
             return "";
         }*/
-        if(Constant.SELECTED_LANG==Constant.LANG_ENG) {
+        if(Constant.SELECTED_LANG.equals(Constant.LANG_ENG)) {
             if (n >= 11 && n <= 13) {
                 return "th";
             }
@@ -597,5 +600,19 @@ public class Utils {
         }else{
             return "0";
         }
+    }
+
+
+    public static ArrayList<Audio> removeDuplicateAudio(ArrayList<Audio> audios){
+// add elements to al, including duplicates
+        ArrayList<Audio> result = new ArrayList<Audio>();
+        Set<String> titles = new HashSet<String>();
+
+        for( Audio item : audios ) {
+            if( titles.add(item.getId())) {
+                result.add( item );
+            }
+        };
+        return result;
     }
 }

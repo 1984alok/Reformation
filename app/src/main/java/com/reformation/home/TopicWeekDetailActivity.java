@@ -87,6 +87,8 @@ public class TopicWeekDetailActivity extends AppCompatActivity implements View.O
         eventRecyclerView.setLayoutManager(layoutManager);
 
         rightFilterImg.setImageResource(R.drawable.filter);
+        rightFilterImg.setVisibility(View.GONE);
+
         leftImg.setOnClickListener(this);
         topic_date.setOnClickListener(this);
         rightFilterImg.setOnClickListener(this);
@@ -154,7 +156,7 @@ public class TopicWeekDetailActivity extends AppCompatActivity implements View.O
 
             @Override
             public void onFailure(Call<TopicweekResponse> call, Throwable t) {
-                Log.d("onFailure ::",t.getMessage());
+               // Log.d("onFailure ::",t.getMessage());
                 if(dlg!=null)
                     dlg.hideDialog();
 

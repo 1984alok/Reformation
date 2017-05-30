@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.reformation.home.fragment.DividerItemDecoration;
@@ -33,12 +35,12 @@ import utils.Constant;
 import utils.CustomProgresDialog;
 import utils.Utils;
 
-public class FaqActivity extends AppCompatActivity implements View.OnClickListener{
+public class FaqActivity extends AppCompatActivity implements View.OnClickListener,SearchView.OnQueryTextListener{
     private TextView topicHeader;
     private ImageView back;
 
     private RecyclerView faq_recycler;
-    private ArrayList<QuestionModel> faqModelArrayList;
+    public static ArrayList<QuestionModel> faqModelArrayList;
     private ArrayList<FaqModel> answerList;
     private FaqAdapter adapter;
     ApiInterface apiInterface;
@@ -46,7 +48,7 @@ public class FaqActivity extends AppCompatActivity implements View.OnClickListen
     RecyclerViewFastScroller fastScroller;
     private List<AlphabetItem> mAlphabetItems;
     ArrayList<FaqModel> ansList;
-
+    private SearchView mSearchView;
 
     protected void initialiseData() {
 
@@ -81,6 +83,7 @@ public class FaqActivity extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_faq);
+        mSearchView = (SearchView) findViewById(R.id.search);
         back=(ImageView)findViewById(R.id.imageViewLeft);
         topicHeader =(TextView)findViewById(R.id.textViewHeaderTitle);
         topicHeader.setText(getResources().getString(R.string.AtoZ));
@@ -91,9 +94,14 @@ public class FaqActivity extends AppCompatActivity implements View.OnClickListen
         fastScroller = (com.viethoa.RecyclerViewFastScroller) findViewById(R.id.fast_scroller);
         faqModelArrayList = new ArrayList<>();
 
+        mSearchView.setIconifiedByDefault(false);
+        mSearchView.setOnQueryTextListener(this);
+        mSearchView.setSubmitButtonEnabled(true);
+        mSearchView.setQueryHint("Search");
+
         //setData();
-       // LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-       // faq_recycler.setLayoutManager(layoutManager);
+        // LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        // faq_recycler.setLayoutManager(layoutManager);
 
         if(Utils.isNetworkAvailable(this,topicHeader)){
             getFaq();
@@ -214,5 +222,24 @@ public class FaqActivity extends AppCompatActivity implements View.OnClickListen
                 break;
 
         }
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        adapter.getFilter().filter(newText);
+        return true;
+    }
+
+
+    public void refresh(ArrayList<QuestionModel> groups) {
+        adapter = new FaqAdapter(this,groups);
+        faq_recycler.setAdapter(adapter);
+        /// faqModelArrayList=groups;
+        ///  adapter.notifyDataSetChanged();
     }
 }

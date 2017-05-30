@@ -25,13 +25,23 @@ public class AniversaryAdapter extends RecyclerView.Adapter<AniversaryAdapter.My
 
     private ArrayList<AnniversaryModelResponse.ResponseModel> eventList;
     public Context ctx;
+    OnItemClickListener mItemClickListener;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public ImageView img;
         public MyViewHolder(View view) {
             super(view);
             img = (ImageView) view.findViewById(R.id.imageViewAnniversry);
+            img.setOnClickListener(this);
 
+        }
+
+
+        @Override
+        public void onClick(View v) {
+            if (mItemClickListener != null) {
+                mItemClickListener.onItemClick(v,itemView, getPosition());
+            }
         }
     }
 
@@ -64,5 +74,14 @@ public class AniversaryAdapter extends RecyclerView.Adapter<AniversaryAdapter.My
     @Override
     public int getItemCount() {
         return eventList.size();
+    }
+
+
+    public interface OnItemClickListener {
+        void onItemClick(View clickView,View view, int position);
+    }
+
+    public void setOnItemClickListener(final OnItemClickListener mItemClickListener) {
+        this.mItemClickListener = mItemClickListener;
     }
 }

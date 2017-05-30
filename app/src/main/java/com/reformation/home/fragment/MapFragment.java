@@ -1,5 +1,6 @@
 package com.reformation.home.fragment;
 
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,6 +33,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.reformation.home.ExhibitorDetailActivity;
 import com.reformation.home.R;
 
 import java.util.ArrayList;
@@ -86,6 +88,15 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
         dlg = CustomProgresDialog.getInstance(getActivity());
         bottomSheet = rootView.findViewById(R.id.design_bottom_sheet);
+
+        more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(exhibitorData!=null)
+                startActivity(new Intent(getActivity(), ExhibitorDetailActivity.class).putExtra("DATA",exhibitorData));
+            }
+        });
         behavior = BottomSheetBehavior.from(bottomSheet);
         behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override

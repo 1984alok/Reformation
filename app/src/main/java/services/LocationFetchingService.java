@@ -275,4 +275,10 @@ public class LocationFetchingService extends Service implements
             LogUtil.createLog(TAG,"stop timer");
         }
     }*/
+
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        super.onTaskRemoved(rootIntent);
+        stopSelf();
+    }
 }

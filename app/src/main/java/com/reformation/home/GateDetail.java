@@ -1,6 +1,7 @@
 package com.reformation.home;
 
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.location.Location;
 import android.os.AsyncTask;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -56,8 +58,8 @@ import static utils.Utils.isAndroid5;
 public class GateDetail extends AppCompatActivity implements View.OnClickListener {
 
     private ImageView gateImgview,leftImg,rightFilterImg;
-    private TextView gateTitle, gateDesc, gateHeader;
-    private CustomProgresDialog dlg;
+    private TextView gateTitle, gateDesc, gateHeader,galleryTxt;
+    private ProgressDialog dlg;
     ProgressBar progressBar;
 
     private RecyclerView gateRecyclerView;
@@ -79,6 +81,7 @@ public class GateDetail extends AppCompatActivity implements View.OnClickListene
     public AudioDB audioDB;
     AudioDownLoadManager audioDownLoadManager;
     private Timer timerTask = null;
+    private RelativeLayout audioRel;
 
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -112,7 +115,10 @@ public class GateDetail extends AppCompatActivity implements View.OnClickListene
         audioDB.open();
         audioDownLoadManager = AudioDownLoadManager.getInstance(this);
 
-        dlg = CustomProgresDialog.getInstance(this);
+      //  dlg = CustomProgresDialog.getInstance(this);
+        dlg = new ProgressDialog(this);
+        dlg.setMessage("Please wait...");
+        dlg.setCancelable(false);
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
         if(isAndroid5()){
             windowTransition();
@@ -126,6 +132,8 @@ public class GateDetail extends AppCompatActivity implements View.OnClickListene
         gateTitle = (TextView)findViewById(R.id.gateName);
         gateDesc = (TextView)findViewById(R.id.textViewTopicDesc);
         gateHeader = (TextView)findViewById(R.id.textViewHeaderTitle);
+        galleryTxt = (TextView)findViewById(R.id.galleryTxt);
+        audioRel = (RelativeLayout) findViewById(R.id.audioRel);
 
         eventGalleryView = (RecyclerView)findViewById(R.id.recyclerview_gallery);
         recyclerview_audioguide = (RecyclerView)findViewById(R.id.recyclerview_audioguide);
@@ -176,12 +184,12 @@ public class GateDetail extends AppCompatActivity implements View.OnClickListene
     private void getGatDetails(String id) {
         LogUtil.createLog("Eventdetail By Id :",id);
 
-        dlg.showDialog();
+        dlg.show();
         Call<GateDetailResponse> call = mApiInterface.getGateDetaillById(Constant.SELECTED_LANG,id);
         call.enqueue(new Callback<GateDetailResponse>() {
             @Override
             public void onResponse(Call<GateDetailResponse> call, Response<GateDetailResponse> response) {
-                dlg.hideDialog();
+
                 if (response.isSuccessful()) {
                     GateDetailResponse eventdetailResponse = response.body();
                     if(eventdetailResponse!=null&&eventdetailResponse.getStatus()){
@@ -196,21 +204,23 @@ public class GateDetail extends AppCompatActivity implements View.OnClickListene
                                 galleries = eventDetailGateData.getGallery();
 
                             }
-                            if(audios!=null&&audios.size()>0)
+                            if(audios!=null&&audios.size()>0) {
+                                audios = Utils.removeDuplicateAudio(audios);
+                            }
                             fillterAudio(audios);
                         }
 
                     }
 
                 }
-
+                dlg.dismiss();
             }
 
             @Override
             public void onFailure(Call<GateDetailResponse> call, Throwable t) {
-                Log.d("onFailure ::", t.getMessage());
+               // Log.d("onFailure ::", t.getMessage());
                 if (dlg != null)
-                    dlg.hideDialog();
+                    dlg.dismiss();
 
             }
         });
@@ -221,10 +231,16 @@ public class GateDetail extends AppCompatActivity implements View.OnClickListene
             audioAdapter = new AudioAdapter(this,audios);
             audioAdapter.setOnItemClickListener(mItemClickListener2);
             recyclerview_audioguide.setAdapter(audioAdapter);
+            audioRel.setVisibility(View.VISIBLE);
+        }else {
+            audioRel.setVisibility(View.GONE);
         }
         if(galleries!=null&&galleries.size()>0){
             galleryAdapter = new GalleryAdapter(this,galleries);
             eventGalleryView.setAdapter(galleryAdapter);
+            galleryTxt.setVisibility(View.VISIBLE);
+        }else {
+            galleryTxt.setVisibility(View.GONE);
         }
         if(eventModels!=null&&eventModels.size()>0) {
             homeEventAdapter = new HomeEventAdapter(this, eventModels, Constant.EVENT_TOPIC_DETAIL_TYPE);
@@ -300,33 +316,35 @@ public class GateDetail extends AppCompatActivity implements View.OnClickListene
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
-                for (Audio audio : audios) {
-                    Audio tempAudio = audioDB.getAudiinfo(audio.getId());
-                    if (tempAudio != null) {
-                        audio.setDownloadProgress(tempAudio.getDownloadProgress());
-                        audio.setDownloadId(tempAudio.getDownloadId());
-                        audio.setDownloadStatus(tempAudio.getDownloadStatus());
-                        audio.setSdcardPath(tempAudio.getSdcardPath());
-                        audio.setSdcardPathDe(tempAudio.getSdcardPathDe());
-                        audio = AudioDownLoadManager.getInstance(GateDetail.this).checkDownLoadStatusFromDownloadManager(audio);
+                if(audios!=null&&audios.size()>0) {
+                    for (Audio audio : audios) {
+                        Audio tempAudio = audioDB.getAudiinfo(audio.getId());
+                        if (tempAudio != null) {
+                            audio.setDownloadProgress(tempAudio.getDownloadProgress());
+                            audio.setDownloadId(tempAudio.getDownloadId());
+                            audio.setDownloadStatus(tempAudio.getDownloadStatus());
+                            audio.setSdcardPath(tempAudio.getSdcardPath());
+                            audio.setSdcardPathDe(tempAudio.getSdcardPathDe());
+                            audio = AudioDownLoadManager.getInstance(GateDetail.this).checkDownLoadStatusFromDownloadManager(audio);
 
 
-                    } else {
-                        audio.setDownloadProgress(0);
-                        audio.setDownloadId(-1);
-                        audio.setDownloadStatus(Constant.ACTION_NOT_DOWNLOAD_YET);
-                        audio.setSdcardPath("");
-                        audio.setSdcardPathDe("");
+                        } else {
+                            audio.setDownloadProgress(0);
+                            audio.setDownloadId(-1);
+                            audio.setDownloadStatus(Constant.ACTION_NOT_DOWNLOAD_YET);
+                            audio.setSdcardPath("");
+                            audio.setSdcardPathDe("");
+                        }
+                        Location loc = new Location("GPS");
+                        loc.setLatitude(audio.getLatitude() != null ? Double.parseDouble(audio.getLatitude()) : 0.0);
+                        loc.setLongitude(audio.getLongitude() != null ? Double.parseDouble(audio.getLongitude()) : 0.0);
+                        audio.setDist(Float.parseFloat(Utils.getDistance(Constant.appLoc, loc)));
+                        checkAudioDownloadInfoAndUpdate(audio);
+
                     }
-                    Location loc = new Location("GPS");
-                    loc.setLatitude(audio.getLatitude() != null ? Double.parseDouble(audio.getLatitude()) : 0.0);
-                    loc.setLongitude(audio.getLongitude() != null ? Double.parseDouble(audio.getLongitude()) : 0.0);
-                    audio.setDist(Float.parseFloat(Utils.getDistance(Constant.appLoc, loc)));
-                    checkAudioDownloadInfoAndUpdate(audio);
 
+                    LogUtil.createLog("Fillter map", audios.get(0).getTitle() + "" + audios.get(0).getId() + "" + audios.get(0).getDownloadStatus());
                 }
-
-                LogUtil.createLog("Fillter map", audios.get(0).getTitle() + "" + audios.get(0).getId() + "" + audios.get(0).getDownloadStatus());
 
                 return null;
             }
@@ -421,8 +439,8 @@ public class GateDetail extends AppCompatActivity implements View.OnClickListene
 
     public void initDownLoad(Audio audio){
         if(audio.getDownloadStatus()==Constant.ACTION_NOT_DOWNLOAD_YET) {
-            String titel = (Constant.SELECTED_LANG != Constant.LANG_ENG ? audio.getTitle() : audio.getTitleEn());
-            String audioPath = ApiClient.BASE_URL + (Constant.SELECTED_LANG != Constant.LANG_ENG ? audio.getAudio() : audio.getAudioSize());
+            String titel = (!Constant.SELECTED_LANG.equals(Constant.LANG_ENG) ? audio.getTitle() : audio.getTitleEn());
+            String audioPath = ApiClient.BASE_URL + (!Constant.SELECTED_LANG.equals(Constant.LANG_ENG) ? audio.getAudio() : audio.getAudioEn());
             long downId = audioDownLoadManager.startDownloadManager(audioPath, titel);
             if (downId != -1) {
                 audio.setDownloadId((int) downId);

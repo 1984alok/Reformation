@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.support.v4.text.TextUtilsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -61,7 +62,8 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
 
     private ImageView leftImg,
             favouriteImage,imageViewShare;
-    private TextView topicTitle,topicDesc,topic_period,topic_ticketInfo,topic_OpeningInfo,topicHeader,textViewaddrss;
+    private TextView topicTitle,topicDesc,topic_period,topic_ticketInfo,topic_OpeningInfo,
+            topicHeader,textViewaddrss,galleryTxt;
     LatLng locationPlace;
     private LinearLayout catgList;
     private FrameLayout mainView;
@@ -84,6 +86,7 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
     public AudioDB audioDB;
     AudioDownLoadManager audioDownLoadManager;
 
+    private CardView cardAudio;
 
     LatLng location;
     String id = "";
@@ -116,6 +119,8 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
         topic_period =(TextView)findViewById(R.id.txtEventTime);
         topic_OpeningInfo= (TextView) findViewById(R.id.textViewOpening);
         topic_ticketInfo= (TextView) findViewById(R.id.textViewTicket);
+        galleryTxt= (TextView) findViewById(R.id.galleryTxt);
+        cardAudio= (CardView) findViewById(R.id.cardAudio);
 
         textViewaddrss =(TextView)findViewById(R.id.textViewMap);
 
@@ -252,7 +257,9 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
 
                             eventModels = placeData.getEventsList();
 
-                            if(audios!=null&&audios.size()>0)
+                            if(audios!=null&&audios.size()>0) {
+                                audios = Utils.removeDuplicateAudio(audios);
+                            }
                             fillterAudio(audios);
 
                         }
@@ -265,7 +272,7 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
 
             @Override
             public void onFailure(Call<ExhibitorDetailResponseById> call, Throwable t) {
-                Log.d("onFailure ::", t.getMessage());
+               // Log.d("onFailure ::", t.getMessage());
                 if (dlg != null)
                     dlg.hideDialog();
 
@@ -302,10 +309,16 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
                 audioAdapter = new AudioAdapter(this,audios);
                 audioAdapter.setOnItemClickListener(mItemClickListener2);
                 recyclerview_audioguide.setAdapter(audioAdapter);
+                cardAudio.setVisibility(View.VISIBLE);
+            }else {
+                cardAudio.setVisibility(View.GONE);
             }
             if(galleries!=null&&galleries.size()>0){
                 galleryAdapter = new GalleryAdapter(this,galleries);
                 eventGalleryView.setAdapter(galleryAdapter);
+                galleryTxt.setVisibility(View.VISIBLE);
+            }else {
+                galleryTxt.setVisibility(View.GONE);
             }
             if(eventModels!=null&&eventModels.size()>0){
                 homeEventAdapter = new HomeEventAdapter(this,eventModels,Constant.EVENT_TDAYTOMORW);
@@ -411,33 +424,35 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
-                for (Audio audio : audios) {
-                    Audio tempAudio = audioDB.getAudiinfo(audio.getId());
-                    if (tempAudio != null) {
-                        audio.setDownloadProgress(tempAudio.getDownloadProgress());
-                        audio.setDownloadId(tempAudio.getDownloadId());
-                        audio.setDownloadStatus(tempAudio.getDownloadStatus());
-                        audio.setSdcardPath(tempAudio.getSdcardPath());
-                        audio.setSdcardPathDe(tempAudio.getSdcardPathDe());
-                        audio = AudioDownLoadManager.getInstance(ExhibitorDetailActivity.this).checkDownLoadStatusFromDownloadManager(audio);
+                if(audios!=null&&audios.size()>0) {
+                    for (Audio audio : audios) {
+                        Audio tempAudio = audioDB.getAudiinfo(audio.getId());
+                        if (tempAudio != null) {
+                            audio.setDownloadProgress(tempAudio.getDownloadProgress());
+                            audio.setDownloadId(tempAudio.getDownloadId());
+                            audio.setDownloadStatus(tempAudio.getDownloadStatus());
+                            audio.setSdcardPath(tempAudio.getSdcardPath());
+                            audio.setSdcardPathDe(tempAudio.getSdcardPathDe());
+                            audio = AudioDownLoadManager.getInstance(ExhibitorDetailActivity.this).checkDownLoadStatusFromDownloadManager(audio);
 
 
-                    } else {
-                        audio.setDownloadProgress(0);
-                        audio.setDownloadId(-1);
-                        audio.setDownloadStatus(Constant.ACTION_NOT_DOWNLOAD_YET);
-                        audio.setSdcardPath("");
-                        audio.setSdcardPathDe("");
+                        } else {
+                            audio.setDownloadProgress(0);
+                            audio.setDownloadId(-1);
+                            audio.setDownloadStatus(Constant.ACTION_NOT_DOWNLOAD_YET);
+                            audio.setSdcardPath("");
+                            audio.setSdcardPathDe("");
+                        }
+                        Location loc = new Location("GPS");
+                        loc.setLatitude(audio.getLatitude() != null ? Double.parseDouble(audio.getLatitude()) : 0.0);
+                        loc.setLongitude(audio.getLongitude() != null ? Double.parseDouble(audio.getLongitude()) : 0.0);
+                        audio.setDist(Float.parseFloat(Utils.getDistance(Constant.appLoc, loc)));
+                        checkAudioDownloadInfoAndUpdate(audio);
+
                     }
-                    Location loc = new Location("GPS");
-                    loc.setLatitude(audio.getLatitude() != null ? Double.parseDouble(audio.getLatitude()) : 0.0);
-                    loc.setLongitude(audio.getLongitude() != null ? Double.parseDouble(audio.getLongitude()) : 0.0);
-                    audio.setDist(Float.parseFloat(Utils.getDistance(Constant.appLoc, loc)));
-                    checkAudioDownloadInfoAndUpdate(audio);
 
+                    LogUtil.createLog("Fillter map", audios.get(0).getTitle() + "" + audios.get(0).getId() + "" + audios.get(0).getDownloadStatus());
                 }
-
-                LogUtil.createLog("Fillter map", audios.get(0).getTitle() + "" + audios.get(0).getId() + "" + audios.get(0).getDownloadStatus());
 
                 return null;
             }
@@ -533,8 +548,8 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
 
     public void initDownLoad(Audio audio){
         if(audio.getDownloadStatus()==Constant.ACTION_NOT_DOWNLOAD_YET) {
-            String titel = (Constant.SELECTED_LANG != Constant.LANG_ENG ? audio.getTitle() : audio.getTitleEn());
-            String audioPath = ApiClient.BASE_URL + (Constant.SELECTED_LANG != Constant.LANG_ENG ? audio.getAudio() : audio.getAudioSize());
+            String titel = (!Constant.SELECTED_LANG.equals(Constant.LANG_ENG) ? audio.getTitle() : audio.getTitleEn());
+            String audioPath = ApiClient.BASE_URL + (!Constant.SELECTED_LANG.equals(Constant.LANG_ENG) ? audio.getAudio() : audio.getAudioEn());
             long downId = audioDownLoadManager.startDownloadManager(audioPath, titel);
             if (downId != -1) {
                 audio.setDownloadId((int) downId);

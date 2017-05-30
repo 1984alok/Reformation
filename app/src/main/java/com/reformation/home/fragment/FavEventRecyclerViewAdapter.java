@@ -39,7 +39,7 @@ public class FavEventRecyclerViewAdapter extends RecyclerView.Adapter<FavEventRe
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(Constant.SELECTED_LANG==Constant.LANG_ENG?mValues.get(position).getName():
+        holder.mIdView.setText(Constant.SELECTED_LANG.equals(Constant.LANG_ENG)?mValues.get(position).getName():
                 mValues.get(position).getName_de());
         holder.mContentView.setText(Utils.formatEvenrtDate(mValues.get(position).getDate())+" - "+mValues.get(position).getStart().split(":")[0]+Utils.getHrFormat());
 

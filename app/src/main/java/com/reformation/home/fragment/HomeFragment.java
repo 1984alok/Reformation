@@ -30,6 +30,7 @@ import com.reformation.home.AudioGuideActivity;
 import com.reformation.home.EventDetailActivity;
 import com.reformation.home.FaqActivity;
 import com.reformation.home.FavActivity;
+import com.reformation.home.HomeScreen;
 import com.reformation.home.R;
 import com.reformation.home.SettingScreen;
 import com.reformation.home.TopicWeekDetailActivity;
@@ -194,6 +195,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Swipe
         if(model!=null) {
             eventList = model.getResponseData();
             if (eventList != null) {
+                EventModel eventModel = new EventModel();
+                eventModel.setTitle("moreEvent");
+                eventList.add(eventModel);
                 homeEventAdapter = new HomeEventAdapter(context, eventList,Constant.EVENT_TOPIC_HOME_TYPE);
                 homeEventAdapter.setOnItemClickListener(mItemClickListener);
                 eventRecyclerView.setAdapter(homeEventAdapter);
@@ -420,7 +424,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Swipe
     HomeEventAdapter.OnItemClickListener mItemClickListener = new HomeEventAdapter.OnItemClickListener(){
         @Override
         public void onItemClick(View clickView, View view, int position) {
-            new Utils().startEventDetailPage(view,position,getActivity(),EventDetailActivity.class,eventList.get(position));
+            if(!eventList.get(position).getTitle().equalsIgnoreCase("moreEvent"))
+                new Utils().startEventDetailPage(view,position,getActivity(),EventDetailActivity.class,eventList.get(position));
+            else{
+                ((HomeScreen)getActivity()).setBootombar();
+
+            }
         }
     };
 }

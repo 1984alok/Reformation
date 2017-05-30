@@ -112,6 +112,21 @@ public interface ApiInterface {
                                                          @Field("place_id") String gatearea_id );
 
 
+//event Catg
+    @POST("webservices_mob_app/get_category_details.php")
+    @FormUrlEncoded
+    Call<JsonObject> getEventCatg(@Field("lang") String lang
+                                  );
+
+
+    //event placeCatg
+    @POST("webservices_mob_app/place_category_list.php")
+    @FormUrlEncoded
+    Call<JsonObject> getPlaceCatg(@Field("lang") String lang
+    );
+
+
+
 
 
 
