@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 
 import model.AnniversaryModelResponse;
 import model.AudioResponse;
+import model.EvenTCatg;
 import model.EventResponse;
 import model.EventdetailResponse;
 import model.ExhibitorDetailResponseById;
@@ -13,6 +14,7 @@ import model.GateDetailResponse;
 import model.GateResponsModel;
 import model.HomeMenuModelResponse;
 import model.MapResponse;
+import model.EventPlaceCatg;
 import model.TopicweekResponse;
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -104,7 +106,7 @@ public interface ApiInterface {
     @POST("webservices_mob_app/event_details_via_id.php")
     @FormUrlEncoded
     Call<JsonObject> chekResponse(@Field("lang") String lang,
-                                        @Field("event_id") String event_id );
+                                  @Field("event_id") String event_id );
 
     @POST("webservices_mob_app/place_details_via_id.php")
     @FormUrlEncoded
@@ -112,22 +114,44 @@ public interface ApiInterface {
                                                          @Field("place_id") String gatearea_id );
 
 
-//event Catg
+    //event Catg
     @POST("webservices_mob_app/get_category_details.php")
     @FormUrlEncoded
-    Call<JsonObject> getEventCatg(@Field("lang") String lang
-                                  );
+    Call<EvenTCatg> getEventCatg(@Field("lang") String lang
+    );
 
 
     //event placeCatg
     @POST("webservices_mob_app/place_category_list.php")
     @FormUrlEncoded
-    Call<JsonObject> getPlaceCatg(@Field("lang") String lang
+    Call<EventPlaceCatg> getPlaceCatg(@Field("lang") String lang
+    );
+
+
+    //event search
+    @POST("webservices_mob_app/search_topic_week.php")
+    @FormUrlEncoded
+    Call<EventResponse> searchTopicweek( @Field("lang") String lang,
+                                         @Field("search") String searchTxt
+    );
+
+    //event filter
+    @POST("webservices_mob_app/event_cat_date_search.php")
+    @FormUrlEncoded
+    Call<EventResponse> filterTopicweek(@Field("lang") String lang,
+                                        @Field("date") String date,
+                                        @Field("search") String searchTxt
     );
 
 
 
-
+    @POST("webservices_mob_app/exhibitors_details_gatearea_id.php?")
+    @FormUrlEncoded
+    Call<ExhibitorResponse> getExhibitorListGateRelated(@Field("lang") String lang,
+                                                        @Field("date") String date,
+                                                        @Field("time") String time,
+                                                        @Field("tags") String tags,
+                                                        @Field("gateareaid") String gateareaid);
 
 
 }

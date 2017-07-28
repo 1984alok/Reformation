@@ -77,6 +77,9 @@ public class HomeEventAdapter  extends RecyclerView.Adapter<HomeEventAdapter.MyV
         else  if (type== Constant.EVENT_TDAYTOMORW)
             itemView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.today_tomrow_listitem, parent, false);
+        else  if (type== Constant.EVENT_SEARCH)
+            itemView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.activity_program_search_list_item, parent, false);
 
         return new MyViewHolder(itemView);
     }
@@ -91,7 +94,7 @@ public class HomeEventAdapter  extends RecyclerView.Adapter<HomeEventAdapter.MyV
                 holder.frameArrow.setVisibility(View.GONE);
             holder.frame.setVisibility(View.VISIBLE);
             holder.txtViewTitle.setText(event.getTitle());
-            holder.time.setText(Utils.formatEvenrtDate(event.getDate()) + " - " + event.getStart().split(":")[0] + Utils.getHrFormat());
+            holder.time.setText(Utils.formatEvenrtDate(event.getDate()) + " - " + Utils.getEventTime(event.getStart()) + Utils.getHrFormat());
             if (event.getCategory() != null) {
                 String[] catList = event.getCategory().split(",");
                 if (holder.linearLayout.getChildCount() > 0) {

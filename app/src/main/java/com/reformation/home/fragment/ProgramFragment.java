@@ -22,6 +22,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.reformation.home.ProgramFilterActivity;
+import com.reformation.home.ProgramSearchActivity;
 import com.reformation.home.R;
 import com.reformation.home.TopicWeekDetailActivity;
 
@@ -96,24 +98,25 @@ public class ProgramFragment extends Fragment implements View.OnClickListener{
         verticalLayoutManagaer
                 = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
 
-         Drawable drawable = getResources().getDrawable(R.drawable.line_devider_two);
+        Drawable drawable = getResources().getDrawable(R.drawable.line_devider_two);
 
 
         topicOvrvwRecyclerView.setFocusable(false);
         topicOvrvwRecyclerView.setNestedScrollingEnabled(false);
         topicOvrvwRecyclerView.setHasFixedSize(true);
         topicOvrvwRecyclerView.setLayoutManager(verticalLayoutManagaer);
-        
+
         topicMnthRecyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL_LIST,drawable));
         topicMnthRecyclerView.setHasFixedSize(true);
         topicMnthRecyclerView.setLayoutManager(horizontalLayoutManagaer);
         imageViewFilter.setImageResource(R.drawable.filter);
         imageViewSearch.setImageResource(R.drawable.search);
+        imageViewSearch.setOnClickListener(this);
         imageViewFilter.setOnClickListener(this);
         topicHeader.setText(getResources().getString(R.string.program_text));
 
-        imageViewFilter.setVisibility(View.GONE);
-        imageViewSearch.setVisibility(View.GONE);
+        imageViewFilter.setVisibility(View.VISIBLE);
+        imageViewSearch.setVisibility(View.VISIBLE);
 
         getTopicMonthWise();
         getTopicDateWise();
@@ -131,7 +134,7 @@ public class ProgramFragment extends Fragment implements View.OnClickListener{
                 if(response.isSuccessful()){
                     TopicweekResponse model = response.body();
                     topicOvrvwList = model.getResponseData();
-                    if(topicOvrvwList!=null&topicOvrvwList.size()>0){
+                    if(topicOvrvwList!=null && topicOvrvwList.size()>0){
                         topicOverviewAdapter = new TopicOverviewAdapter(context,topicOvrvwList);
                         topicOverviewAdapter.setOnItemClickListener(onItemClickListener);
                         topicOvrvwRecyclerView.setAdapter(topicOverviewAdapter);
@@ -142,7 +145,7 @@ public class ProgramFragment extends Fragment implements View.OnClickListener{
 
             @Override
             public void onFailure(Call<TopicweekResponse> call, Throwable t) {
-               // Log.d("onFailure ::",t.getMessage());
+                // Log.d("onFailure ::",t.getMessage());
                 if(dlg!=null)
                     dlg.hideDialog();
 
@@ -231,7 +234,14 @@ public class ProgramFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()){
+            case R.id.imageViewRight:
+                startActivity(new Intent(getActivity(), ProgramSearchActivity.class));
+                break;
+            case R.id.imageViewLeft:
+                startActivity(new Intent(getActivity(), ProgramFilterActivity.class));
+                break;
+        }
     }
 
 

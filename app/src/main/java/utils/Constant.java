@@ -22,6 +22,7 @@ public class Constant {
     public static final int EVENT_TOPIC_DETAIL_TYPE = 2;
     public static final int EVENT_TOPIC_HOME_TYPE = 1;
     public static final int EVENT_TDAYTOMORW = 3;
+    public static final int  EVENT_SEARCH = 4;
 
     public static final String TAG_EXHIBITOR = "Exhibitors";
     public static final String TAG_OTHER_LOCATION = "locations";

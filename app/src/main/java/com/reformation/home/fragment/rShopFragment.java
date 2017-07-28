@@ -33,6 +33,7 @@ public class rShopFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     WebView myWebView;
     String shpUrl;
+    String headerTxt="";
     private ImageView leftImg;
     private TextView headerTitle;
     CustomProgresDialog dlg;
@@ -55,10 +56,11 @@ public class rShopFragment extends Fragment {
      * @return A new instance of fragment rShopFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static rShopFragment newInstance(String param1) {
+    public static rShopFragment newInstance(String param1,String header) {
         rShopFragment fragment = new rShopFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, header);
         fragment.setArguments(args);
         return fragment;
     }
@@ -68,6 +70,7 @@ public class rShopFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             shpUrl = getArguments().getString(ARG_PARAM1);
+            headerTxt= getArguments().getString(ARG_PARAM2);
         }
 
     }
@@ -79,7 +82,7 @@ public class rShopFragment extends Fragment {
         myWebView = (WebView)view.findViewById(R.id.mywebview);
         headerTitle =(TextView)view.findViewById(R.id.textViewHeaderTitle);
         leftImg=(ImageView)view.findViewById(R.id.imageViewLeft);
-        headerTitle.setText(getResources().getString(R.string.rshop));
+        headerTitle.setText(headerTxt);
         dlg = CustomProgresDialog.getInstance(getActivity());
         myWebView.getSettings().setJavaScriptEnabled(true);
         myWebView.setWebViewClient(new MyWebViewClient());

@@ -13,17 +13,17 @@ import com.reformation.home.R;
 public class CustomProgresDialog{
     private ProgressDialog dlg;
     private static CustomProgresDialog customProgresDialog;
-    private CustomProgresDialog(Context context) {
+    public CustomProgresDialog(Context context) {
         dlg = new ProgressDialog(context,R.style.FullHeightDialog);
         dlg.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
         dlg.setCancelable(false);
     }
 
     public static CustomProgresDialog getInstance(Context ctx){
-        if(customProgresDialog==null){
+       /* if(customProgresDialog==null&&ctx!=null){
             customProgresDialog = new CustomProgresDialog(ctx);
-        }
-        return customProgresDialog;
+        }*/
+        return new CustomProgresDialog(ctx);
     }
 
     public void hideDialog(){

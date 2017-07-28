@@ -1,35 +1,89 @@
 package model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
+
 /**
  * Created by muvi on 25/5/17.
  */
 
 public class EvenTCatg {
-    public String getId() {
-        return id;
+
+    @SerializedName("status")
+    @Expose
+    private Boolean status;
+    @SerializedName("statusCode")
+    @Expose
+    private String statusCode;
+    @SerializedName("responseData")
+    @Expose
+    private ArrayList<ResponseDatum> responseData = null;
+
+    public Boolean getStatus() {
+        return status;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
-    public String getCatEn() {
-        return catEn;
+    public String getStatusCode() {
+        return statusCode;
     }
 
-    public void setCatEn(String catEn) {
-        this.catEn = catEn;
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
     }
 
-    public String getCatDe() {
-        return catDe;
+    public ArrayList<ResponseDatum> getResponseData() {
+        return responseData;
     }
 
-    public void setCatDe(String catDe) {
-        this.catDe = catDe;
+    public void setResponseData(ArrayList<ResponseDatum> responseData) {
+        this.responseData = responseData;
     }
 
-    private String id;
-    private String catEn;
-    private String catDe;
+
+    public class ResponseDatum {
+
+        @SerializedName("id")
+        @Expose
+        private String id;
+        @SerializedName("cat")
+        @Expose
+        private String title;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+
+        public boolean isChecked() {
+            return isChecked;
+        }
+
+        public void setChecked(boolean checked) {
+            isChecked = checked;
+        }
+
+        @SerializedName("isChecked")
+        @Expose
+        private boolean isChecked = true;
+
+    }
+
 }

@@ -99,6 +99,7 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
     public AudioDB audioDB;
     AudioDownLoadManager audioDownLoadManager;
     private Timer timerTask = null;
+    String dtTxt ="";
 
 
     @Override
@@ -267,19 +268,19 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
             rightFilterImg.setImageResource(favStatus?R.drawable.heart_filled:R.drawable.heart);
             if(event.getDate()!=null && event.getStart()!=null && event.getEnd()!=null) {
                 String sdate = Utils.formatDate(event.getDate());
-                String dtTxt = Utils.getWeekNameFromDay(event.getDate()) + ", " +
+                dtTxt = Utils.getWeekNameFromDay(event.getDate()) + ", " +
                         Utils.getDaywithTHFormatFromDate(sdate) + " " +
-                        Utils.getMonthFromDate(sdate) + " | " + event.getStart().split(":")[0] + Utils.getHrFormat() + "-"
-                        + event.getEnd().split(":")[0] + Utils.getHrFormat();
+                        Utils.getMonthFromDate(sdate) + " | " + Utils.getEventTime(event.getStart()) + Utils.getHrFormat() + " - "
+                        + Utils.getEventTime(event.getEnd()) + Utils.getHrFormat();
                 topic_date.setText(dtTxt);
             }
             createEventCatgList(this,catgList,event.getCategory());
-            textViewTicket.setText(getResources().getString(R.string.ticket_info)+":"+event.getTicket());
+            textViewTicket.setText(getResources().getString(R.string.ticket_info)+": "+event.getTicket());
             topicDesc.setText(event.getDescp());
         }
 
         if(exhibitor!=null){
-            textViewaddrss.setText(exhibitor.getStreet()+exhibitor.getCity()+exhibitor.getZip()+exhibitor.getCountry());
+            textViewaddrss.setText(exhibitor.getStreet()+", "+exhibitor.getCity()+", "+exhibitor.getZip());
             locationPlace = new LatLng(Double.parseDouble(exhibitor.getLatitude()), Double.parseDouble(exhibitor.getLongitude()));
         }
 
@@ -333,6 +334,12 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+
+            case R.id.imageViewShare:
+
+                if(event!=null)
+                sentEmail(event);
+                break;
 
             case R.id.mapFrame:
 
@@ -620,6 +627,38 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
         }
 
     }
+
+
+
+    private void sentEmail(EventModel eventModel){
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(getResources().getString(R.string.event)+":"+(Constant.SELECTED_LANG.equals(Constant.LANG_ENG)?
+                eventModel.getTitle():eventModel.getTitle_de())+"\n\n");
+        stringBuilder.append(eventModel.getSpeaker()+"\n\n\n\n");
+
+        stringBuilder.append(eventModel.getDescp()+"\n\n\n\n\n");
+
+        stringBuilder.append(dtTxt+"\n");
+        stringBuilder.append(eventModel.getTicket()+"\n");
+        stringBuilder.append(getResources().getString(R.string.direction)+" : "+textViewaddrss.getText().toString()+"\n\n\n\n\n\n");
+        stringBuilder.append(getResources().getString(R.string.mail_footer));
+
+         /* Create the Intent */
+        final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+
+/* Fill it with Data */
+        emailIntent.setType("plain/text");
+       // emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"info@r2017.org "});
+         emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,Constant.SELECTED_LANG.equals(Constant.LANG_ENG)?
+                 eventModel.getTitle():eventModel.getTitle_de());
+
+         emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, stringBuilder.toString());
+
+/* Send it off to the Activity-Chooser */
+        startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+    }
+
 
 
 }

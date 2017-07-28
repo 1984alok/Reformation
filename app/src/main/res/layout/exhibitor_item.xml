@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="1dp"
-    card_view:cardCornerRadius="4dp"
-    app:cardElevation="3dp"
+    card_view:cardCornerRadius="1dp"
+    app:cardElevation="1dp"
     android:background="@color/light_blue">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -17,17 +17,20 @@
         android:id="@+id/frame">
         <FrameLayout
             android:id="@+id/imageViewExhibitorFrame"
-            android:layout_width="@dimen/dp90"
-            android:layout_height="@dimen/dp90"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="@dimen/dp60"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:padding="@dimen/dp1"
-            android:background="@drawable/grey_bag_roundshape">
+            android:layout_centerVertical="true"
+            android:background="@color/white">
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
                 android:id="@+id/imageViewExhibitor"
-                android:scaleType="fitXY"/>
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:background="@color/grey"
+                android:layout_gravity="center"/>
         </FrameLayout>
         <TextView
             android:layout_width="match_parent"

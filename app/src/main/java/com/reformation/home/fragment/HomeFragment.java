@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -41,6 +42,7 @@ import java.util.ArrayList;
 import java.util.ListIterator;
 
 import adapter.HomeEventAdapter;
+import adapter.PlaceCatAdapter;
 import apihandler.ApiClient;
 import apihandler.ApiInterface;
 import model.EventModel;
@@ -233,8 +235,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Swipe
     }
 
     private void loadView(TopicweekResponse model) {
-        topicWeekModel = model.getResponseData().get(0);
-        if(topicWeekModel!=null){
+        if(model!=null) {
+            topicWeekModel = model.getResponseData().get(0);
+            if (topicWeekModel != null) {
            /* if(eventList!=null) {
                 eventList = topicWeekModel.getEvent();
                 homeEventAdapter = new HomeEventAdapter(context, eventList);
@@ -242,23 +245,23 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Swipe
             }*/
 
 
-            if(topicWeekModel.getHeaderPic()!=null) {
-                Picasso.with(context).load(ApiClient.BASE_URL+topicWeekModel.getHeaderPic())
-                        // .placeholder(R.drawable.progress_animation)
-                        .error(R.drawable.ic_photo_frame)
-                        .into(topicImgview);
+                if (topicWeekModel.getHeaderPic() != null) {
+                    Picasso.with(context).load(ApiClient.BASE_URL + topicWeekModel.getHeaderPic())
+                            // .placeholder(R.drawable.progress_animation)
+                            .error(R.drawable.ic_photo_frame)
+                            .into(topicImgview);
+
+                }
+
+                topicTitle.setText(topicWeekModel.getToWeekTitle());
+                topicDesc.setText(topicWeekModel.getToWeekDes() != null ? topicWeekModel.getToWeekDes() : getResources().getString(R.string.topic_desc));
+
+                FontUtls.loadFont(context, "fonts/RobotoCondensed-Bold.ttf", topicTitle);
+                // FontUtls.loadFont(context,"fonts/RobotoCondensed-Bold.ttf",topicDesc);
+
 
             }
-
-            topicTitle.setText(topicWeekModel.getToWeekTitle());
-            topicDesc.setText(topicWeekModel.getToWeekDes()!=null?topicWeekModel.getToWeekDes():getResources().getString(R.string.topic_desc));
-
-            FontUtls.loadFont(context,"fonts/RobotoCondensed-Bold.ttf",topicTitle);
-            // FontUtls.loadFont(context,"fonts/RobotoCondensed-Bold.ttf",topicDesc);
-
-
         }
-
 
     }
 
@@ -303,12 +306,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Swipe
                     progressBar = (ProgressBar) itemView.findViewById(R.id.dlg);
                     txtViewTitle.setText(model.getTitle());
                     FontUtls.loadFont(getActivity(), "fonts/Roboto-Bold.ttf", txtViewTitle);
-                    progressBar.setVisibility(View.VISIBLE);
-                    imgPic.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.GONE);
+                    imgPic.setVisibility(View.VISIBLE);
                     if (model.getImage() != null) {
-                        LoadInPicasso.getInstance(context).loadPic(imgPic, progressBar, model.getImage());
+                        Picasso.with(context).load(ApiClient.BASE_URL + model.getImage())
+                                // .placeholder(R.drawable.progress_animation)
+                                .error(R.drawable.ic_photo_frame)
+                                .into(imgPic);
+
                     }
                     shopUrl = model.getExternalLink();
+                    itemView.setTag(model.getExternalLink());
 
                     LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) menuLayout.getLayoutParams();
                     if (params != null) {
@@ -341,7 +349,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Swipe
                 @Override
                 public void onClick(View v) {
                     // startAudioPage(v,0, FaqActivity.class);
-                    rShopFragment fragment = rShopFragment.newInstance(shopUrl);
+                    rShopFragment fragment = rShopFragment.newInstance(v.getTag().toString(),getResources().getString(R.string.rshop));
+                    FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                            android.R.anim.fade_out);
+                    fragmentTransaction.add(R.id.frame, fragment, "web");
+                    fragmentTransaction.addToBackStack("web");
+                    fragmentTransaction.commitAllowingStateLoss();
+                }
+            });
+
+            menuLayout.getChildAt(3).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // startAudioPage(v,0, FaqActivity.class);
+                    rShopFragment fragment = rShopFragment.newInstance(v.getTag().toString(),getResources().getString(R.string.video_guide));
                     FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
                             android.R.anim.fade_out);
@@ -432,4 +454,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Swipe
             }
         }
     };
+
+
+
+
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        dlg.hideDialog();
+    }
 }

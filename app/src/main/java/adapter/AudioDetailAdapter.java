@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import model.Audio;
 import utils.Constant;
+import utils.FontUtls;
 import utils.Utils;
 
 /**
@@ -111,11 +112,13 @@ public class AudioDetailAdapter extends RecyclerView.Adapter<AudioDetailAdapter.
                 :
                 (model.getTitle() != null ? model.getTitle() : ""));
         //  holder.txtViewSize.setText(model.getAudioSizeEn() != null ? model.getAudioSizeEn() : "");
-        holder.txtViewSpkr.setText(ctx.getResources().getString(R.string.spker)+(Constant.SELECTED_LANG.equals(Constant.LANG_ENG)
+        holder.txtViewSpkr.setText(ctx.getResources().getString(R.string.spker)+" "+(Constant.SELECTED_LANG.equals(Constant.LANG_ENG)
                 ?
                 (model.getSpeakerEn() != null ? model.getSpeakerEn() : "")
                 :
                 (model.getSpeaker() != null ? model.getSpeaker() : "")));
+
+       // FontUtls.loadFont(ctx, "fonts/Roboto-Bold.ttf",  holder.txtViewSpkr);
         // Log.i("gate data", model.getTitle());
         Location loc= new Location("GPS");
         loc.setLatitude(model.getLatitude()!=null?Double.parseDouble(model.getLatitude()):0.0);

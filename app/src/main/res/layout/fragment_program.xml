@@ -96,6 +96,7 @@
                     android:id="@+id/horizontal_recycler_topicoverview"
                     android:layout_width="match_parent"
                     android:layout_marginTop="@dimen/dp10"
+                    android:layout_marginLeft="10dp"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
 

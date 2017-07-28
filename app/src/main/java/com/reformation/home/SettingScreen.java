@@ -202,8 +202,7 @@ public class SettingScreen extends AppCompatActivity implements View.OnClickList
 
     private void showImprintAlert() {
         new AlertDialog.Builder(this)
-                .setMessage(getResources().getString(R.string.policy))
-                .setTitle("")
+                .setView(LayoutInflater.from(this).inflate(R.layout.imprint,null))
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

@@ -46,8 +46,31 @@ public class FragmentExhibitorTab extends Fragment implements OnLoadListener{
     private ExhibitorTabAdapter exhibitorTabAdapter;
     OnLoadListener mOnLoadListener;
 
+    private static final String ARG_PARAM1 = "param1";
+
+    private String gateId = "";
+
     public FragmentExhibitorTab(){}
 
+    // TODO: Rename and change types and number of parameters
+    public static FragmentExhibitorTab newInstance(String gateId) {
+        FragmentExhibitorTab fragment = new FragmentExhibitorTab();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1,gateId);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            gateId = getArguments().getString(ARG_PARAM1);
+
+
+        }
+    }
 
 
     @Override
@@ -84,7 +107,9 @@ public class FragmentExhibitorTab extends Fragment implements OnLoadListener{
         dlg.showDialog();
         String date = Utils.getCurrentDate();
         String time = Utils.getCurrentTime();
-        Call<ExhibitorResponse> call = mApiInterface.getExhibitorList(Constant.SELECTED_LANG,date,time,tag);
+        Call<ExhibitorResponse> call = (gateId.equals("") ? mApiInterface.getExhibitorList(Constant.SELECTED_LANG,date,time,tag)
+                : mApiInterface.getExhibitorListGateRelated(Constant.SELECTED_LANG,date,time,tag,gateId));
+
         call.enqueue(new Callback<ExhibitorResponse>() {
             @Override
             public void onResponse(Call<ExhibitorResponse> call, Response<ExhibitorResponse> response) {

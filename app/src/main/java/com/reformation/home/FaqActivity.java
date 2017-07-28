@@ -97,7 +97,7 @@ public class FaqActivity extends AppCompatActivity implements View.OnClickListen
         mSearchView.setIconifiedByDefault(false);
         mSearchView.setOnQueryTextListener(this);
         mSearchView.setSubmitButtonEnabled(true);
-        mSearchView.setQueryHint("Search");
+        mSearchView.setQueryHint(getResources().getString(R.string.search));
 
         //setData();
         // LinearLayoutManager layoutManager = new LinearLayoutManager(this);

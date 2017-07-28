@@ -145,7 +145,15 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
         // eventGalleryView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL_LIST,drawable));
 
         recyclerview_audioguide.setHasFixedSize(true);
+
         eventGalleryView.setHasFixedSize(true);
+        eventGalleryView.setItemViewCacheSize(20);
+        eventGalleryView.setDrawingCacheEnabled(true);
+        eventGalleryView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+
+
+
+
         recyclerview_eventList.setHasFixedSize(true);
 
         eventGalleryView.setLayoutManager(gallerylayoutManager);
@@ -158,7 +166,7 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
         leftImg.setOnClickListener(this);
         favouriteImage.setOnClickListener(this);
         mapFrame.setOnClickListener(this);
-//        imageViewShare.setOnClickListener(this);
+        imageViewShare.setOnClickListener(this);
 
         exhibitor = (Exhibitor) getIntent().getSerializableExtra("DATA");
         if(exhibitor!=null){
@@ -166,6 +174,7 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
             topicTitle.setText(exhibitor.getPlaceName());
             topicDesc.setText(exhibitor.getDescp());
             textViewaddrss.setText(exhibitor.getAddress());
+            //  textViewaddrss.setText(exhibitor.getStreet()+","+exhibitor.getCity()+","+exhibitor.getZip());
             favStatus = favDB.isFav(id,"place");
             favouriteImage.setImageResource(favStatus?R.drawable.heart_filled:R.drawable.heart);
 
@@ -179,6 +188,13 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+
+            case R.id.imageViewShare:
+
+                if(placeData!=null)
+                    sentEmail(placeData);
+                break;
+
             case R.id.imageViewLeft:
                 super.onBackPressed();
                 break;
@@ -272,7 +288,7 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
 
             @Override
             public void onFailure(Call<ExhibitorDetailResponseById> call, Throwable t) {
-               // Log.d("onFailure ::", t.getMessage());
+                // Log.d("onFailure ::", t.getMessage());
                 if (dlg != null)
                     dlg.hideDialog();
 
@@ -291,17 +307,17 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
                         && !TextUtils.isEmpty(placeData.getPerSelectionEnd())) {
                     String sdate = Utils.formatEvenrtDate(placeData.getPerSelectionStart());
                     String edate = Utils.formatEvenrtDate(placeData.getPerSelectionEnd());
-                    topic_period.setText(getResources().getString(R.string.period) + ":" + sdate + "-" + edate);
+                    topic_period.setText(getResources().getString(R.string.period) + ": " + sdate + " - " + edate);
                 }else{
                     topic_period.setText("");
                 }
-                topic_OpeningInfo.setText(getResources().getString(R.string.opening)+":"+getOpeningTime());
+                topic_OpeningInfo.setText(getOpeningTime());
                 createEventCatgList(this,catgList,placeData.getCategory());
                 // topic_ticketInfo.setText(getResources().getString(R.string.ticket_info)+":"+placeData.getTi);
             }
 
             if(placeData!=null){
-                //   textViewaddrss.setText(placeData.getStreet()+""+placeData.getCity()+placeData.getZip()+placeData.getCountry());
+                textViewaddrss.setText(placeData.getStreet()+", "+placeData.getCity()+", "+placeData.getZip());
                 location = new LatLng(Double.parseDouble(placeData.getLatitude()!=null?placeData.getLatitude():"0.0"), Double.parseDouble(placeData.getLongitude()!=null?placeData.getLongitude():"0.0"));
             }
 
@@ -334,22 +350,24 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
     private String getOpeningTime() {
         StringBuilder stringBuilder = new StringBuilder("");
 
-        if(placeData!=null){
-            if(placeData.getOpenSun()!=null&&placeData.getCloseSun()!=null)
-                stringBuilder.append(placeData.getOpenSun().split(":")[0]+Utils.getHrFormat()+"-"+placeData.getCloseSun().split(":")[0]+Utils.getHrFormat()+","+getResources().getString(R.string.sunday));
-            if(placeData.getOpenMon()!=null&&placeData.getCloseMon()!=null)
-                stringBuilder.append("\n                 "+placeData.getOpenMon().split(":")[0]+Utils.getHrFormat()+"-"+placeData.getCloseMon().split(":")[0]+Utils.getHrFormat()+","+getResources().getString(R.string.monday));
-            if(placeData.getOpenTue()!=null&&placeData.getCloseTue()!=null)
-                stringBuilder.append("\n                 "+placeData.getOpenTue().split(":")[0]+Utils.getHrFormat()+"-"+placeData.getCloseTue().split(":")[0]+Utils.getHrFormat()+","+getResources().getString(R.string.tuesday));
-            if(placeData.getOpenWed()!=null&&placeData.getCloseWed()!=null)
-                stringBuilder.append("\n                 "+placeData.getOpenWed().split(":")[0]+Utils.getHrFormat()+"-"+placeData.getCloseWed().split(":")[0]+Utils.getHrFormat()+","+getResources().getString(R.string.wednesday));
-            if(placeData.getOpenThru()!=null&&placeData.getCloseThru()!=null)
-                stringBuilder.append("\n                 "+placeData.getOpenThru().split(":")[0]+Utils.getHrFormat()+"-"+placeData.getCloseThru().split(":")[0]+Utils.getHrFormat()+","+getResources().getString(R.string.thursday));
-            if(placeData.getOpenFri()!=null&&placeData.getCloseFri()!=null)
-                stringBuilder.append("\n                 "+placeData.getOpenFri().split(":")[0]+Utils.getHrFormat()+"-"+placeData.getCloseFri().split(":")[0]+Utils.getHrFormat()+","+getResources().getString(R.string.friday));
-            if(placeData.getOpenSat()!=null&&placeData.getCloseSat()!=null)
-                stringBuilder.append("\n                 "+placeData.getOpenSat().split(":")[0]+Utils.getHrFormat()+"-"+placeData.getCloseSat().split(":")[0]+Utils.getHrFormat()+","+getResources().getString(R.string.saterday));
+        if (placeData != null) {
+            if (placeData.getOpenMon() != null && placeData.getCloseMon() != null)
+                stringBuilder.append(getResources().getString(R.string.monday) + Utils.getEventTime(placeData.getOpenMon()) + " - " + Utils.getEventTime(placeData.getCloseMon()) + " " + Utils.getHrFormat());
+            if (placeData.getOpenTue() != null && placeData.getCloseTue() != null)
+                stringBuilder.append("\n" + getResources().getString(R.string.tuesday) + Utils.getEventTime(placeData.getOpenTue() )+ " - " + Utils.getEventTime(placeData.getCloseTue()) +" "+ Utils.getHrFormat());
+            if (placeData.getOpenWed() != null && placeData.getCloseWed() != null)
+                stringBuilder.append("\n" + getResources().getString(R.string.wednesday) + Utils.getEventTime(placeData.getOpenWed()) + " - " + Utils.getEventTime(placeData.getCloseWed()) + " " + Utils.getHrFormat());
+            if (placeData.getOpenThru() != null && placeData.getCloseThru() != null)
+                stringBuilder.append("\n" + getResources().getString(R.string.thursday) + Utils.getEventTime(placeData.getOpenThru()) + " - " + Utils.getEventTime(placeData.getCloseThru()) + " " + Utils.getHrFormat());
+            if (placeData.getOpenFri() != null && placeData.getCloseFri() != null)
+                stringBuilder.append("\n" + getResources().getString(R.string.friday) + Utils.getEventTime(placeData.getOpenFri()) + " - " + Utils.getEventTime(placeData.getCloseFri()) + " " + Utils.getHrFormat());
+            if (placeData.getOpenSat() != null && placeData.getCloseSat() != null)
+                stringBuilder.append("\n" + getResources().getString(R.string.saterday) + Utils.getEventTime(placeData.getOpenSat()) +  " - " + Utils.getEventTime(placeData.getCloseSat()) +" " + Utils.getHrFormat());
+            if (placeData.getOpenSun() != null && placeData.getCloseSun() != null)
+                stringBuilder.append("\n" + getResources().getString(R.string.sunday) + Utils.getEventTime(placeData.getOpenSun()) + " - " + Utils.getEventTime(placeData.getCloseSun()) + " " + Utils.getHrFormat());
+
         }
+
         return stringBuilder.toString();
     }
 
@@ -570,6 +588,35 @@ public class ExhibitorDetailActivity extends AppCompatActivity implements View.O
     }
 
 
+
+
+    private void sentEmail(PlaceDetailData exhibitor){
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(getResources().getString(R.string.exhibitor_txt)+":"+(Constant.SELECTED_LANG.equals(Constant.LANG_ENG)?
+                exhibitor.getPlaceName():exhibitor.getPlaceNameDe())+"\n\n");
+
+        stringBuilder.append(exhibitor.getDescp()+"\n\n\n\n\n");
+
+        stringBuilder.append(topic_period.getText().toString()+"\n");
+        stringBuilder.append(topic_OpeningInfo.getText().toString()+"\n");
+        stringBuilder.append(getResources().getString(R.string.direction)+" : "+textViewaddrss.getText().toString()+"\n\n\n\n\n\n");
+        stringBuilder.append(getResources().getString(R.string.mail_footer));
+
+         /* Create the Intent */
+        final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+
+/* Fill it with Data */
+        emailIntent.setType("plain/text");
+        // emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"info@r2017.org "});
+        emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,getResources().getString(R.string.exhibitor_txt)+":"+(Constant.SELECTED_LANG.equals(Constant.LANG_ENG)?
+                exhibitor.getPlaceName():exhibitor.getPlaceNameDe()));
+
+        emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, stringBuilder.toString());
+
+/* Send it off to the Activity-Chooser */
+        startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+    }
 
 
 }

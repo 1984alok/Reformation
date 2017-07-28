@@ -1,84 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/semi_transparent">
+    android:background="@color/fillter_overlay_color"
+    android:id="@+id/relativeLayout"
+    android:paddingBottom="10dp">
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/relativeLayout">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/relativeLayout2">
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout2"
+        >
 
-            <ImageButton
-                android:id="@+id/buttonClose"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/close_white"
-                android:background="@null" />
-            <TextView
-                android:id="@+id/textViewSelectAll"
-                android:background="@drawable/press_bag2"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/filter"
-                android:layout_marginLeft="160dp"
-                android:padding="15dp"
-                android:textColor="@color/white"
-                android:textSize="18dp"/>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/relativelayout3"
-            android:layout_below="@+id/relativeLayout2"
-            android:padding="20dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textSize="18sp"
-                android:textColor="@color/white"
-                android:text="@string/catogory"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/selectall"
-                android:textSize="18sp"
-                android:textColor="@color/white"
-                android:layout_marginLeft="260dp"/>
-
-        </RelativeLayout>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/ll"
-            android:layout_width="match_parent"
-            android:layout_margin="@dimen/dp20"
+        <ImageButton
+            android:id="@+id/buttonClose"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/relativelayout3"/>
-
-        <Button
-            android:layout_below="@id/ll"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp40"
-            android:text="@string/takeover"
-            android:id="@+id/buttontakeover"
-            android:background="@drawable/btn_selector"
-            android:gravity="center"
-            android:textSize="@dimen/sp15"
-            android:textAllCaps="false"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:textColor="@drawable/btn_text_selector"
+            android:src="@drawable/close_white"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/press_bag"
+            android:padding="10dp"
             />
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:text="@string/filter"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:textSize="18sp"/>
     </RelativeLayout>
 
-</ScrollView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativelayout3"
+        android:layout_below="@+id/relativeLayout2"
+        android:padding="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:text="@string/catogory"
+            android:background="@drawable/press_bag"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/all_selected"
+            android:textSize="18sp"
+            android:id="@+id/textViewSelectAll"
+            android:background="@drawable/press_bag"
+            android:textColor="@color/white"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:background="@color/semi_transparent"
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/dp10"
+        android:padding="10dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/relativelayout3"
+        android:layout_above="@+id/buttontakeover"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/takeover"
+        android:id="@+id/buttontakeover"
+        android:background="@drawable/btn_selector"
+        android:gravity="center"
+        android:textSize="@dimen/sp17"
+        android:textAllCaps="false"
+        android:padding="@dimen/dp10"
+        android:layout_margin="10dp"
+        android:layout_alignParentBottom="true"
+        android:textColor="@drawable/btn_text_selector"
+        />
+</RelativeLayout>
+
+

@@ -6,12 +6,51 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/rlMapLayout">
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/mapView"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent">
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+        <LinearLayout
+            android:id="@+id/txtFrame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/semi_transparent"
+            android:layout_gravity="top|right"
+            android:layout_margin="@dimen/activity_vertical_margin"
+            android:visibility="visible">
+            <ImageView
+                android:id="@+id/direction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:scaleType="fitXY"
+                android:padding="@dimen/dp10"
+                android:src="@drawable/position_white"
+                android:visibility="visible"/>
+            <View
+                android:layout_width="1dp"
+                android:layout_toLeftOf="@+id/fillter"
+                android:layout_height="match_parent"
+                android:background="@color/grey"
+                android:visibility="visible"/>
+            <ImageView
+                android:id="@+id/fillter"
+                android:padding="@dimen/dp10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/filter_white"
+                android:visibility="visible"/>
+        </LinearLayout>
 
+    </FrameLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -39,20 +78,39 @@
                 android:paddingBottom="@dimen/dp60"
                 android:paddingTop="@dimen/dp10">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/header_title_17px"
-                    android:textColor="@color/black"
-                    android:id="@+id/title"
-                    android:gravity="center"
-                    android:text="Wel Come"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:layout_marginRight="@dimen/dp10"
-                    >
-                </TextView>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/header_title_17px"
+                        android:textColor="@color/black"
+                        android:id="@+id/title"
+                        android:gravity="center"
+                        android:text="Wel Come"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="@dimen/dp10"
+                        android:layout_marginRight="@dimen/dp10"
+                        android:layout_toLeftOf="@+id/titleDist">
+                    </TextView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/header_title_11px_greyfont"
+                        android:id="@+id/titleDist"
+                        android:gravity="center"
+                        android:text="0km"
+                        android:drawablePadding="10dp"
+                        android:drawableRight="@drawable/position_grey"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginLeft="@dimen/dp10"
+                        android:layout_marginRight="@dimen/dp10"
+                        >
+                    </TextView>
+                </RelativeLayout>
                 <TextView
                     android:layout_below="@+id/title"
                     android:layout_width="match_parent"

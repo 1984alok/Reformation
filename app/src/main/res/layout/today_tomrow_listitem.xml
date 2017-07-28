@@ -8,7 +8,7 @@
     android:minWidth="@dimen/dp110"
     android:layout_margin="1dp"
     card_view:cardCornerRadius="4dp"
-    app:cardElevation="3dp"
+    app:cardElevation="1dp"
     android:background="@color/white">
     <RelativeLayout
         android:id="@+id/frame"

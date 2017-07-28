@@ -2,8 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -128,6 +128,30 @@
                 android:layout_margin="@dimen/dp10"
                 android:layout_height="match_parent"/>
 
+            <RelativeLayout
+                android:id="@+id/frame"
+                android:layout_width="match_parent"
+                android:background="@color/white"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/dp10"
+                android:orientation="vertical">
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:tabGravity="fill"
+                    app:tabMode="fixed" />
+
+                <android.support.v4.view.ViewPager
+                    android:layout_below="@+id/tabs"
+                    android:id="@+id/viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+            </RelativeLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -138,6 +162,7 @@
                 android:layout_marginLeft="@dimen/dp10"
                 android:layout_gravity="left"
                 android:gravity="center"
+                android:visibility="gone"
                 android:text="@string/more_event"/>
 
             <android.support.v7.widget.RecyclerView
@@ -145,7 +170,8 @@
                 android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_margin="@dimen/dp10"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:visibility="gone"/>
 
         </LinearLayout>
     </ScrollView>

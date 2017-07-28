@@ -44,7 +44,36 @@ public class FragmentOtherLocationTab extends Fragment implements OnLoadListener
     private ExhibitorTabAdapter exhibitorTabAdapter;
 
     OnLoadListener mOnLoadListener;
+
+    private static final String ARG_PARAM2 = "param2";
+
+    private String gateId = "";
+    
+    
     public FragmentOtherLocationTab(){}
+
+
+    // TODO: Rename and change types and number of parameters
+    public static FragmentOtherLocationTab newInstance(String gateId) {
+        FragmentOtherLocationTab fragment = new FragmentOtherLocationTab();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM2,gateId);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            gateId = getArguments().getString(ARG_PARAM2);
+
+
+        }
+    }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,7 +103,9 @@ public class FragmentOtherLocationTab extends Fragment implements OnLoadListener
         dlg.showDialog();
         String date = Utils.getCurrentDate();
         String time = Utils.getCurrentTime();
-        Call<ExhibitorResponse> call = mApiInterface.getExhibitorList(Constant.SELECTED_LANG,date,time,tag);
+        Call<ExhibitorResponse> call = (gateId.equals("") ? mApiInterface.getExhibitorList(Constant.SELECTED_LANG,date,time,tag)
+                : mApiInterface.getExhibitorListGateRelated(Constant.SELECTED_LANG,date,time,tag,gateId));
+
         call.enqueue(new Callback<ExhibitorResponse>() {
             @Override
             public void onResponse(Call<ExhibitorResponse> call, Response<ExhibitorResponse> response) {

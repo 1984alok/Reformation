@@ -10,6 +10,7 @@
     <string name="lang_german">German</string>
     <string name="visitor_info">Visitor Information A - Z</string>
     <string name="audio_video_guide">Audio Guide</string>
+    <string name="video_guide">Video Guide</string>
     <string name="contact">Contact\nReformationsjubiläum 2017 e.V.\nNeustr. 10 b\n06886 Lutherstadt Wittenberg, Germany</string>
     <string name="email_contact">E-Mail Contact</string>
     <string name="imprintTxt">Imprint</string>
@@ -49,23 +50,25 @@
     <string name="rshop">r2017 - Shop</string>
     <string name="gotit">Got It</string>
     <string name="cancel">cancel</string>
-    <string name="catogory">category</string>
+    <string name="catogory">Category</string>
     <string name="period">Period</string>
-    <string name="filter">filter</string>
+    <string name="filter">Filter</string>
     <string name="resetfilter">Reset Filter</string>
     <string name="selectall">Select All</string>
-    <string name="policy">Headquarter
-Reformationsjubiläum 2017 e.V.
-Neustraße 10b
-06886 Lutherstadt Wittenberg, Germany
+    <string name="all_selected">All Selected</string>
+    <string name="all_catg_selected">All Category Selected</string>
+    <string name="policy">Headquarter\n
+Reformationsjubiläum 2017 e.V.\n
+Neustraße 10b\n
+06886 Lutherstadt Wittenberg,\n Germany\n\n
 
-Berlin Office: Lehrter Straße 68
-10557 Berlin, Germany
+Berlin Office: Lehrter Straße 68\n
+10557 Berlin, Germany\n\n
 
-Leipzig Office: Ritterstraße 30-36
-04109 Leipzig
+Leipzig Office: Ritterstraße 30-36\n
+04109 Leipzig\n\n
 
-Management: Hartwig Bodmann, Ulrich Schneider (responsible in the terms of press law)
+Management:\n Hartwig Bodmann, Ulrich Schneider (responsible in the terms of press law)\n\n
 
 County Court Stendal
 Register of associations VR 3400
@@ -75,23 +78,45 @@ Tax number 115 / 143 / 11694</string>
     <string name="event">Events</string>
     <string name="favourites">Favorites</string>
 
-    <string name="opening">Opening</string>
-    <string name="sunday">Sun</string>
-    <string name="monday">Mon </string>
-    <string name="tuesday">Tue </string>
-    <string name="wednesday">Wed </string>
-    <string name="thursday">Thru </string>
-    <string name="friday">Fri </string>
-    <string name="saterday">Sat </string>
+    <string name="opening">Opening:</string>
+    <string name="sunday">Su.&#160;&#160;:&#160;</string>
+    <string name="monday">Mo.&#160;:&#160;</string>
+    <string name="tuesday">Tu.&#160;:&#160;</string>
+    <string name="wednesday">We.&#160;:&#160;</string>
+    <string name="thursday">Th.&#160;&#160;:&#160;</string>
+    <string name="friday">Fr.&#160;&#160;&#160;&#160;:&#160;</string>
+    <string name="saterday">Sa.&#160;&#160;:&#160;</string>
     <string name="favourite_added">Favorite added</string>
     <string name="favourite_removed">Favorite removed</string>
     <string name="takeover">Take Over</string>
     <string name="already_added">Alredy added.</string>
     <string name="succesfully_added">Successfully Added to calendar.</string>
-    <string name="spker">Speaker :</string>
+    <string name="spker">Speaker:</string>
     <string name="exhibitor_txt"><![CDATA[Exhibitors & Sights]]></string>
     <string name="exhibitor_desc">At the World Reformation Exhibition church and non-church groups alike from all denominations, civic institutions, groups and organizations, and cultural bodies and educational establishments from all over the world are invited. On big and little stages in the city, in tents, on panels, in cafés or bars, they create together an image of reformation ideas and ideas that encompass the entire world and takes on board a variety of inspirations. The exhibitors and local establishments in Wittenberg invite the visitors to take part in discussions, lectures, church services, concerts, plays and much more. Each of the 16 topic weeks brings together inspiring personalities, newcomer and well-known heads. Additionally, museums, churches and other permanent exhibitions in Wittenberg are part of the World Reformation Exhibition.</string>
     <string name="title_activity_maps_load">Map</string>
 
+    <string name="mail_footer">This is an official event during World Reformation Exhibition in Wittenberg. Hope to see you there! For further information check #Reformationssommer | r2017.org.
+Download the official app free of charge for iOS or Android at r2017.org/app - including an audio guide with Margot Käßmann, special envoy of the Council of the Evangelical Church in Germany for the Reformation anniversary in 2017.</string>
+    <string name="search">Search...</string>
+    <string name="prg_found">Program found</string>
 
+
+    <array name="place">
+        <item>Church</item>
+        <item>Museum</item>
+        <item>Exhibitor</item>
+        <item>Info point</item>
+
+        <item>Bathroom</item>
+        <item>First aid</item>
+        <item>Parking space</item>
+        <item>Other event space</item>
+
+        <item>Reformation lunch</item>
+        <item>Shop</item>
+        <item>Installation</item>
+        <item>Place for children</item>
+
+    </array>
 </resources>

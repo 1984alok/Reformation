@@ -10,6 +10,7 @@
     <string name="lang_german">Deutsch</string>
     <string name="visitor_info">Besucherinformationen A bis Z</string>
     <string name="audio_video_guide">Audioguide</string>
+    <string name="video_guide">Video Guide</string>
     <string name="contact">Kontakt\nReformationsjubiläum 2017 e.V.\nNeustr. 10 b\n06886 Lutherstadt Wittenberg</string>
     <string name="email_contact">E-Mail-Kontakt</string>
     <string name="imprintTxt">Impressum</string>
@@ -48,46 +49,73 @@
     <string name="ticket_info">Ticket erforderlich</string>
     <string name="gateTitel">Torräume</string>
     <string name="gateDesc"><![CDATA[Die Open-Air-Ausstellung steht unter dem Titel „Tore der Freiheit“ – sinnbildlich für die Tore, die mit der Reformation aufgestoßen wurden und neue Freiheiten brachten. Wie Martin Luther im Jahr 1517 die Lebensumstände seiner Zeit hinterfragte, so wird 2017 Gegenwärtiges diskutiert: Jugend, Spiritualität, Globalisierung, Ökumene & Religion, Kunst & Kultur, Gerechtigkeit, Frieden und Bewahrung der Schöpfung. Angeordnet sind die Themen in sieben „Torräumen“. Das schafft nicht nur inhaltliche Orientierung, sondern auch räumliche vor Ort. Installationen, von Studierenden verschiedener Universitäten aus Deutschland und Österreich entworfen, laden in jedem Torraum zum Entdecken und Nachdenken ein. ]]></string>
-    <string name="gotit">got It</string>
+    <string name="gotit">Ich habs</string>
     <string name="cancel">stornieren</string>
     <string name="catogory">Kategorie</string>
     <string name="period">Zeitraum</string>
     <string name="filter">Filter</string>
     <string name="resetfilter">Filter zurücksetzen</string>
     <string name="selectall">Alle auswählen</string>
-    <string name="policy">Geschäftsstelle: Reformationsjubiläum 2017 e.V.
-Neustraße 10b
-06886 Lutherstadt Wittenberg
+    <string name="all_selected">Alle Ausgewählt</string>
+    <string name="all_catg_selected">Alle Kategorie ausgewählt</string>
 
-Büro Berlin: Lehrter Straße 68
-10557 Berlin
+    <string name="policy">Geschäftsstelle:\n Reformationsjubiläum 2017 e.V.\n
+Neustraße 10b\n
+06886 Lutherstadt Wittenberg\n\n
 
-Büro Leipzig: Ritterstraße 30-36
-04109 Leipzig
+Büro Berlin: Lehrter Straße 68\n
+10557 Berlin\n\n
 
-Geschäftsführer: Hartwig Bodmann, Ulrich Schneider (V.i.S.d.P.)
+Büro Leipzig: Ritterstraße 30-36\n
+04109 Leipzig\n\n
 
-Amtsgericht Stendal
+Geschäftsführer:\n Hartwig Bodmann, Ulrich Schneider (V.i.S.d.P.)\n\n
+
+Amtsgericht Stendal\n
 Vereinsregister VR 3400
 
 </string>
-    <string name="event">Geschehen</string>
+    <string name="event">Events</string>
     <string name="favourites">Favoriten</string>
 
-    <string name="opening">Öffnungszeiten</string>
-    <string name="sunday">Son</string>
-    <string name="monday">Mon </string>
-    <string name="tuesday">Die </string>
-    <string name="wednesday">Mit </string>
-    <string name="thursday">Thru </string>
-    <string name="friday">Fre </string>
-    <string name="saterday">Sat </string>
+    <string name="opening">Öffnungszeiten:</string>
+    <string name="sunday">So.&#160;&#160;:&#160;</string>
+    <string name="monday">Mo.&#160;:&#160;</string>
+    <string name="tuesday">Di.&#160;:&#160;</string>
+    <string name="wednesday">Mi.&#160;&#160;:&#160;</string>
+    <string name="thursday">Do.&#160;&#160;:&#160;</string>
+    <string name="friday">Fr.&#160;&#160;&#160;:&#160;</string>
+    <string name="saterday">Sa.&#160;&#160;:&#160;</string>
     <string name="favourite_added">Favorit hinzugefügt.</string>
     <string name="favourite_removed">Favorit entfernt.</string>
     <string name="takeover">Übernehmen</string>
     <string name="already_added">Schon hinzugefügt.</string>
     <string name="succesfully_added">Erfolgreich zum Kalender hinzugefügt.</string>
-    <string name="spker">Redner :</string>
+    <string name="spker">Redner:</string>
     <string name="exhibitor_txt"><![CDATA[Aussteller & Sehenswürdigkeiten]]></string>
     <string name="exhibitor_desc">In der Weltausstellung Reformation sind internationale Institutionen, Organisationen, Kirchen aus aller Welt, Initiativen und viele Kulturschaffende vertreten. Auf großen und kleinen Bühnen in der Stadt, in Pavillons, Zelten, auf Podien, in Cafés oder Bars bieten sie ihre Perspektiven auf wichtige Themen der Zeit. Die Aussteller laden zu Podiumsdiskussionen, Lesungen, Gottesdiensten, Workshops, Konzerten, Theaterstücken und vielem mehr ein. Jede der 16 Themenwochen bringt inspirierende Persönlichkeiten, unbekannte Newcomer und bekannte Köpfe nach Lutherstadt Wittenberg. Neben den Ausstellern, die temporär nach Wittenberg kommen, zählen Museen, dauerhafte Ausstellungen und historische Orte wie die Schloss- und Stadtkirche zu den Veranstaltungsorten der Weltausstellung Reformation.</string>
+
+<string name="mail_footer">Das ist eine Veranstaltung der Weltausstellung Reformation in Lutherstadt Wittenberg. Hoffentlich sehen wir Sie da! Für weitere Informationen folgen Sie #Reformationssommer | r2017.org.
+Laden Sie sich auch die kostenlose App für iOS oder Android herunter: r2017.org/app - inklusive eines Audioguides mit Margot Käßman, Botschafterin der Evangelischen Kirchen in Deutschland für das Reformationsjubiläum 2017.</string>
+    <string name="search">Suchen...</string>
+    <string name="prg_found">Programm gefunden</string>
+
+
+    <array name="place">
+        <item>Kirche</item>
+        <item>Museum</item>
+        <item>Aussteller</item>
+        <item>Info-Point</item>
+
+        <item>WC</item>
+        <item>Erste Hilfe</item>
+        <item>Parkplatz</item>
+        <item>Sonstiger Veranstaltungsort</item>
+
+        <item>Reformationsteller</item>
+        <item>Shop</item>
+        <item>Installation</item>
+        <item>Ort für Kindere</item>
+
+    </array>
 </resources>

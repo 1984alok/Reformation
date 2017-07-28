@@ -33,7 +33,8 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:textSize="22sp"
-            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:singleLine="true"
             android:textStyle="bold"
             android:ellipsize="marquee"
             android:text="The Good, The Bad And The Ugly"
@@ -48,12 +49,12 @@
         android:id="@+id/songThumbnail"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:padding="10dp"
         android:gravity="center"
         android:layout_below="@id/player_header_bg">
-        <ImageView android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:src="@drawable/adele"
             android:scaleType="fitXY"
             android:id="@+id/songThumbnailImg"/>

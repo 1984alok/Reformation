@@ -187,10 +187,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/ll3"
                 android:layout_marginTop="@dimen/dp10"
-                android:paddingTop="@dimen/dp10"
-                android:paddingBottom="@dimen/dp10"
-                android:paddingRight="@dimen/dp10"
-                android:paddingLeft="@dimen/dp10"
+                android:padding="@dimen/dp1"
                 android:orientation="vertical"
                 android:background="@drawable/grey_bag_roundshape">
                 <TextView

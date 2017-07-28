@@ -181,7 +181,7 @@ public class TopicWeekDetailActivity extends AppCompatActivity implements View.O
                     if (calanderMap == null) {
                         calanderMap = new HashMap<>();
                     }
-                    if (calanderMap != null) {
+                    if (calanderMap != null&&topicWeekModel!=null) {
                         if (calanderMap.get(topicWeekModel.getId()) == null) {
                            long status = Utils.addEventToCalenderForTopicWeek(this, Utils.getMillisecFromDate(topicWeekModel.getPerStart()),
                                     Utils.getMillisecFromDate(topicWeekModel.getPerEnd()), topicWeekModel.getToWeekTitle());

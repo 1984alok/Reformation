@@ -8,8 +8,8 @@
     android:minWidth="@dimen/dp110"
     android:layout_margin="1dp"
     android:transitionName="headerPic"
-    card_view:cardCornerRadius="4dp"
-    app:cardElevation="3dp"
+    card_view:cardCornerRadius="1dp"
+    app:cardElevation="1dp"
     android:background="@color/light_blue">
     <TextView
         android:layout_width="match_parent"

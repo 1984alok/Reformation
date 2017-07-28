@@ -7,8 +7,10 @@
             android:id="@+id/homeMenuImg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:maxHeight="@dimen/home_imageHeight"/>
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:maxHeight="230dp"/>
+
         <ProgressBar
             android:id="@+id/dlg"
             android:layout_width="@dimen/dp40"

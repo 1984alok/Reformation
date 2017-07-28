@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,11 +17,14 @@ import android.transition.Transition;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.reformation.home.fragment.FragmentExhibitorTab;
+import com.reformation.home.fragment.FragmentOtherLocationTab;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,6 +32,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import adapter.AudioAdapter;
+import adapter.FragAdapter;
 import adapter.GalleryAdapter;
 import adapter.HomeEventAdapter;
 import apihandler.ApiClient;
@@ -39,6 +45,7 @@ import model.EventDetailPlaceData;
 import model.EventModel;
 import model.EventResponseData;
 import model.EventDetailGateData;
+import model.ExhibitorResponse;
 import model.Gallery;
 import model.GateDetailResponse;
 import model.GateModel;
@@ -50,18 +57,19 @@ import utils.Constant;
 import utils.CustomProgresDialog;
 import utils.LoadInPicasso;
 import utils.LogUtil;
+import utils.OnLoadListener;
 import utils.TransitionAdapter;
 import utils.Utils;
 
 import static utils.Utils.isAndroid5;
 
-public class GateDetail extends AppCompatActivity implements View.OnClickListener {
+public class GateDetail extends AppCompatActivity implements View.OnClickListener, OnLoadListener {
 
     private ImageView gateImgview,leftImg,rightFilterImg;
     private TextView gateTitle, gateDesc, gateHeader,galleryTxt;
     private ProgressDialog dlg;
     ProgressBar progressBar;
-
+    int count = 0;
     private RecyclerView gateRecyclerView;
     private LinearLayoutManager layoutManagaer;
 
@@ -82,6 +90,23 @@ public class GateDetail extends AppCompatActivity implements View.OnClickListene
     AudioDownLoadManager audioDownLoadManager;
     private Timer timerTask = null;
     private RelativeLayout audioRel;
+
+    private FragAdapter adapter;
+    private ViewPager viewPager;
+    private TabLayout tabLayout;
+    private RelativeLayout frame;
+    FragmentExhibitorTab fragmentExhibitorTab;
+    FragmentOtherLocationTab fragmentOtherLocationTab;
+
+    private void setupViewPager(ViewPager viewPager) {
+        adapter = new FragAdapter(getSupportFragmentManager());
+        fragmentExhibitorTab = FragmentExhibitorTab.newInstance(id);
+        fragmentOtherLocationTab= FragmentOtherLocationTab.newInstance(id);
+        adapter.addFragment(fragmentExhibitorTab,getResources().getString(R.string.exhibitors));
+        adapter.addFragment(fragmentOtherLocationTab,getResources().getString(R.string.other_location));
+        viewPager.setAdapter(adapter);
+    }
+
 
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -126,7 +151,7 @@ public class GateDetail extends AppCompatActivity implements View.OnClickListene
             makeEnterTransition();
         }
         leftImg=(ImageView)findViewById(R.id.imageViewLeft);
-        rightFilterImg=(ImageView)findViewById(R.id.imageViewLeft);
+        rightFilterImg=(ImageView)findViewById(R.id.imageViewRight);
         gateImgview = (ImageView)findViewById(R.id.homeMenuImg);
         progressBar = (ProgressBar)findViewById(R.id.dlg);
         gateTitle = (TextView)findViewById(R.id.gateName);
@@ -178,6 +203,14 @@ public class GateDetail extends AppCompatActivity implements View.OnClickListene
 
         }
 
+
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        frame = (RelativeLayout) findViewById(R.id.frame);
+        setupViewPager(viewPager);
+        fragmentExhibitorTab.setOnLoadListener(this);
+        fragmentOtherLocationTab.setOnLoadListener(this);
+        tabLayout = (TabLayout)findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
 
     }
 
@@ -467,6 +500,50 @@ public class GateDetail extends AppCompatActivity implements View.OnClickListene
         super.onDestroy();
         audioDB.close();
         dbAdapter.close();
+    }
+
+
+
+    public void loadExhibitor(ExhibitorResponse model, int height) {
+        if (model != null&&model.getResponseData()!=null) {
+            int count = model.getResponseData().size();
+            increaseSizeofFrame(count,height);
+            /*Exhibitor gateModel = model.getResponseData().get(0);
+            if (gateModel!=null
+                    ) {
+                if (gateModel.getHeaderPic() != null) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    gateImgview.setVisibility(View.GONE);
+                    LoadInPicasso.getInstance(getActivity()).loadPic(gateImgview, progressBar, gateModel.getHeaderPic());
+
+                }
+
+                gateTitle.setText(gateModel.getPlaceName());
+                gateDesc.setText(gateModel.getDescp() != null ? gateModel.getDescp() : getResources().getString(R.string.topic_desc));
+
+                FontUtls.loadFont(getActivity(), "fonts/RobotoCondensed-Bold.ttf", gateTitle);
+                // FontUtls.loadFont(context, "fonts/RobotoCondensed-Bold.ttf", gateDesc);
+            }*/
+        }
+    }
+
+    private void increaseSizeofFrame(int count,int height) {
+        LogUtil.createLog("exh size", "" + height);
+
+        if(this.count<count) {
+            this.count=count;
+            int size = height * count;
+
+            LinearLayout.LayoutParams prms = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, size);
+            frame.setLayoutParams(prms);
+
+            LogUtil.createLog("exh size frame", "" + frame.getHeight());
+        }
+    }
+
+    @Override
+    public void onLoad(ExhibitorResponse model,int height) {
+        loadExhibitor(model,height);
     }
 
 

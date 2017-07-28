@@ -117,7 +117,7 @@ public class AudioAdapter extends RecyclerView.Adapter<AudioAdapter.MyViewHolder
                 :
                 (model.getTitle() != null ? model.getTitle() : ""));
         //  holder.txtViewSize.setText(model.getAudioSizeEn() != null ? model.getAudioSizeEn() : "");
-        holder.txtViewSpkr.setText(ctx.getResources().getString(R.string.spker)+(Constant.SELECTED_LANG.equals(Constant.LANG_ENG)
+        holder.txtViewSpkr.setText(ctx.getResources().getString(R.string.spker)+" "+(Constant.SELECTED_LANG.equals(Constant.LANG_ENG)
                 ?
                 (model.getSpeakerEn() != null ? model.getSpeakerEn() : "")
                 :

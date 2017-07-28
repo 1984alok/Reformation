@@ -8,6 +8,6 @@
         android:width="@dimen/dp1"
         android:color="@color/light_white"/>
 
-    <solid android:color="@color/text_color_eight" />
+    <solid android:color="@color/button_green_bag" />
 
 </shape>

@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.support.design.widget.NavigationView;
@@ -20,6 +21,8 @@ import com.reformation.home.fragment.GateFragment;
 import com.reformation.home.fragment.HomeFragment;
 import com.reformation.home.fragment.MapFragment;
 import com.reformation.home.fragment.ProgramFragment;
+
+import java.util.Locale;
 
 import bottombar.BottomBar;
 import bottombar.OnTabReselectListener;
@@ -40,9 +43,18 @@ public class HomeScreen extends AppCompatActivity {
     private Handler mHandler;
     BottomBar bottomBar;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+       /* if (newConfig.locale == Locale.ENGLISH) {
+            Toast.makeText(this, "English", Toast.LENGTH_SHORT).show();
+        } else if (newConfig.locale == Locale.GERMAN){
+            Toast.makeText(this, "French", Toast.LENGTH_SHORT).show();
+        }*/
+    }
+
+    private void _init(){
         setContentView(R.layout.activity_home_screen);
         bottomBar = (BottomBar) findViewById(R.id.bottomBar);
         Utils.createCLAPPDirectory();
@@ -55,7 +67,7 @@ public class HomeScreen extends AppCompatActivity {
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
-              //  messageView.setText(TabMessage.get(tabId, false));
+                //  messageView.setText(TabMessage.get(tabId, false));
                 loadHomeFragment(tabId);
             }
         });
@@ -63,9 +75,15 @@ public class HomeScreen extends AppCompatActivity {
         bottomBar.setOnTabReselectListener(new OnTabReselectListener() {
             @Override
             public void onTabReSelected(@IdRes int tabId) {
-               // Toast.makeText(getApplicationContext(), TabMessage.get(tabId, true), Toast.LENGTH_LONG).show();
+                // Toast.makeText(getApplicationContext(), TabMessage.get(tabId, true), Toast.LENGTH_LONG).show();
             }
         });
+    }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        _init();
+
     }
 
 
@@ -148,7 +166,15 @@ public class HomeScreen extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
 
+            _init();
             loadHomeFragment(R.id.tab_home);
+
+            ReformationApplication reformationApplication = (ReformationApplication)HomeScreen.this.getApplicationContext();
+            if(reformationApplication.getPalceCatList()!=null&&reformationApplication.getPalceCatList().size()>0)
+            reformationApplication.getPalceCatList().clear();
+
+            if(reformationApplication.getEventCat()!=null&&reformationApplication.getEventCat().size()>0)
+                reformationApplication.getEventCat().clear();
         }
     };
 

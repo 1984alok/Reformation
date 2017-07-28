@@ -11,6 +11,8 @@
     <color name="style_color_primary">#2d5d82</color>
     <color name="style_color_primary_dark">#21425d</color>
     <color name="style_color_accent">#01bcd5</color>
+    <color name="fillter_overlay_color">#6F6B64</color>
+    <color name="button_green_bag">#90C22D</color>
 
 
     <color name="fab_color_pressed">#007787</color>

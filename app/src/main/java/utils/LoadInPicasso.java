@@ -55,6 +55,8 @@ public class LoadInPicasso {
                 // loading of the bitmap failed
                 // TODO do some action/warning/error message
                 LogUtil.createLog("Target","onBitmapFailed");
+                progressBar.setVisibility(View.GONE);
+                imgPic.setImageDrawable(errorDrawable);
             }
 
             @Override
@@ -65,7 +67,19 @@ public class LoadInPicasso {
 
         imgPic.setTag(target);
         picasso.load(ApiClient.BASE_URL+path)
+                .error(R.drawable.gallery_default)
                 .into(target);
+    }
+
+
+    public void loadPic(final ImageView imgPic,String path){
+        picasso.load(ApiClient.BASE_URL+path)
+                .error(R.drawable.gallery_default)
+               // .centerInside()
+                .resize(0,230)
+              //  .fit()
+                .into(imgPic);
+
     }
 
 

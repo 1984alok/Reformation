@@ -16,6 +16,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
@@ -41,6 +42,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.reformation.home.EventDetailActivity;
@@ -256,7 +259,7 @@ public class Utils {
 
     public static String formatEvenrtDate( String inputDateStr){
         DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
-        DateFormat outputFormat = new SimpleDateFormat("dd.MM.");
+        DateFormat outputFormat = new SimpleDateFormat("dd.MM");
         Date date = null;
         try {
             date = inputFormat.parse(inputDateStr);
@@ -351,6 +354,25 @@ public class Utils {
         System.out.println("Time in 24-hour format :"
                 + obDateFormat.format(time.getTime()));
         return obDateFormat.format(time.getTime());
+
+    }
+
+
+    public static String getEventTime(String giventimeFormat){
+        String timeformat = "HH:mm:ss";
+        SimpleDateFormat obDateFormat = new SimpleDateFormat(timeformat);
+        try {
+            Date date = obDateFormat.parse(giventimeFormat);
+            SimpleDateFormat outFormat = new SimpleDateFormat("HH:mm");
+            System.out.println("Time in 24-hour format :"
+                    + outFormat.format(date));
+            return outFormat.format(date);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        //  Calendar time = Calendar.getInstance();
+        return "";
 
     }
 
@@ -614,5 +636,81 @@ public class Utils {
             }
         };
         return result;
+    }
+
+
+
+    public static BitmapDescriptor getMarkerIcon(String category) {
+        if(category.equalsIgnoreCase("Church")||category.equalsIgnoreCase("Kirche")) {
+            return BitmapDescriptorFactory.fromResource(R.drawable.church);
+        }else if(category.equalsIgnoreCase("Museum")||category.equalsIgnoreCase("Museum")) {
+            return BitmapDescriptorFactory.fromResource(R.drawable.museum);
+        }else if(category.equalsIgnoreCase("Exhibitor")||category.equalsIgnoreCase("Aussteller")) {
+            return BitmapDescriptorFactory.fromResource(R.drawable.mexhibitors);
+        }else if(category.equalsIgnoreCase("Info-Point")||category.equalsIgnoreCase("Info point")) {
+            return BitmapDescriptorFactory.fromResource(R.drawable.infopoint);
+        }else if(category.equalsIgnoreCase("Bathroom")||category.equalsIgnoreCase("WC")) {
+            return BitmapDescriptorFactory.fromResource(R.drawable.bathroom);
+        }else if(category.equalsIgnoreCase("First aid")||category.equalsIgnoreCase("Erste Hilfe")) {
+            return BitmapDescriptorFactory.fromResource(R.drawable.exhibitors_point);
+        }else if(category.equalsIgnoreCase("Parking space")||category.equalsIgnoreCase("Parkplatz")) {
+            return BitmapDescriptorFactory.fromResource(R.drawable.parking);
+        }else if(category.equalsIgnoreCase("Other event space")||category.equalsIgnoreCase("Sonstiger Veranstaltungsort")) {
+            return BitmapDescriptorFactory.fromResource(R.drawable.otherexhibitors);
+        }else if(category.equalsIgnoreCase("Reformation lunch")||category.equalsIgnoreCase("Reformationsteller")) {
+            return BitmapDescriptorFactory.fromResource(R.drawable.anyting_else);
+        }else if(category.equalsIgnoreCase("Installation")||category.equalsIgnoreCase("Installation")) {
+            return BitmapDescriptorFactory.fromResource(R.drawable.installation);
+        }else if(category.equalsIgnoreCase("Place for children")||category.equalsIgnoreCase("Ort für Kinder")) {
+            return BitmapDescriptorFactory.fromResource(R.drawable.children);
+        }else if(category.equalsIgnoreCase("Shop")||category.equalsIgnoreCase("Shop")) {
+            return BitmapDescriptorFactory.fromResource(R.drawable.info_shop);
+        }else if(category.equalsIgnoreCase("Exhibitor,Place for children")||category.equalsIgnoreCase("Aussteller,Ort für Kinder")) {
+            return BitmapDescriptorFactory.fromResource(R.drawable.exhibitor_and_children);
+        }else if(category.equalsIgnoreCase("Exhibitor,Church")||category.equalsIgnoreCase("Aussteller,Kirche")) {
+            return BitmapDescriptorFactory.fromResource(R.drawable.exhibitor_and_church);
+        }else if(category.equalsIgnoreCase("Museum,Place for children")||category.equalsIgnoreCase("Museum,Ort für Kinder")) {
+            return BitmapDescriptorFactory.fromResource(R.drawable.museum_and_children);
+        }else{
+            return BitmapDescriptorFactory.fromResource(R.drawable.anyting_else);
+        }
+    }
+
+
+
+    public static Drawable getFillterIconIcon(Context ctx,String category) {
+        if(category.equalsIgnoreCase("Church")||category.equalsIgnoreCase("Kirche")) {
+            return ctx.getResources().getDrawable(R.drawable.church);
+        }else if(category.equalsIgnoreCase("Museum")||category.equalsIgnoreCase("Museum")) {
+             return ctx.getResources().getDrawable( R.drawable.museum);
+        }else if(category.equalsIgnoreCase("Exhibitor")||category.equalsIgnoreCase("Aussteller")) {
+             return ctx.getResources().getDrawable( R.drawable.mexhibitors);
+        }else if(category.equalsIgnoreCase("Info-Point")||category.equalsIgnoreCase("Info point")) {
+             return ctx.getResources().getDrawable( R.drawable.infopoint);
+        }else if(category.equalsIgnoreCase("Bathroom")||category.equalsIgnoreCase("WC")) {
+             return ctx.getResources().getDrawable( R.drawable.bathroom);
+        }else if(category.equalsIgnoreCase("First aid")||category.equalsIgnoreCase("Erste Hilfe")) {
+             return ctx.getResources().getDrawable( R.drawable.exhibitors_point);
+        }else if(category.equalsIgnoreCase("Parking space")||category.equalsIgnoreCase("Parkplatz")) {
+             return ctx.getResources().getDrawable( R.drawable.parking);
+        }else if(category.equalsIgnoreCase("Other event space")||category.equalsIgnoreCase("Sonstiger Veranstaltungsort")) {
+             return ctx.getResources().getDrawable( R.drawable.otherexhibitors);
+        }else if(category.equalsIgnoreCase("Reformation lunch")||category.equalsIgnoreCase("Reformationsteller")) {
+             return ctx.getResources().getDrawable( R.drawable.anyting_else);
+        }else if(category.equalsIgnoreCase("Installation")||category.equalsIgnoreCase("Installation")) {
+             return ctx.getResources().getDrawable( R.drawable.installation);
+        }else if(category.equalsIgnoreCase("Place for children")||category.equalsIgnoreCase("Ort für Kinder")) {
+             return ctx.getResources().getDrawable( R.drawable.children);
+        }else if(category.equalsIgnoreCase("Shop")||category.equalsIgnoreCase("Shop")) {
+             return ctx.getResources().getDrawable( R.drawable.info_shop);
+        }else if(category.equalsIgnoreCase("Exhibitor,Place for children")||category.equalsIgnoreCase("Aussteller,Ort für Kinder")) {
+             return ctx.getResources().getDrawable( R.drawable.exhibitor_and_children);
+        }else if(category.equalsIgnoreCase("Exhibitor,Church")||category.equalsIgnoreCase("Aussteller,Kirche")) {
+             return ctx.getResources().getDrawable( R.drawable.exhibitor_and_church);
+        }else if(category.equalsIgnoreCase("Museum,Place for children")||category.equalsIgnoreCase("Museum,Ort für Kinder")) {
+             return ctx.getResources().getDrawable( R.drawable.museum_and_children);
+        }else{
+             return ctx.getResources().getDrawable( R.drawable.anyting_else);
+        }
     }
 }

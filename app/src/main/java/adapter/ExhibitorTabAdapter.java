@@ -91,7 +91,8 @@ public class ExhibitorTabAdapter extends RecyclerView.Adapter<ExhibitorTabAdapte
             Picasso.with(ctx).load(ApiClient.BASE_URL+model.getHeaderPic())
                     // .placeholder(R.drawable.progress_animation)
                     .error(R.drawable.ic_photo_frame)
-                    .resize(90,90)
+                    .resize(80,80)
+                    .centerCrop()
                     .into(holder.imageView);
 
         }
