@@ -12,7 +12,7 @@ public class ApiClient {
      public static final String BASE_URL = "http://eventmanager.r2017.org/";
 
     //Test
-   // public static final String BASE_URL = "http://www.inoasoft.info/projects/event2017/";
+   //
 
 
     private static Retrofit retrofit = null;
@@ -27,4 +27,14 @@ public class ApiClient {
         }
         return retrofit;
     }
+
+    /*public static Retrofit getClient2() {
+        if (retrofit==null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL_TWO)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        return retrofit;
+    }*/
 }

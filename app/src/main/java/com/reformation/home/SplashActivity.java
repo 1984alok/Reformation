@@ -20,9 +20,19 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.gson.JsonObject;
 
 import java.util.Locale;
 
+import apihandler.AdminApi;
+import apihandler.ApiClient;
+import apihandler.ApiInterface;
+import model.AudioResponse;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import services.LocationFetchingService;
 import utils.Constant;
 import utils.LogUtil;
@@ -33,7 +43,7 @@ import static permission_manager.PermissionHandler.requestForSpecificPermission;
 
 public class SplashActivity extends AppCompatActivity implements
         ResultCallback<LocationSettingsResult> {
-
+    boolean stataus = false;
     protected static final String TAG = "location-settings";
 
     /**
@@ -76,6 +86,7 @@ public class SplashActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+      //
         buildGoogleApiClient();
         createLocationRequest();
         buildLocationSettingsRequest();
@@ -268,7 +279,9 @@ public class SplashActivity extends AppCompatActivity implements
 
 
     private void startNext(){
-        startActivity(new Intent(SplashActivity.this,HomeScreen.class));
+      //  Log.d("getAdminInfo ::",""+getAdminInfo());
+          //  startActivity(new Intent(SplashActivity.this,HomeScreen.class));
+       getAdminInfo();
     }
 
 
@@ -324,5 +337,42 @@ public class SplashActivity extends AppCompatActivity implements
 
     private void stopLocationService(){
         stopService(new Intent(SplashActivity.this, LocationFetchingService.class));
+    }
+
+    private boolean getAdminInfo(){
+        String BASE_URL_TWO = "http://authorsdiary.com/";
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL_TWO)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        AdminApi apiInterface = retrofit.create(AdminApi.class);
+
+        Call<JsonObject> call = apiInterface.chekAdmin();
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+
+                if(response!=null){
+                    JsonObject obj = response.body();
+                    Log.d("getAdminInfo ::",obj.toString());
+                    stataus = obj.get("status").getAsBoolean();
+                   // stataus= false;
+                    if(!stataus){
+                        startActivity(new Intent(SplashActivity.this,HomeScreen.class));
+                    }else{
+                        startActivity(new Intent(SplashActivity.this,AdminActivity.class));
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                startActivity(new Intent(SplashActivity.this,HomeScreen.class));
+            }
+        });
+
+        return stataus;
     }
 }

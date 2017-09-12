@@ -17,13 +17,12 @@
         android:icon="@mipmap/app_icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".SplashActivity"
             android:configChanges="orientation|screenLayout|keyboard|keyboardHidden|layoutDirection|screenSize"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,20 +32,24 @@
         <activity
             android:name=".HomeScreen"
             android:configChanges="orientation|screenLayout|keyboard|keyboardHidden|layoutDirection|screenSize"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".AudioGuideActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AudioGuideActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SettingScreen"
             android:configChanges="orientation|screenLayout|keyboard|keyboardHidden|layoutDirection|screenSize"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".TopicWeekDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TopicWeekDetailActivity"
             android:configChanges="orientation|screenLayout|keyboard|keyboardHidden|layoutDirection|screenSize"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".GateDetail"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GateDetail"
             android:configChanges="orientation|screenLayout|keyboard|keyboardHidden|layoutDirection|screenSize"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".EventDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EventDetailActivity"
             android:screenOrientation="portrait" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -62,46 +65,51 @@
 
         <activity
             android:name=".MapsActivity"
+            android:configChanges="orientation|screenLayout|keyboard|keyboardHidden|layoutDirection|screenSize"
             android:label="@string/title_activity_maps"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|screenLayout|keyboard|keyboardHidden|layoutDirection|screenSize" />
-        <activity android:name=".FaqActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|screenLayout|keyboard|keyboardHidden|layoutDirection|screenSize" />
-        <activity android:name=".ExhibitorDetailActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|screenLayout|keyboard|keyboardHidden|layoutDirection|screenSize" />
-        <activity android:name=".FavActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|screenLayout|keyboard|keyboardHidden|layoutDirection|screenSize" />
-        <activity android:name=".AudioPlayerActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|screenLayout|keyboard|keyboardHidden|layoutDirection|screenSize" />
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FaqActivity"
+            android:configChanges="orientation|screenLayout|keyboard|keyboardHidden|layoutDirection|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ExhibitorDetailActivity"
+            android:configChanges="orientation|screenLayout|keyboard|keyboardHidden|layoutDirection|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FavActivity"
+            android:configChanges="orientation|screenLayout|keyboard|keyboardHidden|layoutDirection|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AudioPlayerActivity"
+            android:configChanges="orientation|screenLayout|keyboard|keyboardHidden|layoutDirection|screenSize"
+            android:screenOrientation="portrait" />
 
-        <service android:name="services.LocationFetchingService"
-            />
+        <service android:name="services.LocationFetchingService" />
 
         <activity
             android:name=".MapsLoadActivity"
+            android:configChanges="orientation|screenLayout|keyboard|keyboardHidden|layoutDirection|screenSize"
             android:label="@string/title_activity_maps_load"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|screenLayout|keyboard|keyboardHidden|layoutDirection|screenSize" />
-
-        <activity android:name=".ProgramSearchActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|screenLayout|keyboard|keyboardHidden|layoutDirection|screenSize" />
-
-        <activity android:name=".ProgramFilterActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|screenLayout|keyboard|keyboardHidden|layoutDirection|screenSize" />
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ProgramSearchActivity"
+            android:configChanges="orientation|screenLayout|keyboard|keyboardHidden|layoutDirection|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ProgramFilterActivity"
+            android:configChanges="orientation|screenLayout|keyboard|keyboardHidden|layoutDirection|screenSize"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="9e2976e0627a7febfea6b4f2e820ab8d79839dc8" />
 
-        <activity android:name=".FilterResultActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|screenLayout|keyboard|keyboardHidden|layoutDirection|screenSize" />
+        <activity
+            android:name=".FilterResultActivity"
+            android:configChanges="orientation|screenLayout|keyboard|keyboardHidden|layoutDirection|screenSize"
+            android:screenOrientation="portrait" />
+        <activity android:name=".AdminActivity"></activity>
     </application>
 
 </manifest>
